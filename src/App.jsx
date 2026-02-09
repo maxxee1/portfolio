@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { supabase } from './lib/supabase';
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X } from 'lucide-react';
 
 const Portfolio = () => {
@@ -6,6 +7,10 @@ const Portfolio = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredSkill, setHoveredSkill] = useState(null);
+
+  // -------------------- CONST FOTOS -------------------
+const BUCKET = "img";
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
   const translations = {
     es: {
