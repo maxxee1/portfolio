@@ -340,7 +340,15 @@ const Portfolio = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'projects', 'education', 'certifications', 'contact'];
+      const sections = ['home',
+                        'about',
+                        'experience',
+                        'projects',
+                        'skills'
+                        'education',
+                        'certifications',
+                        'contact'];
+      
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
