@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import profileImg from '../assets/IMG_0077 2.jpeg';
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X } from 'lucide-react';
 
 const Portfolio = () => {
@@ -7,9 +6,6 @@ const Portfolio = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredSkill, setHoveredSkill] = useState(null);
-
-  // -------------------- CONST FOTOS -------------------
-
 
   const translations = {
     es: {
@@ -462,16 +458,8 @@ const Portfolio = () => {
 
           <div style={styles.heroImage}>
             <div style={styles.profilePlaceholder}>
-              <img 
-                src={profileImg}
-                alt="Maximiliano Solorza"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  borderRadius: '50%'
-                }}
-              />
+              {/* Cambia esto por: <img src="/images/profile.jpg" alt="Maximiliano Solorza" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} /> */}
+              <span style={styles.profileIcon}>👤</span>
             </div>
           </div>
         </div>
