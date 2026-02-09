@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import profileImg from '../assets/profile.jpeg';
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X } from 'lucide-react';
 
 const Portfolio = () => {
