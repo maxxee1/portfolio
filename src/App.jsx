@@ -752,17 +752,27 @@ const Portfolio = () => {
         <div style={styles.certGrid}>
           {certifications.map(cert => (
             <div key={cert.id} style={styles.certCard}>
-              <div style={styles.certIcon}>
-                <img
-                  src={`/images/credentials/${cert.image}`}
-                  alt={typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+              <div
                   style={{
-                    width: '60px',
-                    height: '60px',
-                    objectFit: 'contain'
+                    width: '120px',
+                    height: '120px',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
                   }}
-                />
-              </div>
+                >
+                  <img
+                    src={`/images/credentials/${cert.image}`}
+                    alt={typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                  />
+                </div>
               <h3 style={styles.certTitle}>
                 {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
               </h3>
