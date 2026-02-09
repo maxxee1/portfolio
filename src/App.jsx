@@ -470,7 +470,7 @@ const Portfolio = () => {
 
           <div style={styles.heroImage}>
             <img
-              src="/images/profile.jpg"
+              src="/images/profile.jpeg"
               alt="Maximiliano Solorza"
               style={{
                 width: '280px',
