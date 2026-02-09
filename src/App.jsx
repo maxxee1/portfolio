@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { supabase } from './lib/supabase';
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X } from 'lucide-react';
 
 const Portfolio = () => {
-  const [currentLang, setCurrentLang] = useState('en');
+  const [currentLang, setCurrentLang] = useState('es');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-
-  // -------------------- CONST FOTOS -------------------
-const BUCKET = "rental-apartments-images";
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+  const [hoveredSkill, setHoveredSkill] = useState(null);
 
   const translations = {
     es: {
@@ -32,9 +28,6 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
         title: 'Sobre mí',
         p1: 'Soy un estudiante motivado y enfocado en ciberseguridad, gestión de datos y optimización de sistemas. Tengo experiencia en el desarrollo de aplicaciones web seguras, modelos predictivos de machine learning y soluciones de accesibilidad tecnológica.',
         p2: 'Competente en programación, despliegue en la nube y gestión de bases de datos. Adaptable, colaborativo y con aprendizaje rápido, siempre dispuesto a enfrentar nuevos desafíos tecnológicos.',
-        languages: 'Lenguajes',
-        dbCloud: 'Base de Datos & Cloud',
-        specialization: 'Especialización'
       },
       experience: {
         title: 'Experiencia',
@@ -85,9 +78,6 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
         title: 'About Me',
         p1: 'I am a motivated student focused on cybersecurity, data management, and systems optimization. I have experience developing secure web applications, machine learning predictive models, and technology accessibility solutions.',
         p2: 'Proficient in programming, cloud deployment, and database management. Adaptable, collaborative, and a fast learner, always ready to face new technological challenges.',
-        languages: 'Languages',
-        dbCloud: 'Database & Cloud',
-        specialization: 'Specialization'
       },
       experience: {
         title: 'Experience',
@@ -121,6 +111,51 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
   };
 
   const t = translations[currentLang];
+
+  const skillsData = {
+    cybersecurity: {
+      title: { es: 'Ciberseguridad & Infraestructura Cloud', en: 'Cybersecurity & Cloud Infrastructure' },
+      skills: [
+        { name: 'Bash', icon: '📜' },
+        { name: 'Docker', icon: '🐳' },
+        { name: 'Kubernetes', icon: '⚓' },
+        { name: 'AWS', icon: '☁️' },
+        { name: 'Cloudflare', icon: '🔶' },
+        { name: 'Oracle Cloud', icon: '🔴' },
+        { name: 'Nginx', icon: '🔧' },
+        { name: 'Wireshark', icon: '🦈' },
+        { name: 'Burp Suite', icon: '🔐' },
+        { name: 'Metasploit', icon: '🎯' },
+      ]
+    },
+    backend: {
+      title: { es: 'Backend & Datos', en: 'Backend & Data' },
+      skills: [
+        { name: 'C++', icon: '©️' },
+        { name: 'Java', icon: '☕' },
+        { name: 'Python', icon: '🐍' },
+        { name: 'Lua', icon: '🌙' },
+        { name: 'Node.js', icon: '💚' },
+        { name: 'Express', icon: '⚡' },
+        { name: 'Redis', icon: '🔴' },
+        { name: 'PostgreSQL', icon: '🐘' },
+        { name: 'MongoDB', icon: '🍃' },
+        { name: 'Arduino', icon: '🤖' },
+      ]
+    },
+    frontend: {
+      title: { es: 'Frontend & Web Moderno', en: 'Frontend & Modern Web' },
+      skills: [
+        { name: 'React', icon: '⚛️' },
+        { name: 'Tailwind', icon: '💨' },
+        { name: 'JavaScript', icon: '📜' },
+        { name: 'HTML', icon: '🌐' },
+        { name: 'CSS', icon: '🎨' },
+        { name: 'Git', icon: '📦' },
+        { name: 'LaTeX', icon: '📄' },
+      ]
+    }
+  };
 
   const projects = [
     {
@@ -423,6 +458,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
           <div style={styles.heroImage}>
             <div style={styles.profilePlaceholder}>
+              {/* Cambia esto por: <img src="/images/profile.jpg" alt="Maximiliano Solorza" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} /> */}
               <span style={styles.profileIcon}>👤</span>
             </div>
           </div>
@@ -436,39 +472,67 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
           <p style={styles.aboutText}>{t.about.p1}</p>
           <p style={styles.aboutText}>{t.about.p2}</p>
 
-          <div style={styles.skillsGrid}>
-            <div style={styles.skillCategory}>
-              <h3 style={styles.skillCategoryTitle}>{t.about.languages}</h3>
-              <ul style={styles.skillList}>
-                {['C++', 'JavaScript', 'Python', 'Java', 'SQL', 'Cypher'].map(skill => (
-                  <li key={skill} style={styles.skillItem}>▹ {skill}</li>
-                ))}
-              </ul>
-            </div>
-            <div style={styles.skillCategory}>
-              <h3 style={styles.skillCategoryTitle}>Frameworks & Tools</h3>
-              <ul style={styles.skillList}>
-                {['Node.js / Express.js', 'React', 'Bootstrap', 'Docker', 'Git', 'Nginx'].map(skill => (
-                  <li key={skill} style={styles.skillItem}>▹ {skill}</li>
-                ))}
-              </ul>
-            </div>
-            <div style={styles.skillCategory}>
-              <h3 style={styles.skillCategoryTitle}>{t.about.dbCloud}</h3>
-              <ul style={styles.skillList}>
-                {['PostgreSQL', 'Neo4j', 'AWS EC2', 'Vercel', 'Power BI'].map(skill => (
-                  <li key={skill} style={styles.skillItem}>▹ {skill}</li>
-                ))}
-              </ul>
-            </div>
-            <div style={styles.skillCategory}>
-              <h3 style={styles.skillCategoryTitle}>{t.about.specialization}</h3>
-              <ul style={styles.skillList}>
-                {['Cybersecurity', 'Machine Learning', 'Network Analysis', 'Wireshark', 'Linux (Kali, Ubuntu)'].map(skill => (
-                  <li key={skill} style={styles.skillItem}>▹ {skill}</li>
-                ))}
-              </ul>
-            </div>
+          {/* Cybersecurity & Cloud Infrastructure */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.cybersecurity.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.cybersecurity.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Backend & Data */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.backend.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.backend.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Frontend & Modern Web */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.frontend.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.frontend.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -550,6 +614,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
           {projects.map(project => (
             <div key={project.id} style={styles.projectCard}>
               <div style={styles.projectImage}>
+                {/* Cambia esto por: <img src={project.image} alt={project.title[currentLang]} style={{width: '100%', height: '100%', objectFit: 'cover'}} /> */}
                 <span style={styles.projectIcon}>{project.icon}</span>
               </div>
               <div style={styles.projectContent}>
@@ -801,9 +866,6 @@ const styles = {
     border: 'none',
     color: '#ffffff',
     cursor: 'pointer',
-    '@media (max-width: 968px)': {
-      display: 'block',
-    },
   },
   navLinks: {
     display: 'flex',
@@ -843,7 +905,6 @@ const styles = {
     borderRadius: '50%',
     filter: 'blur(150px)',
     opacity: 0.2,
-    animation: 'float 8s ease-in-out infinite',
   },
   heroContent: {
     maxWidth: '1200px',
@@ -969,25 +1030,49 @@ const styles = {
     fontSize: '1.1rem',
     marginBottom: '1.5rem',
   },
-  skillsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '2rem',
-    marginTop: '2rem',
+  skillSectionTitle: {
+    color: '#5eb3f6',
+    fontSize: '1.3rem',
+    marginTop: '2.5rem',
+    marginBottom: '1.5rem',
+    textAlign: 'left',
+    letterSpacing: '0.5px',
   },
-  skillCategory: {},
-  skillCategoryTitle: {
-    color: '#a855f7',
+  skillCardsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
+    gap: '1rem',
     marginBottom: '1rem',
   },
-  skillList: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
+  skillCard: {
+    background: '#1a1a1a',
+    border: '1px solid #2a2a3a',
+    borderRadius: '12px',
+    padding: '1.2rem 0.8rem',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.8rem',
+    transition: 'all 0.3s ease',
+    cursor: 'pointer',
+    minHeight: '100px',
   },
-  skillItem: {
-    color: '#b4b4b4',
-    padding: '0.5rem 0',
+  skillCardHover: {
+    transform: 'translateY(-5px)',
+    borderColor: '#5a0fb3',
+    background: 'linear-gradient(135deg, rgba(57, 9, 119, 0.3) 0%, rgba(90, 15, 179, 0.3) 100%)',
+    boxShadow: '0 8px 20px rgba(90, 15, 179, 0.3)',
+  },
+  skillIcon: {
+    fontSize: '2.5rem',
+    lineHeight: '1',
+  },
+  skillName: {
+    color: '#ffffff',
+    fontSize: '0.85rem',
+    fontWeight: '600',
+    textAlign: 'center',
   },
   experienceTimeline: {
     position: 'relative',
