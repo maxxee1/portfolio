@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X } from 'lucide-react';
 
 const Portfolio = () => {
-  const [currentLang, setCurrentLang] = useState('es');
+  const [currentLang, setCurrentLang] = useState('en');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredSkill, setHoveredSkill] = useState(null);
