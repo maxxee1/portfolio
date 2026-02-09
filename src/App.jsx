@@ -767,8 +767,8 @@ const Portfolio = () => {
                     src={`/images/credentials/${cert.image}`}
                     alt={typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
                     style={{
-                      width: '100%',
-                      height: '100%',
+                      width: '140%',
+                      height: '140%',
                       objectFit: 'cover'
                     }}
                   />
