@@ -593,6 +593,75 @@ const Portfolio = () => {
         </div>
       </section>
 
+
+      
+      {/* About Section */}
+      <section id="skills" style={styles.section}>
+      {/* Cybersecurity & Cloud Infrastructure */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.cybersecurity.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.cybersecurity.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Backend & Data */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.backend.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.backend.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Frontend & Modern Web */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.frontend.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.frontend.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Education & Competitions */}
       <section id="education" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.education.title}</h2>
