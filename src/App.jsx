@@ -14,6 +14,7 @@ const Portfolio = () => {
         about: 'Sobre mí',
         experience: 'Experiencia',
         projects: 'Proyectos',
+        education: 'Educación',
         certifications: 'Certificaciones',
         contact: 'Contacto'
       },
@@ -64,6 +65,7 @@ const Portfolio = () => {
         about: 'About',
         experience: 'Experience',
         projects: 'Projects',
+        education: 'Education',
         certifications: 'Certifications',
         contact: 'Contact'
       },
@@ -338,7 +340,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'projects', 'certifications', 'contact'];
+      const sections = ['home', 'about', 'experience', 'projects', 'education', 'certifications', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
