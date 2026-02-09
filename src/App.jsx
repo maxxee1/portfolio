@@ -753,7 +753,15 @@ const Portfolio = () => {
           {certifications.map(cert => (
             <div key={cert.id} style={styles.certCard}>
               <div style={styles.certIcon}>
-                <span style={{ fontSize: '40px' }}>{cert.icon}</span>
+                <img
+                  src={`/images/credentials/${cert.image}`}
+                  alt={typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    objectFit: 'contain'
+                  }}
+                />
               </div>
               <h3 style={styles.certTitle}>
                 {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
