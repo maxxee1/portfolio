@@ -657,39 +657,6 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Certifications Section */}
-      <section id="certifications" style={styles.section}>
-        <h2 style={styles.sectionTitle}>{t.certifications.title}</h2>
-        <div style={styles.certGrid}>
-          {certifications.map(cert => (
-            <div key={cert.id} style={styles.certCard}>
-              <div style={styles.certIcon}>
-                <span style={{ fontSize: '40px' }}>{cert.icon}</span>
-              </div>
-              <h3 style={styles.certTitle}>
-                {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
-              </h3>
-              <p style={styles.certProvider}>
-                {typeof cert.provider === 'object' ? cert.provider[currentLang] : cert.provider}
-              </p>
-              <span style={{
-                ...styles.certStatus,
-                ...(cert.status === 'completed' ? styles.certStatusCompleted : styles.certStatusInProgress)
-              }}>
-                {cert.status === 'completed' ? t.certifications.completed : t.certifications.inProgress}
-              </span>
-              {cert.url && (
-                <div style={{ marginTop: '1rem' }}>
-                  <a href={cert.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
-                    {t.certifications.viewCredential}
-                  </a>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Education & Competitions */}
       <section id="education" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.education.title}</h2>
@@ -754,6 +721,39 @@ const Portfolio = () => {
               {currentLang === 'es' ? 'Fecha: Octubre 2025' : 'Date: October 2025'}
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section id="certifications" style={styles.section}>
+        <h2 style={styles.sectionTitle}>{t.certifications.title}</h2>
+        <div style={styles.certGrid}>
+          {certifications.map(cert => (
+            <div key={cert.id} style={styles.certCard}>
+              <div style={styles.certIcon}>
+                <span style={{ fontSize: '40px' }}>{cert.icon}</span>
+              </div>
+              <h3 style={styles.certTitle}>
+                {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+              </h3>
+              <p style={styles.certProvider}>
+                {typeof cert.provider === 'object' ? cert.provider[currentLang] : cert.provider}
+              </p>
+              <span style={{
+                ...styles.certStatus,
+                ...(cert.status === 'completed' ? styles.certStatusCompleted : styles.certStatusInProgress)
+              }}>
+                {cert.status === 'completed' ? t.certifications.completed : t.certifications.inProgress}
+              </span>
+              {cert.url && (
+                <div style={{ marginTop: '1rem' }}>
+                  <a href={cert.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
+                    {t.certifications.viewCredential}
+                  </a>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
