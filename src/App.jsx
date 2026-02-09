@@ -760,7 +760,8 @@ const Portfolio = () => {
                     overflow: 'hidden',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    margin: '0 auto 1rem auto'
                   }}
                 >
                   <img
