@@ -8,7 +8,7 @@ const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
 
   // -------------------- CONST FOTOS -------------------
-const BUCKET = "img";
+const BUCKET = "rental-apartments-images";
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
   const translations = {
