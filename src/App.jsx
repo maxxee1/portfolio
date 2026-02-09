@@ -406,6 +406,9 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
               <a href="mailto:maximilianoo.adonis@gmail.com" style={styles.socialLink}>
                 <Mail size={24} />
               </a>
+              <a href="tel:+56979613993" style={styles.socialLink}>
+                <Phone size={24} />
+              </a>
             </div>
 
             <div style={styles.ctaButtons}>
