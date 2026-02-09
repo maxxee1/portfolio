@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import profileImg from '../assets/profile.jpeg';
+import profileImg from '../assets/IMG_0077 2.jpeg';
 import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X } from 'lucide-react';
 
 const Portfolio = () => {
@@ -463,7 +463,7 @@ const Portfolio = () => {
           <div style={styles.heroImage}>
             <div style={styles.profilePlaceholder}>
               <img 
-                src="/images/profile.jpeg" 
+                src={profileImg}
                 alt="Maximiliano Solorza"
                 style={{
                   width: '100%',
