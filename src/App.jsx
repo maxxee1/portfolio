@@ -406,9 +406,6 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
               <a href="mailto:maximilianoo.adonis@gmail.com" style={styles.socialLink}>
                 <Mail size={24} />
               </a>
-              <a href="tel:+56979613993" style={styles.socialLink}>
-                <Phone size={24} />
-              </a>
             </div>
 
             <div style={styles.ctaButtons}>
@@ -701,12 +698,6 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
               <Mail size={24} style={styles.contactIcon} />
               <a href="mailto:maximilianoo.adonis@gmail.com" style={styles.contactLink}>
                 maximilianoo.adonis@gmail.com
-              </a>
-            </div>
-            <div style={styles.contactItem}>
-              <Phone size={24} style={styles.contactIcon} />
-              <a href="tel:+56979613993" style={styles.contactLink}>
-                +56 9 7961 3993
               </a>
             </div>
             <div style={styles.contactItem}>
