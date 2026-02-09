@@ -12,6 +12,11 @@ const Portfolio = () => {
 const BUCKET = "img";
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 
+const getImageUrl = (path) => {
+  if (!path || !SUPABASE_URL) return "/placeholder-image.png"; // Imagen por defecto si falla
+  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${path}`;
+};
+
   const translations = {
     es: {
       nav: {
