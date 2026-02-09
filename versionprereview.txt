@@ -1,0 +1,1051 @@
+import React, { useState } from 'react';
+import { Camera, Search, Plus, Users, MapPin, Building2, Calendar, User, LogOut, Shield, FileText, Download, X, Check, ChevronRight, Menu, Settings } from 'lucide-react';
+
+// Hardcoded users
+const USERS = {
+  admin: { password: 'admin', role: 'admin', name: 'Admin User' },
+  test: { password: 'test', role: 'user', name: 'Test User' }
+};
+
+// Sample data
+const SAMPLE_INSPECTIONS = [
+  {
+    id: 1,
+    location: 'Edificio Central - Piso 5',
+    date: '2026-02-08',
+    inspector: 'Admin User',
+    status: 'completed',
+    comments: 'Inspección rutinaria completada sin observaciones críticas',
+    images: 2
+  },
+  {
+    id: 2,
+    location: 'Almacén Norte',
+    date: '2026-02-07',
+    inspector: 'Test User',
+    status: 'pending',
+    comments: 'Pendiente de revisión de sistemas eléctricos',
+    images: 1
+  },
+  {
+    id: 3,
+    location: 'Oficinas - Planta Baja',
+    date: '2026-02-06',
+    inspector: 'Admin User',
+    status: 'completed',
+    comments: 'Todo en orden, siguiente revisión programada para marzo',
+    images: 3
+  }
+];
+
+const SAMPLE_USERS = [
+  { id: 1, name: 'Admin User', role: 'admin', email: 'admin@company.com', canSearch: true, canCreate: true, canManageAreas: true },
+  { id: 2, name: 'Test User', role: 'user', email: 'test@company.com', canSearch: true, canCreate: false, canManageAreas: false },
+  { id: 3, name: 'Maria Garcia', role: 'user', email: 'maria@company.com', canSearch: true, canCreate: false, canManageAreas: false },
+  { id: 4, name: 'Carlos López', role: 'inspector', email: 'carlos@company.com', canSearch: true, canCreate: true, canManageAreas: true }
+];
+
+const SAMPLE_PROPERTIES = [
+  { 
+    id: 1, 
+    name: 'Edificio Central', 
+    address: 'Av. Principal 123', 
+    floors: 8, 
+    lastInspection: '2026-02-08',
+    units: ['101', '102', '103', '201', '202', '301', '401', '501'],
+    areas: ['Cocina', 'Baño', 'Sala', 'Habitación Principal', 'Habitación 2', 'Balcón']
+  },
+  { 
+    id: 2, 
+    name: 'Almacén Norte', 
+    address: 'Calle Industrial 456', 
+    floors: 2, 
+    lastInspection: '2026-02-07',
+    units: ['A1', 'A2', 'B1', 'B2'],
+    areas: ['Zona de Carga', 'Oficina', 'Baño', 'Almacén']
+  },
+  { 
+    id: 3, 
+    name: 'Oficinas Este', 
+    address: 'Blvd. Comercial 789', 
+    floors: 3, 
+    lastInspection: '2026-01-28',
+    units: ['Suite 100', 'Suite 200', 'Suite 300'],
+    areas: ['Recepción', 'Sala de Juntas', 'Oficina', 'Baño', 'Cocina']
+  }
+];
+
+const SAMPLE_LOCATIONS = [
+  { id: 1, property: 'Edificio Central', location: 'Piso 5 - Oficina 501' },
+  { id: 2, property: 'Edificio Central', location: 'Planta Baja - Recepción' },
+  { id: 3, property: 'Almacén Norte', location: 'Zona de Carga' },
+  { id: 4, property: 'Oficinas Este', location: 'Sala de Juntas A' }
+];
+
+export default function InspectionApp() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [currentView, setCurrentView] = useState('login');
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+  const [showMenu, setShowMenu] = useState(false);
+  
+  // Inspection form states
+  const [inspectionStep, setInspectionStep] = useState('select-property'); // select-property, select-unit, inspection-areas
+  const [currentInspection, setCurrentInspection] = useState({
+    property: null,
+    unit: '',
+    areas: [] // Each area: { name: string, photos: [], comments: string }
+  });
+  const [currentAreaIndex, setCurrentAreaIndex] = useState(0);
+  const [showAreaSelector, setShowAreaSelector] = useState(false);
+  const [newAreaName, setNewAreaName] = useState('');
+  
+  // Property management
+  const [editingProperty, setEditingProperty] = useState(null);
+  const [propertyAreas, setPropertyAreas] = useState({});
+  
+  const [newInspection, setNewInspection] = useState({
+    location: '',
+    comments: '',
+    images: []
+  });
+  
+  // Search filters
+  const [searchFilters, setSearchFilters] = useState({
+    date: '',
+    inspector: '',
+    location: '',
+    status: ''
+  });
+  
+  // User management
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [editingPermissions, setEditingPermissions] = useState(false);
+
+  const handleLogin = (e) => {
+    if (e) e.preventDefault();
+    const username = loginForm.username.toLowerCase().trim();
+    const password = loginForm.password.trim();
+    const user = USERS[username];
+    
+    if (user && user.password === password) {
+      setCurrentUser({ username: username, ...user });
+      setCurrentView(user.role === 'admin' ? 'admin-dashboard' : 'user-dashboard');
+      setLoginError('');
+      setLoginForm({ username: '', password: '' });
+    } else {
+      setLoginError('Credenciales inválidas');
+    }
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setCurrentView('login');
+    setLoginForm({ username: '', password: '' });
+    setShowMenu(false);
+  };
+
+  const resetInspection = () => {
+    setInspectionStep('select-property');
+    setCurrentInspection({
+      property: null,
+      unit: '',
+      areas: []
+    });
+    setCurrentAreaIndex(0);
+  };
+
+  const selectProperty = (property) => {
+    setCurrentInspection({
+      ...currentInspection,
+      property: property
+    });
+    setInspectionStep('select-unit');
+  };
+
+  const selectUnit = (unit) => {
+    setCurrentInspection({
+      ...currentInspection,
+      unit: unit,
+      areas: []
+    });
+    setInspectionStep('inspection-areas');
+  };
+
+  const addArea = (areaName) => {
+    const newArea = {
+      name: areaName,
+      photos: [],
+      comments: ''
+    };
+    const updatedAreas = [...currentInspection.areas, newArea];
+    setCurrentInspection({
+      ...currentInspection,
+      areas: updatedAreas
+    });
+    // Automatically go to the newly added area
+    setCurrentAreaIndex(updatedAreas.length - 1);
+    setShowAreaSelector(false);
+    setNewAreaName('');
+  };
+
+  const updateCurrentArea = (field, value) => {
+    const updatedAreas = [...currentInspection.areas];
+    updatedAreas[currentAreaIndex] = {
+      ...updatedAreas[currentAreaIndex],
+      [field]: value
+    };
+    setCurrentInspection({
+      ...currentInspection,
+      areas: updatedAreas
+    });
+  };
+
+  const handleAreaImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    const currentArea = currentInspection.areas[currentAreaIndex];
+    updateCurrentArea('photos', [...currentArea.photos, ...files.map(f => URL.createObjectURL(f))]);
+  };
+
+  const removeAreaImage = (photoIndex) => {
+    const currentArea = currentInspection.areas[currentAreaIndex];
+    updateCurrentArea('photos', currentArea.photos.filter((_, i) => i !== photoIndex));
+  };
+
+  const goToArea = (index) => {
+    if (index >= 0 && index < currentInspection.areas.length) {
+      setCurrentAreaIndex(index);
+      setShowAreaSelector(false);
+    } else {
+      // If index is out of bounds, go back to area selector
+      setCurrentAreaIndex(-1);
+      setTimeout(() => setCurrentAreaIndex(currentInspection.areas.length), 10);
+    }
+  };
+
+  const finishInspection = () => {
+    // Here would be the logic to save the inspection
+    alert('Inspección guardada exitosamente!');
+    resetInspection();
+    setCurrentView('find-inspection');
+  };
+
+  const addCustomArea = (propertyId, areaName) => {
+    setPropertyAreas({
+      ...propertyAreas,
+      [propertyId]: [...(propertyAreas[propertyId] || []), areaName]
+    });
+  };
+
+  const handleImageUpload = (e) => {
+    const files = Array.from(e.target.files);
+    setNewInspection({
+      ...newInspection,
+      images: [...newInspection.images, ...files.map(f => URL.createObjectURL(f))]
+    });
+  };
+
+  const removeImage = (index) => {
+    setNewInspection({
+      ...newInspection,
+      images: newInspection.images.filter((_, i) => i !== index)
+    });
+  };
+
+  // Login Screen
+  if (currentView === 'login') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-2xl mb-4 shadow-2xl shadow-cyan-500/30">
+              <Shield className="w-10 h-10 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>InspecPro</h1>
+            <p className="text-slate-400 text-sm">Sistema de Gestión de Inspecciones</p>
+          </div>
+          
+          <form onSubmit={handleLogin} className="bg-slate-800/50 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-slate-700/50">
+            <div className="space-y-6">
+              <div>
+                <label className="block text-slate-300 text-sm font-medium mb-2">Usuario</label>
+                <input
+                  type="text"
+                  value={loginForm.username}
+                  onChange={(e) => setLoginForm({ ...loginForm, username: e.target.value })}
+                  className="w-full bg-slate-700/50 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                  placeholder="admin o test"
+                  autoComplete="username"
+                />
+              </div>
+              
+              <div>
+                <label className="block text-slate-300 text-sm font-medium mb-2">Contraseña</label>
+                <input
+                  type="password"
+                  value={loginForm.password}
+                  onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
+                  className="w-full bg-slate-700/50 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                  placeholder="••••••"
+                  autoComplete="current-password"
+                />
+              </div>
+              
+              {loginError && (
+                <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-4 py-3 rounded-xl text-sm">
+                  {loginError}
+                </div>
+              )}
+              
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-xl py-3 font-semibold hover:from-cyan-600 hover:to-blue-600 transition-all shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50"
+              >
+                Iniciar Sesión
+              </button>
+            </div>
+          </form>
+          
+          <div className="mt-6 text-center text-slate-500 text-xs">
+            <p>Usuario Demo: admin / admin o test / test</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Header Component
+  const Header = () => (
+    <div className="bg-gradient-to-r from-slate-900 to-slate-800 border-b border-slate-700/50 sticky top-0 z-50 backdrop-blur-xl">
+      <div className="px-4 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-3">
+            <button onClick={() => setShowMenu(!showMenu)} className="lg:hidden text-white">
+              <Menu className="w-6 h-6" />
+            </button>
+            <div className="flex items-center space-x-2">
+              <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-white" style={{ fontFamily: 'Georgia, serif' }}>InspecPro</h1>
+                <p className="text-xs text-slate-400">{currentUser.role === 'admin' ? 'Admin' : 'Usuario'}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <div className="hidden md:flex items-center space-x-2 bg-slate-800/50 px-3 py-2 rounded-xl">
+              <User className="w-4 h-4 text-cyan-400" />
+              <span className="text-sm text-white">{currentUser.name}</span>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="text-slate-400 hover:text-red-400 transition-colors p-2 hover:bg-slate-800 rounded-xl"
+            >
+              <LogOut className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Navigation Component
+  const Navigation = () => {
+    const navItems = currentUser.role === 'admin' 
+      ? [
+          { id: 'admin-dashboard', icon: Plus, label: 'Nueva Inspección', color: 'cyan' },
+          { id: 'find-inspection', icon: Search, label: 'Buscar Inspección', color: 'blue' },
+          { id: 'users', icon: Users, label: 'Usuarios', color: 'purple' },
+          { id: 'properties', icon: Building2, label: 'Propiedades', color: 'green' },
+          { id: 'locations', icon: MapPin, label: 'Ubicaciones', color: 'orange' }
+        ]
+      : [
+          { id: 'user-dashboard', icon: Plus, label: 'Nueva Inspección', color: 'cyan' },
+          { id: 'find-inspection', icon: Search, label: 'Buscar Inspección', color: 'blue' }
+        ];
+
+    return (
+      <div className={`${showMenu ? 'block' : 'hidden'} lg:block bg-slate-800/30 border-r border-slate-700/50 lg:w-64 absolute lg:relative top-full lg:top-0 left-0 right-0 lg:h-auto z-40`}>
+        <nav className="p-4 space-y-2">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => {
+                setCurrentView(item.id);
+                setShowMenu(false);
+              }}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all ${
+                currentView === item.id
+                  ? `bg-${item.color}-500/20 text-${item.color}-400 shadow-lg`
+                  : 'text-slate-400 hover:bg-slate-700/50 hover:text-white'
+              }`}
+            >
+              <item.icon className="w-5 h-5" />
+              <span className="font-medium">{item.label}</span>
+            </button>
+          ))}
+        </nav>
+      </div>
+    );
+  };
+
+  // New Inspection View - Multi-step
+  const NewInspectionView = () => {
+    // Step 1: Select Property
+    if (inspectionStep === 'select-property') {
+      return (
+        <div className="p-6 max-w-4xl mx-auto">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>Nueva Inspección</h2>
+            <p className="text-slate-400">Paso 1: Selecciona la propiedad</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {SAMPLE_PROPERTIES.map((property) => (
+              <button
+                key={property.id}
+                onClick={() => selectProperty(property)}
+                className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-xl hover:shadow-2xl hover:border-cyan-500/50 transition-all text-left"
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                    <Building2 className="w-6 h-6 text-white" />
+                  </div>
+                  <ChevronRight className="w-6 h-6 text-slate-500" />
+                </div>
+                
+                <h3 className="text-xl font-semibold text-white mb-2">{property.name}</h3>
+                <p className="text-sm text-slate-400 mb-2">{property.address}</p>
+                <div className="text-xs text-slate-500">{property.units.length} unidades disponibles</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Step 2: Select Unit
+    if (inspectionStep === 'select-unit') {
+      return (
+        <div className="p-6 max-w-4xl mx-auto">
+          <div className="mb-6">
+            <button
+              onClick={() => setInspectionStep('select-property')}
+              className="text-cyan-400 hover:text-cyan-300 mb-4 flex items-center space-x-2"
+            >
+              <ChevronRight className="w-4 h-4 rotate-180" />
+              <span>Volver</span>
+            </button>
+            <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              {currentInspection.property.name}
+            </h2>
+            <p className="text-slate-400">Paso 2: Selecciona la unidad</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {currentInspection.property.units.map((unit) => (
+              <button
+                key={unit}
+                onClick={() => selectUnit(unit)}
+                className="bg-slate-800/50 backdrop-blur-xl rounded-xl p-6 border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-cyan-500/50 transition-all"
+              >
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-white mb-2">{unit}</div>
+                  <div className="text-xs text-slate-400">Unidad</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // Step 3: Inspection Areas
+    if (inspectionStep === 'inspection-areas') {
+      const currentArea = currentInspection.areas[currentAreaIndex];
+      const availableAreas = [...currentInspection.property.areas, ...(propertyAreas[currentInspection.property.id] || [])];
+
+      // If no current area, show area selector
+      if (!currentArea) {
+        return (
+          <div className="p-6 max-w-4xl mx-auto">
+            <div className="mb-6">
+              <button
+                onClick={() => setInspectionStep('select-unit')}
+                className="text-cyan-400 hover:text-cyan-300 mb-4 flex items-center space-x-2"
+              >
+                <ChevronRight className="w-4 h-4 rotate-180" />
+                <span>Cambiar unidad</span>
+              </button>
+              <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+                {currentInspection.property.name} - Unidad {currentInspection.unit}
+              </h2>
+              <p className="text-slate-400">Selecciona el área a inspeccionar</p>
+            </div>
+
+            <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-2xl">
+              <h3 className="text-xl font-semibold text-white mb-4">¿Qué área deseas inspeccionar?</h3>
+              
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {availableAreas.map((area, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => addArea(area)}
+                    className="bg-slate-700/50 hover:bg-cyan-500/20 text-white px-4 py-4 rounded-xl text-left transition-all border border-slate-600 hover:border-cyan-500 flex items-center justify-between"
+                  >
+                    <span className="font-medium">{area}</span>
+                    <ChevronRight className="w-5 h-5 text-slate-500" />
+                  </button>
+                ))}
+              </div>
+              
+              {currentUser.canManageAreas && (
+                <div className="pt-4 border-t border-slate-700">
+                  <h4 className="text-sm font-medium text-slate-300 mb-3">Crear área personalizada</h4>
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={newAreaName}
+                      onChange={(e) => setNewAreaName(e.target.value)}
+                      placeholder="Nombre del área..."
+                      className="flex-1 bg-slate-700/50 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter' && newAreaName.trim()) {
+                          addCustomArea(currentInspection.property.id, newAreaName.trim());
+                          addArea(newAreaName.trim());
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={() => {
+                        if (newAreaName.trim()) {
+                          addCustomArea(currentInspection.property.id, newAreaName.trim());
+                          addArea(newAreaName.trim());
+                        }
+                      }}
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg text-sm font-medium transition-all"
+                    >
+                      Crear
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Show completed areas if any */}
+            {currentInspection.areas.length > 0 && (
+              <div className="mt-6 bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-xl">
+                <h3 className="text-lg font-semibold text-white mb-4">Áreas inspeccionadas ({currentInspection.areas.length})</h3>
+                <div className="space-y-2">
+                  {currentInspection.areas.map((area, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => goToArea(idx)}
+                      className="w-full flex items-center justify-between bg-slate-700/30 hover:bg-slate-700/50 px-4 py-3 rounded-xl transition-all group"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                          <Check className="w-5 h-5 text-green-400" />
+                        </div>
+                        <div className="text-left">
+                          <div className="text-white font-medium">{area.name}</div>
+                          <div className="text-xs text-slate-400">{area.photos.length} fotos • {area.comments ? 'Con comentarios' : 'Sin comentarios'}</div>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-slate-500 group-hover:text-cyan-400" />
+                    </button>
+                  ))}
+                </div>
+                
+                <button
+                  onClick={finishInspection}
+                  className="w-full mt-4 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-xl py-4 font-semibold hover:from-green-600 hover:to-emerald-600 transition-all shadow-lg flex items-center justify-center space-x-2"
+                >
+                  <Check className="w-5 h-5" />
+                  <span>Finalizar Inspección</span>
+                </button>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      // Inspecting current area
+      return (
+        <div className="p-6 max-w-4xl mx-auto">
+          {/* Header with breadcrumb */}
+          <div className="mb-6">
+            <div className="flex items-center space-x-2 text-sm text-slate-400 mb-3">
+              <button
+                onClick={() => setInspectionStep('select-property')}
+                className="hover:text-cyan-400 transition-colors"
+              >
+                {currentInspection.property.name}
+              </button>
+              <ChevronRight className="w-4 h-4" />
+              <button
+                onClick={() => setInspectionStep('select-unit')}
+                className="hover:text-cyan-400 transition-colors"
+              >
+                Unidad {currentInspection.unit}
+              </button>
+              <ChevronRight className="w-4 h-4" />
+              <span className="text-cyan-400">{currentArea.name}</span>
+            </div>
+            
+            <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              {currentArea.name}
+            </h2>
+            <p className="text-slate-400">Área {currentAreaIndex + 1} de {currentInspection.areas.length}</p>
+          </div>
+
+          {/* Progress bar */}
+          <div className="mb-6">
+            <div className="flex items-center space-x-2 mb-2">
+              <span className="text-sm text-slate-400">Progreso</span>
+              <div className="flex-1 bg-slate-700 h-2 rounded-full overflow-hidden">
+                <div 
+                  className="bg-gradient-to-r from-cyan-500 to-blue-500 h-full transition-all duration-300"
+                  style={{ width: `${((currentAreaIndex + 1) / currentInspection.areas.length) * 100}%` }}
+                />
+              </div>
+              <span className="text-sm text-slate-400">{currentAreaIndex + 1}/{currentInspection.areas.length}</span>
+            </div>
+          </div>
+
+          <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-2xl">
+            <div className="space-y-6">
+              {/* Photos */}
+              <div>
+                <label className="block text-slate-300 text-sm font-medium mb-3">
+                  Fotografías {currentArea.photos.length > 0 && `(${currentArea.photos.length})`}
+                </label>
+                <div className="space-y-4">
+                  {currentArea.photos.length > 0 && (
+                    <div className="grid grid-cols-2 gap-3 mb-4">
+                      {currentArea.photos.map((img, index) => (
+                        <div key={index} className="relative group">
+                          <img src={img} alt={`Preview ${index + 1}`} className="w-full h-40 object-cover rounded-xl border-2 border-slate-700" />
+                          <button
+                            onClick={() => removeAreaImage(index)}
+                            className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg shadow-lg transition-all"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                          <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm text-white px-2 py-1 rounded text-xs">
+                            Foto {index + 1}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  
+                  <label className="flex items-center justify-center w-full bg-slate-700/30 border-2 border-dashed border-slate-600 rounded-xl px-4 py-8 cursor-pointer hover:border-cyan-500 hover:bg-slate-700/50 transition-all">
+                    <div className="text-center">
+                      <Camera className="w-12 h-12 text-slate-500 mx-auto mb-3" />
+                      <span className="text-slate-300 text-sm font-medium block mb-1">Agregar foto</span>
+                      <span className="text-slate-500 text-xs">Toca para tomar o seleccionar foto</span>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleAreaImageUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {/* Comments */}
+              <div>
+                <label className="block text-slate-300 text-sm font-medium mb-2">Comentarios</label>
+                <textarea
+                  value={currentArea.comments}
+                  onChange={(e) => updateCurrentArea('comments', e.target.value)}
+                  className="w-full bg-slate-700/50 text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all resize-none"
+                  rows="4"
+                  placeholder="Describe observaciones, problemas encontrados, condiciones del área..."
+                />
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="flex flex-col space-y-3 pt-4">
+                <div className="grid grid-cols-2 gap-3">
+                  {currentAreaIndex > 0 && (
+                    <button
+                      onClick={() => setCurrentAreaIndex(currentAreaIndex - 1)}
+                      className="bg-slate-700 text-white rounded-xl py-3 font-semibold hover:bg-slate-600 transition-all flex items-center justify-center space-x-2"
+                    >
+                      <ChevronRight className="w-5 h-5 rotate-180" />
+                      <span>Anterior</span>
+                    </button>
+                  )}
+                  
+                  <button
+                    onClick={() => {
+                      setCurrentAreaIndex(-1);
+                      // Small delay to trigger re-render
+                      setTimeout(() => setCurrentAreaIndex(currentInspection.areas.length), 10);
+                    }}
+                    className={`bg-cyan-500 text-white rounded-xl py-3 font-semibold hover:bg-cyan-600 transition-all flex items-center justify-center space-x-2 ${currentAreaIndex === 0 ? 'col-span-2' : ''}`}
+                  >
+                    <span>Siguiente Área</span>
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+                
+                <button
+                  onClick={finishInspection}
+                  className="w-full bg-slate-700/50 text-slate-300 border-2 border-slate-600 hover:border-green-500 hover:text-white hover:bg-green-500/10 rounded-xl py-3 font-semibold transition-all flex items-center justify-center space-x-2"
+                >
+                  <Check className="w-5 h-5" />
+                  <span>Finalizar Inspección ({currentInspection.areas.length} {currentInspection.areas.length === 1 ? 'área' : 'áreas'})</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick area switcher */}
+          {currentInspection.areas.length > 1 && (
+            <div className="mt-6 bg-slate-800/50 backdrop-blur-xl rounded-xl p-4 border border-slate-700/50">
+              <div className="text-sm text-slate-400 mb-3">Ir a otra área:</div>
+              <div className="flex flex-wrap gap-2">
+                {currentInspection.areas.map((area, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => goToArea(idx)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                      idx === currentAreaIndex
+                        ? 'bg-cyan-500 text-white shadow-lg'
+                        : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                    }`}
+                  >
+                    {area.name}
+                    {area.photos.length > 0 && (
+                      <span className="ml-2 text-xs opacity-75">({area.photos.length})</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+  };
+
+  // Find Inspection View
+  const FindInspectionView = () => (
+    <div className="p-6 max-w-6xl mx-auto">
+      <div className="mb-6">
+        <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>Buscar Inspecciones</h2>
+        <p className="text-slate-400">Encuentra y revisa inspecciones anteriores</p>
+      </div>
+
+      <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-2xl mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label className="block text-slate-300 text-xs font-medium mb-2">Fecha</label>
+            <input
+              type="date"
+              value={searchFilters.date}
+              onChange={(e) => setSearchFilters({ ...searchFilters, date: e.target.value })}
+              className="w-full bg-slate-700/50 text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+          </div>
+          
+          {currentUser.role === 'admin' && (
+            <div>
+              <label className="block text-slate-300 text-xs font-medium mb-2">Inspector</label>
+              <select
+                value={searchFilters.inspector}
+                onChange={(e) => setSearchFilters({ ...searchFilters, inspector: e.target.value })}
+                className="w-full bg-slate-700/50 text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              >
+                <option value="">Todos</option>
+                <option value="Admin User">Admin User</option>
+                <option value="Test User">Test User</option>
+              </select>
+            </div>
+          )}
+          
+          <div>
+            <label className="block text-slate-300 text-xs font-medium mb-2">Ubicación</label>
+            <input
+              type="text"
+              value={searchFilters.location}
+              onChange={(e) => setSearchFilters({ ...searchFilters, location: e.target.value })}
+              className="w-full bg-slate-700/50 text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              placeholder="Buscar..."
+            />
+          </div>
+          
+          <div>
+            <label className="block text-slate-300 text-xs font-medium mb-2">Estado</label>
+            <select
+              value={searchFilters.status}
+              onChange={(e) => setSearchFilters({ ...searchFilters, status: e.target.value })}
+              className="w-full bg-slate-700/50 text-white rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            >
+              <option value="">Todos</option>
+              <option value="completed">Completado</option>
+              <option value="pending">Pendiente</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {SAMPLE_INSPECTIONS.map((inspection) => (
+          <div key={inspection.id} className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-xl hover:shadow-2xl hover:border-cyan-500/50 transition-all">
+            <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-1">{inspection.location}</h3>
+                <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
+                  <span className="flex items-center space-x-1">
+                    <Calendar className="w-4 h-4" />
+                    <span>{inspection.date}</span>
+                  </span>
+                  <span className="flex items-center space-x-1">
+                    <User className="w-4 h-4" />
+                    <span>{inspection.inspector}</span>
+                  </span>
+                  <span className="flex items-center space-x-1">
+                    <Camera className="w-4 h-4" />
+                    <span>{inspection.images} fotos</span>
+                  </span>
+                </div>
+              </div>
+              <div className="mt-3 md:mt-0">
+                <span className={`px-4 py-2 rounded-full text-xs font-medium ${
+                  inspection.status === 'completed' 
+                    ? 'bg-green-500/20 text-green-400' 
+                    : 'bg-yellow-500/20 text-yellow-400'
+                }`}>
+                  {inspection.status === 'completed' ? 'Completado' : 'Pendiente'}
+                </span>
+              </div>
+            </div>
+            
+            <p className="text-slate-300 mb-4">{inspection.comments}</p>
+            
+            <button className="flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors text-sm font-medium">
+              <Download className="w-4 h-4" />
+              <span>Generar PDF</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Users Management View
+  const UsersView = () => (
+    <div className="p-6 max-w-6xl mx-auto">
+      <div className="mb-6">
+        <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>Gestión de Usuarios</h2>
+        <p className="text-slate-400">Administra usuarios y sus permisos</p>
+      </div>
+
+      <div className="grid gap-4">
+        {SAMPLE_USERS.map((user) => (
+          <div key={user.id} className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-xl">
+            <div className="flex flex-col md:flex-row md:items-center justify-between">
+              <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                  <User className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">{user.name}</h3>
+                  <p className="text-sm text-slate-400">{user.email}</p>
+                  <span className={`inline-block mt-1 px-3 py-1 rounded-full text-xs font-medium ${
+                    user.role === 'admin' 
+                      ? 'bg-red-500/20 text-red-400' 
+                      : user.role === 'inspector'
+                      ? 'bg-blue-500/20 text-blue-400'
+                      : 'bg-green-500/20 text-green-400'
+                  }`}>
+                    {user.role === 'admin' ? 'Administrador' : user.role === 'inspector' ? 'Inspector' : 'Usuario'}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="flex flex-col space-y-2">
+                <div className="flex flex-wrap gap-3 text-sm">
+                  <label className="flex items-center space-x-2 text-slate-300">
+                    <input type="checkbox" checked={user.canSearch} className="rounded bg-slate-700 border-slate-600" readOnly />
+                    <span>Buscar</span>
+                  </label>
+                  <label className="flex items-center space-x-2 text-slate-300">
+                    <input type="checkbox" checked={user.canCreate} className="rounded bg-slate-700 border-slate-600" readOnly />
+                    <span>Crear</span>
+                  </label>
+                  <label className="flex items-center space-x-2 text-slate-300">
+                    <input type="checkbox" checked={user.canManageAreas} className="rounded bg-slate-700 border-slate-600" readOnly />
+                    <span>Gestionar áreas</span>
+                  </label>
+                </div>
+                <button className="text-cyan-400 hover:text-cyan-300 transition-colors text-sm font-medium flex items-center space-x-1">
+                  <Settings className="w-4 h-4" />
+                  <span>Editar permisos</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Properties View
+  const PropertiesView = () => {
+    const [editingAreas, setEditingAreas] = useState(null);
+    const [newPropertyArea, setNewPropertyArea] = useState('');
+
+    return (
+      <div className="p-6 max-w-6xl mx-auto">
+        <div className="mb-6">
+          <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>Propiedades</h2>
+          <p className="text-slate-400">Administra las propiedades y sus áreas</p>
+        </div>
+
+        <div className="space-y-4">
+          {SAMPLE_PROPERTIES.map((property) => (
+            <div key={property.id} className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50 shadow-xl">
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start space-x-4">
+                  <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-6 h-6 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-white mb-1">{property.name}</h3>
+                    <p className="text-sm text-slate-400 mb-2">{property.address}</p>
+                    <div className="flex flex-wrap gap-2 text-xs text-slate-500">
+                      <span>{property.floors} pisos</span>
+                      <span>•</span>
+                      <span>{property.units.length} unidades</span>
+                      <span>•</span>
+                      <span>Última inspección: {property.lastInspection}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {currentUser.canManageAreas && (
+                  <button
+                    onClick={() => setEditingAreas(editingAreas === property.id ? null : property.id)}
+                    className="text-cyan-400 hover:text-cyan-300 transition-colors text-sm font-medium flex items-center space-x-1"
+                  >
+                    <Settings className="w-4 h-4" />
+                    <span>Áreas</span>
+                  </button>
+                )}
+              </div>
+
+              {/* Areas Management */}
+              {editingAreas === property.id && (
+                <div className="mt-4 pt-4 border-t border-slate-700">
+                  <h4 className="text-sm font-medium text-slate-300 mb-3">Áreas de inspección</h4>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {property.areas.map((area, idx) => (
+                      <span key={idx} className="bg-slate-700/50 text-slate-300 px-3 py-1 rounded-lg text-sm">
+                        {area}
+                      </span>
+                    ))}
+                    {(propertyAreas[property.id] || []).map((area, idx) => (
+                      <span key={`custom-${idx}`} className="bg-cyan-500/20 text-cyan-400 px-3 py-1 rounded-lg text-sm border border-cyan-500/30">
+                        {area}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={newPropertyArea}
+                      onChange={(e) => setNewPropertyArea(e.target.value)}
+                      placeholder="Nueva área (ej: Terraza, Estudio, etc.)"
+                      className="flex-1 bg-slate-700/50 text-white rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    />
+                    <button
+                      onClick={() => {
+                        if (newPropertyArea.trim()) {
+                          addCustomArea(property.id, newPropertyArea.trim());
+                          setNewPropertyArea('');
+                        }
+                      }}
+                      className="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                    >
+                      Agregar
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Units */}
+              <div className="mt-4 pt-4 border-t border-slate-700">
+                <h4 className="text-sm font-medium text-slate-300 mb-3">Unidades disponibles</h4>
+                <div className="flex flex-wrap gap-2">
+                  {property.units.map((unit, idx) => (
+                    <span key={idx} className="bg-slate-700/30 text-slate-400 px-3 py-1 rounded-lg text-xs">
+                      {unit}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // Locations View
+  const LocationsView = () => (
+    <div className="p-6 max-w-6xl mx-auto">
+      <div className="mb-6">
+        <h2 className="text-3xl font-bold text-white mb-2" style={{ fontFamily: 'Georgia, serif' }}>Ubicaciones</h2>
+        <p className="text-slate-400">Ubicaciones específicas dentro de cada propiedad</p>
+      </div>
+
+      <div className="grid gap-3">
+        {SAMPLE_LOCATIONS.map((location) => (
+          <div key={location.id} className="bg-slate-800/50 backdrop-blur-xl rounded-xl p-4 border border-slate-700/50 shadow-lg hover:shadow-xl hover:border-orange-500/50 transition-all flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                <MapPin className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-white">{location.location}</h3>
+                <p className="text-sm text-slate-400">{location.property}</p>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5 text-slate-500" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  // Main Layout
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+      <Header />
+      <div className="flex relative">
+        <Navigation />
+        <div className="flex-1 overflow-auto">
+          {currentView === 'admin-dashboard' && <NewInspectionView />}
+          {currentView === 'user-dashboard' && <NewInspectionView />}
+          {currentView === 'find-inspection' && <FindInspectionView />}
+          {currentView === 'users' && <UsersView />}
+          {currentView === 'properties' && <PropertiesView />}
+          {currentView === 'locations' && <LocationsView />}
+        </div>
+      </div>
+    </div>
+  );
+}
