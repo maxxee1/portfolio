@@ -14,8 +14,6 @@ const Portfolio = () => {
         about: 'Sobre mí',
         experience: 'Experiencia',
         projects: 'Proyectos',
-        skills: 'Skills',
-        education: 'Educación',
         certifications: 'Certificaciones',
         contact: 'Contacto'
       },
@@ -66,8 +64,6 @@ const Portfolio = () => {
         about: 'About',
         experience: 'Experience',
         projects: 'Projects',
-        skills: 'Skills',
-        education: 'Education',
         certifications: 'Certifications',
         contact: 'Contact'
       },
@@ -342,7 +338,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'projects', 'skills', 'education', 'certifications', 'contact'];
+      const sections = ['home', 'about', 'experience', 'projects', 'certifications', 'contact'];
       const scrollPosition = window.scrollY + 200;
 
       for (const section of sections) {
@@ -475,6 +471,70 @@ const Portfolio = () => {
         <div style={styles.aboutContent}>
           <p style={styles.aboutText}>{t.about.p1}</p>
           <p style={styles.aboutText}>{t.about.p2}</p>
+
+          {/* Cybersecurity & Cloud Infrastructure */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.cybersecurity.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.cybersecurity.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Backend & Data */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.backend.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.backend.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Frontend & Modern Web */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.frontend.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.frontend.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Experience Section */}
@@ -595,79 +655,40 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Skills Section */}
-<section id="skills" style={styles.section}>
-  <h2 style={styles.sectionTitle}>
-    {currentLang === 'es' ? 'Skills Técnicas' : 'Technical Skills'}
-  </h2>
-
-  <div style={styles.aboutContent}>
-    {/* Cybersecurity & Cloud */}
-    <h3 style={styles.skillSectionTitle}>
-      {skillsData.cybersecurity.title[currentLang]}
-    </h3>
-    <div style={styles.skillCardsGrid}>
-      {skillsData.cybersecurity.skills.map(skill => (
-        <div
-          key={skill.name}
-          style={{
-            ...styles.skillCard,
-            ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
-          }}
-          onMouseEnter={() => setHoveredSkill(skill.name)}
-          onMouseLeave={() => setHoveredSkill(null)}
-        >
-          <div style={styles.skillIcon}>{skill.icon}</div>
-          <div style={styles.skillName}>{skill.name}</div>
+      {/* Certifications Section */}
+      <section id="certifications" style={styles.section}>
+        <h2 style={styles.sectionTitle}>{t.certifications.title}</h2>
+        <div style={styles.certGrid}>
+          {certifications.map(cert => (
+            <div key={cert.id} style={styles.certCard}>
+              <div style={styles.certIcon}>
+                <span style={{ fontSize: '40px' }}>{cert.icon}</span>
+              </div>
+              <h3 style={styles.certTitle}>
+                {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+              </h3>
+              <p style={styles.certProvider}>
+                {typeof cert.provider === 'object' ? cert.provider[currentLang] : cert.provider}
+              </p>
+              <span style={{
+                ...styles.certStatus,
+                ...(cert.status === 'completed' ? styles.certStatusCompleted : styles.certStatusInProgress)
+              }}>
+                {cert.status === 'completed' ? t.certifications.completed : t.certifications.inProgress}
+              </span>
+              {cert.url && (
+                <div style={{ marginTop: '1rem' }}>
+                  <a href={cert.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
+                    {t.certifications.viewCredential}
+                  </a>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </section>
 
-    {/* Backend & Data */}
-    <h3 style={styles.skillSectionTitle}>
-      {skillsData.backend.title[currentLang]}
-    </h3>
-    <div style={styles.skillCardsGrid}>
-      {skillsData.backend.skills.map(skill => (
-        <div
-          key={skill.name}
-          style={{
-            ...styles.skillCard,
-            ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
-          }}
-          onMouseEnter={() => setHoveredSkill(skill.name)}
-          onMouseLeave={() => setHoveredSkill(null)}
-        >
-          <div style={styles.skillIcon}>{skill.icon}</div>
-          <div style={styles.skillName}>{skill.name}</div>
-        </div>
-      ))}
-    </div>
-
-    {/* Frontend */}
-    <h3 style={styles.skillSectionTitle}>
-      {skillsData.frontend.title[currentLang]}
-    </h3>
-    <div style={styles.skillCardsGrid}>
-      {skillsData.frontend.skills.map(skill => (
-        <div
-          key={skill.name}
-          style={{
-            ...styles.skillCard,
-            ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
-          }}
-          onMouseEnter={() => setHoveredSkill(skill.name)}
-          onMouseLeave={() => setHoveredSkill(null)}
-        >
-          <div style={styles.skillIcon}>{skill.icon}</div>
-          <div style={styles.skillName}>{skill.name}</div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-              {/* Education & Competitions */}
+      {/* Education & Competitions */}
       <section id="education" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.education.title}</h2>
         
@@ -731,40 +752,6 @@ const Portfolio = () => {
               {currentLang === 'es' ? 'Fecha: Octubre 2025' : 'Date: October 2025'}
             </p>
           </div>
-        </div>
-      </section>
-
-
-      {/* Certifications Section */}
-      <section id="certifications" style={styles.section}>
-        <h2 style={styles.sectionTitle}>{t.certifications.title}</h2>
-        <div style={styles.certGrid}>
-          {certifications.map(cert => (
-            <div key={cert.id} style={styles.certCard}>
-              <div style={styles.certIcon}>
-                <span style={{ fontSize: '40px' }}>{cert.icon}</span>
-              </div>
-              <h3 style={styles.certTitle}>
-                {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
-              </h3>
-              <p style={styles.certProvider}>
-                {typeof cert.provider === 'object' ? cert.provider[currentLang] : cert.provider}
-              </p>
-              <span style={{
-                ...styles.certStatus,
-                ...(cert.status === 'completed' ? styles.certStatusCompleted : styles.certStatusInProgress)
-              }}>
-                {cert.status === 'completed' ? t.certifications.completed : t.certifications.inProgress}
-              </span>
-              {cert.url && (
-                <div style={{ marginTop: '1rem' }}>
-                  <a href={cert.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
-                    {t.certifications.viewCredential}
-                  </a>
-                </div>
-              )}
-            </div>
-          ))}
         </div>
       </section>
 
