@@ -10,12 +10,23 @@ const Portfolio = () => {
 
   // -------------------- CONST FOTOS -------------------
 const BUCKET = "img";
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || "";
 
 const getImageUrl = (path) => {
-  if (!path || !SUPABASE_URL) return "/placeholder-image.png"; // Imagen por defecto si falla
-  return `${SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${path}`;
+  if (!path) return "/placeholder-image.png";
+  if (!SUPABASE_URL) {
+    console.error("SUPABASE URL missing");
+    return "/placeholder-image.png";
+  }
+
+  const cleanPath = path.startsWith("/") ? path.slice(1) : path;
+
+  return `${SUPABASE_URL}/storage/v1/object/public/img/${cleanPath}`;
 };
+
+console.log("SUPABASE:", SUPABASE_URL);
+
 
   const translations = {
     es: {
