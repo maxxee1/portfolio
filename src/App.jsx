@@ -300,7 +300,7 @@ const Portfolio = () => {
       provider: 'Cisco Networking Academy',
       status: 'completed',
       url: 'https://www.credly.com/badges/0e8d7cb2-4e8d-4aa0-bfaa-24977276b72e/public_url',
-      icon: '🔒'
+      image: 'ce.png'
     },
     {
       id: 3,
