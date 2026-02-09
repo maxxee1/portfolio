@@ -14,6 +14,7 @@ const Portfolio = () => {
         about: 'Sobre mí',
         experience: 'Experiencia',
         projects: 'Proyectos',
+        skills: 'Skills',
         education: 'Educación',
         certifications: 'Certificaciones',
         contact: 'Contacto'
@@ -65,6 +66,7 @@ const Portfolio = () => {
         about: 'About',
         experience: 'Experience',
         projects: 'Projects',
+        skills: 'Skills',
         education: 'Education',
         certifications: 'Certifications',
         contact: 'Contact'
@@ -344,7 +346,7 @@ const Portfolio = () => {
                         'about',
                         'experience',
                         'projects',
-                        'skills'
+                        'skills',
                         'education',
                         'certifications',
                         'contact'];
@@ -481,6 +483,7 @@ const Portfolio = () => {
         <div style={styles.aboutContent}>
           <p style={styles.aboutText}>{t.about.p1}</p>
           <p style={styles.aboutText}>{t.about.p2}</p>
+        </div>
       </section>
 
       {/* Experience Section */}
@@ -603,7 +606,7 @@ const Portfolio = () => {
 
 
       
-      {/* About Section */}
+      {/* Skills Section */}
       <section id="skills" style={styles.section}>
       {/* Cybersecurity & Cloud Infrastructure */}
           <h3 style={styles.skillSectionTitle}>
@@ -666,7 +669,6 @@ const Portfolio = () => {
                 <div style={styles.skillName}>{skill.name}</div>
               </div>
             ))}
-          </div>
         </div>
       </section>
 
