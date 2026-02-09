@@ -473,8 +473,8 @@ const Portfolio = () => {
               src="/images/profile.jpeg"
               alt="Maximiliano Solorza"
               style={{
-                width: '280px',
-                height: '280px',
+                width: '320px',
+                height: '320px',
                 objectFit: 'cover',
                 borderRadius: '50%',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
