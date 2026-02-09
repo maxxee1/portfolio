@@ -461,8 +461,16 @@ const Portfolio = () => {
 
           <div style={styles.heroImage}>
             <div style={styles.profilePlaceholder}>
-              {/* Cambia esto por: <img src="/images/profile.jpg" alt="Maximiliano Solorza" style={{width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} /> */}
-              <span style={styles.profileIcon}>👤</span>
+              <img 
+                src="/images/profile.jepg" 
+                alt="Maximiliano Solorza"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '50%'
+                }}
+              />
             </div>
           </div>
         </div>
