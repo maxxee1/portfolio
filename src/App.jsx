@@ -155,7 +155,7 @@ const Portfolio = () => {
         { name: 'HTML', icon: <i class="devicon-html5-plain colored"></i> },
         { name: 'CSS', icon: <i class="devicon-css3-plain colored"></i> },
         { name: 'Git', icon: <i class="devicon-git-plain colored"></i> },
-        { name: 'LaTeX', icon: <i class="devicon-latex-original colored"></i> },
+        { name: 'LaTeX', icon: <i class="devicon-latex-original"></i> },
       ]
     }
   };
