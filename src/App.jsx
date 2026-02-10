@@ -329,7 +329,7 @@ const Portfolio = () => {
       title: 'Ethical Hacking: Metasploit & Python',
       provider: { es: 'Herramientas y Scripting', en: 'Tools & Scripting' },
       status: 'in-progress',
-      icon: '💻'
+      image: 'oau.png'
     },
     {
       id: 7,
