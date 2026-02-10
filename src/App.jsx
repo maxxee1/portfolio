@@ -315,7 +315,7 @@ const Portfolio = () => {
       title: 'Ethical Hacking',
       provider: 'Cisco Networking Academy',
       status: 'in-progress',
-      icon: '🕵️'
+      image: 'eh.png'
     },
     {
       id: 5,
