@@ -135,7 +135,7 @@ const Portfolio = () => {
     backend: {
       title: { es: 'Backend & Datos', en: 'Backend & Data' },
       skills: [
-        { name: 'C++', image: '©<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" />' },
+        { name: 'C++', icon: <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" /> },
         { name: 'Java', icon: '☕' },
         { name: 'Python', icon: '🐍' },
         { name: 'Lua', icon: '🌙' },
