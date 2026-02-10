@@ -128,7 +128,7 @@ const Portfolio = () => {
         { name: 'PostgreSQL', icon: <i class="devicon-postgresql-plain colored"></i> },
         { name: 'MongoDB', icon: <i class="devicon-mongodb-plain colored"></i> },
         { name: 'SupaBase', icon: <i class="devicon-supabase-plain colored"></i> },
-        { name: 'Vercel', icon: <i class="devicon-vercel-original colored"></i> },
+        { name: 'Vercel', icon: <i class="devicon-vercel-original"></i> },
         { name: 'Arduino', icon: <i class="devicon-arduino-plain colored"></i> },
       ]
     },
@@ -631,7 +631,7 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
-      {/* Cybersecurity & Cloud Infrastructure */}
+          {/* Cybersecurity & Cloud Infrastructure */}
           <h3 style={styles.skillSectionTitle}>
             {skillsData.cybersecurity.title[currentLang]}
           </h3>
