@@ -336,7 +336,7 @@ const Portfolio = () => {
       title: 'English for Developers',
       provider: 'FreeCodeCamp',
       status: 'in-progress',
-      icon: '📚'
+      image: 'efd.png'
     }
   ];
 
