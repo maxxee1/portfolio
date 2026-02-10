@@ -135,16 +135,16 @@ const Portfolio = () => {
     backend: {
       title: { es: 'Backend & Datos', en: 'Backend & Data' },
       skills: [
-        { name: 'C++', icon: <i class="devicon-cplusplus-plain"></i> },
-        { name: 'Java', icon: '☕' },
-        { name: 'Python', icon: '🐍' },
-        { name: 'Lua', icon: '🌙' },
-        { name: 'Node.js', icon: '💚' },
-        { name: 'Express', icon: '⚡' },
-        { name: 'Redis', icon: '🔴' },
-        { name: 'PostgreSQL', icon: '🐘' },
-        { name: 'MongoDB', icon: '🍃' },
-        { name: 'Arduino', icon: '🤖' },
+        { name: 'C++', icon: <i class="devicon-cplusplus-plain colored"></i> },
+        { name: 'Java', icon: <i class="devicon-java-plain colored"></i> },
+        { name: 'Python', icon: <i class="devicon-python-plain colored"></i> },
+        { name: 'Node.js', icon: <i class="devicon-nodejs-plain colored"></i> },
+        { name: 'Express', icon: <i class="devicon-express-original colored"></i> },
+        { name: 'PostgreSQL', icon: <i class="devicon-postgresql-plain colored"></i> },
+        { name: 'MongoDB', icon: <i class="devicon-mongodb-plain colored"></i> },
+        { name: 'SupaBase', icon: <i class="devicon-supabase-plain colored"></i> },
+        { name: 'Vercel', icon: <i class="devicon-vercel-original colored"></i> },
+        { name: 'Arduino', icon: <i class="devicon-arduino-plain colored"></i> },
       ]
     },
     frontend: {
