@@ -194,7 +194,7 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      icon: '🧠',
+      image: "images/projects/mlp.png",
       title: {
         es: 'Predicción de Calificaciones (MLP)',
         en: 'Grade Prediction (MLP)'
@@ -212,7 +212,7 @@ const Portfolio = () => {
     },
     {
       id: 4,
-      icon: '💾',
+      icon: "images/projects/ms.png",
       title: {
         es: 'Simulador de Memoria',
         en: 'Memory Simulator'
