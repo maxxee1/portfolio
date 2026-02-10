@@ -560,89 +560,52 @@ const Portfolio = () => {
       </section>
 
       {/* Projects Section */}
-<section id="projects" style={styles.section}>
-  <h2 style={styles.sectionTitle}>{t.projects.title}</h2>
-
-  <div style={styles.projectsGrid}>
-    {projects.map(project => (
-      <div
-        key={project.id}
-        style={{
-          ...styles.projectCard,
-          ...(hoveredProject === project.id ? styles.projectCardHover : {})
-        }}
-        onMouseEnter={() => setHoveredProject(project.id)}
-        onMouseLeave={() => setHoveredProject(null)}
-      >
-
-        {/* Project Image */}
-        <img
-          src={project.image}
-          alt={typeof project.title === 'object'
-            ? project.title[currentLang]
-            : project.title}
-          style={styles.projectImage}
-        />
-
-        <div style={styles.projectContent}>
-          <h3 style={styles.projectTitle}>
-            {typeof project.title === 'object'
-              ? project.title[currentLang]
-              : project.title}
-          </h3>
-
-          <p style={styles.projectDescription}>
-            {typeof project.description === 'object'
-              ? project.description[currentLang]
-              : project.description}
-          </p>
-
-          <div style={styles.projectTags}>
-            {project.tags.map(tag => (
-              <span key={tag} style={styles.tag}>{tag}</span>
-            ))}
-          </div>
-
-          <div style={styles.projectLinks}>
-            {project.links.github && (
-              <a
-                href={project.links.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={styles.projectLink}
-              >
-                <Github size={16} /> {t.projects.viewCode}
-              </a>
-            )}
-
-            {project.links.demo && (
-              <a
-                href={project.links.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={styles.projectLink}
-              >
-                <ExternalLink size={16} /> {t.projects.demo}
-              </a>
-            )}
-
-            {project.links.website && (
-              <a
-                href={project.links.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={styles.projectLink}
-              >
-                <Globe size={16} /> {t.projects.website}
-              </a>
-            )}
-          </div>
+      <section id="projects" style={styles.section}>
+        <h2 style={styles.sectionTitle}>{t.projects.title}</h2>
+        <div style={styles.projectsGrid}>
+          {projects.map(project => (
+            <div key={project.id} style={styles.projectCard}>
+              <div style={styles.projectImage}>
+                {/* Cambia esto por: <img src={project.image} alt={project.title[currentLang]} style={{width: '100%', height: '100%', objectFit: 'cover'}} /> */}
+                <span style={styles.projectIcon}>{project.icon}</span>
+              </div>
+              <div style={styles.projectContent}>
+                <h3 style={styles.projectTitle}>
+                  {typeof project.title === 'object' ? project.title[currentLang] : project.title}
+                </h3>
+                <p style={styles.projectDescription}>
+                  {typeof project.description === 'object' ? project.description[currentLang] : project.description}
+                </p>
+                <div style={styles.projectTags}>
+                  {project.tags.map(tag => (
+                    <span key={tag} style={styles.tag}>{tag}</span>
+                  ))}
+                </div>
+                <div style={styles.projectLinks}>
+                  <a href={project.links.github} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
+                    <Github size={16} /> {t.projects.viewProject}
+                  </a>
+                  {project.links.viewCode && (
+                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
+                      <Code size={16} /> {t.projects.viewCode}
+                    </a>
+                  )}
+                  {project.links.demo && typeof project.links.demo === 'string' && (
+                    <a href={project.links.demo} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
+                      <ExternalLink size={16} /> {t.projects.demo}
+                    </a>
+                  )}
+                  {project.links.website && (
+                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
+                      <Globe size={16} /> {t.projects.website}
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-    ))}
-  </div>
-</section>
-
+      </section>
 
 
       
