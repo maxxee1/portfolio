@@ -224,7 +224,7 @@ const Portfolio = () => {
       links: {
         github: 'https://github.com/maxxee1/memory-simulator',
         demo: 'https://paging-simulator-one.vercel.app',
-        viewCode: true
+        viewCode: 'https://github.com/maxxee1/memory-simulator/blob/main/paging_simulator.cpp'
       }
     },
     {
