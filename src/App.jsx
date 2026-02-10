@@ -160,7 +160,7 @@ const Portfolio = () => {
   const projects = [
     {
       id: 1,
-      image: "images/projects/xd.png",
+      image: "images/projects/gcf.png",
       title: {
         es: 'Predicción Atardecer Rosa (gcForest)',
         en: 'Pink Sunset Prediction (gcForest)'
@@ -212,7 +212,7 @@ const Portfolio = () => {
     },
     {
       id: 4,
-      icon: "images/projects/ms.png",
+      image: "images/projects/ms.png",
       title: {
         es: 'Simulador de Memoria',
         en: 'Memory Simulator'
