@@ -160,7 +160,7 @@ const Portfolio = () => {
   const projects = [
     {
       id: 1,
-      icon: '☁️',
+      image: "images/projects/xd.png",
       title: {
         es: 'Predicción Atardecer Rosa (gcForest)',
         en: 'Pink Sunset Prediction (gcForest)'
@@ -177,7 +177,7 @@ const Portfolio = () => {
     },
     {
       id: 2,
-      icon: '👁️',
+      image: "images/projects/proxivision.png",
       title: {
         es: 'ProxiVision - Proyecto TIC',
         en: 'ProxiVision - TIC Project'
@@ -263,7 +263,7 @@ const Portfolio = () => {
     },
     {
       id: 7,
-      icon: '🔍',
+      image: "images/projects/neo4j.png",
       title: {
         es: 'Anti-Lavado de Dinero (AML)',
         en: 'Anti-Money Laundering (AML)'
