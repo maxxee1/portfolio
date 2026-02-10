@@ -120,7 +120,7 @@ const Portfolio = () => {
     cybersecurity: {
       title: { es: 'Ciberseguridad & Infraestructura Cloud', en: 'Cybersecurity & Cloud Infrastructure' },
       skills: [
-        { name: 'Bash', icon: <i class="devicon-bash-plain colored"></i> },
+        { name: 'Bash', icon: <i class="devicon-bash-plain"></i> },
         { name: 'Docker', icon: <i class="devicon-docker-plain colored"></i> },
         { name: 'Kubernetes', icon: <i class="devicon-kubernetes-plain colored"></i> },
         { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
@@ -138,7 +138,7 @@ const Portfolio = () => {
         { name: 'Java', icon: <i class="devicon-java-plain colored"></i> },
         { name: 'Python', icon: <i class="devicon-python-plain colored"></i> },
         { name: 'Node.js', icon: <i class="devicon-nodejs-plain colored"></i> },
-        { name: 'Express', icon: <i class="devicon-express-original colored"></i> },
+        { name: 'Express', icon: <i class="devicon-express-original"></i> },
         { name: 'PostgreSQL', icon: <i class="devicon-postgresql-plain colored"></i> },
         { name: 'MongoDB', icon: <i class="devicon-mongodb-plain colored"></i> },
         { name: 'SupaBase', icon: <i class="devicon-supabase-plain colored"></i> },
