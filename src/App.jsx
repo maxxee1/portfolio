@@ -611,6 +611,26 @@ const Portfolio = () => {
       
       {/* Skills Section */}
       <section id="skills" style={styles.section}>
+      {/* Backend & Data */}
+          <h3 style={styles.skillSectionTitle}>
+            {skillsData.backend.title[currentLang]}
+          </h3>
+          <div style={styles.skillCardsGrid}>
+            {skillsData.backend.skills.map(skill => (
+              <div 
+                key={skill.name}
+                style={{
+                  ...styles.skillCard,
+                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+              >
+                <div style={styles.skillIcon}>{skill.icon}</div>
+                <div style={styles.skillName}>{skill.name}</div>
+              </div>
+            ))}
+          </div>
       {/* Cybersecurity & Cloud Infrastructure */}
           <h3 style={styles.skillSectionTitle}>
             {skillsData.cybersecurity.title[currentLang]}
@@ -631,28 +651,6 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
-
-          {/* Backend & Data */}
-          <h3 style={styles.skillSectionTitle}>
-            {skillsData.backend.title[currentLang]}
-          </h3>
-          <div style={styles.skillCardsGrid}>
-            {skillsData.backend.skills.map(skill => (
-              <div 
-                key={skill.name}
-                style={{
-                  ...styles.skillCard,
-                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
-                }}
-                onMouseEnter={() => setHoveredSkill(skill.name)}
-                onMouseLeave={() => setHoveredSkill(null)}
-              >
-                <div style={styles.skillIcon}>{skill.icon}</div>
-                <div style={styles.skillName}>{skill.name}</div>
-              </div>
-            ))}
-          </div>
-
           {/* Frontend & Modern Web */}
           <h3 style={styles.skillSectionTitle}>
             {skillsData.frontend.title[currentLang]}
