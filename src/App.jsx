@@ -565,10 +565,13 @@ const Portfolio = () => {
         <div style={styles.projectsGrid}>
           {projects.map(project => (
             <div key={project.id} style={styles.projectCard}>
-              <div style={styles.projectImage}>
-                {/* Cambia esto por: <img src={project.image} alt={project.title[currentLang]} style={{width: '100%', height: '100%', objectFit: 'cover'}} /> */}
-                <span style={styles.projectIcon}>{project.icon}</span>
-              </div>
+              <img
+                src={project.image}
+                alt={typeof project.title === 'object'
+                  ? project.title[currentLang]
+                  : project.title}
+                style={styles.projectImage}
+              />
               <div style={styles.projectContent}>
                 <h3 style={styles.projectTitle}>
                   {typeof project.title === 'object' ? project.title[currentLang] : project.title}
