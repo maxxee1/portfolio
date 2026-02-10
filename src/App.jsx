@@ -565,13 +565,19 @@ const Portfolio = () => {
         <div style={styles.projectsGrid}>
           {projects.map(project => (
             <div key={project.id} style={styles.projectCard}>
-              <img
-                src={project.image}
-                alt={typeof project.title === 'object'
-                  ? project.title[currentLang]
-                  : project.title}
-                style={styles.projectImage}
-              />
+              {project.image ? (
+                <img
+                  src={project.image}
+                  alt={typeof project.title === 'object'
+                    ? project.title[currentLang]
+                    : project.title}
+                  style={styles.projectImage}
+                />
+              ) : (
+                <div style={styles.projectImage}>
+                  <span style={styles.projectIcon}>{project.icon}</span>
+                </div>
+              )}
               <div style={styles.projectContent}>
                 <h3 style={styles.projectTitle}>
                   {typeof project.title === 'object' ? project.title[currentLang] : project.title}
@@ -1058,6 +1064,12 @@ const styles = {
     textAlign: 'center',
     position: 'relative',
     paddingBottom: '20px',
+  },
+  projectImage: {
+  width: '100%',
+  height: '180px',
+  objectFit: 'cover',
+  display: 'block',
   },
   aboutContent: {
     background: '#151515',
