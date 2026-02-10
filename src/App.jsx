@@ -120,13 +120,12 @@ const Portfolio = () => {
     cybersecurity: {
       title: { es: 'Ciberseguridad & Infraestructura Cloud', en: 'Cybersecurity & Cloud Infrastructure' },
       skills: [
-        { name: 'Bash', icon: '📜' },
-        { name: 'Docker', icon: '🐳' },
-        { name: 'Kubernetes', icon: '⚓' },
-        { name: 'AWS', icon: '☁️' },
-        { name: 'Cloudflare', icon: '🔶' },
-        { name: 'Oracle Cloud', icon: '🔴' },
-        { name: 'Nginx', icon: '🔧' },
+        { name: 'Bash', icon: <i class="devicon-bash-plain colored"></i> },
+        { name: 'Docker', icon: <i class="devicon-docker-plain colored"></i> },
+        { name: 'Kubernetes', icon: <i class="devicon-kubernetes-plain colored"></i> },
+        { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
+        { name: 'Cloudflare', icon: <i class="devicon-cloudflare-plain colored"></i> },
+        { name: 'Nginx', icon: <i class="devicon-nginx-original colored"></i> },
         { name: 'Wireshark', icon: '🦈' },
         { name: 'Burp Suite', icon: '🔐' },
         { name: 'Metasploit', icon: '🎯' },
@@ -150,13 +149,13 @@ const Portfolio = () => {
     frontend: {
       title: { es: 'Frontend & Web Moderno', en: 'Frontend & Modern Web' },
       skills: [
-        { name: 'React', icon: '⚛️' },
-        { name: 'Tailwind', icon: '💨' },
-        { name: 'JavaScript', icon: '📜' },
-        { name: 'HTML', icon: '🌐' },
-        { name: 'CSS', icon: '🎨' },
-        { name: 'Git', icon: '📦' },
-        { name: 'LaTeX', icon: '📄' },
+        { name: 'React', icon: <i class="devicon-react-original colored"></i> },
+        { name: 'Tailwind', icon: <i class="devicon-tailwindcss-original colored"></i> },
+        { name: 'JavaScript', icon: <i class="devicon-javascript-plain colored"></i> },
+        { name: 'HTML', icon: <i class="devicon-html5-plain colored"></i> },
+        { name: 'CSS', icon: <i class="devicon-css3-plain colored"></i> },
+        { name: 'Git', icon: <i class="devicon-git-plain colored"></i> },
+        { name: 'LaTeX', icon: <i class="devicon-latex-original colored"></i> },
       ]
     }
   };
