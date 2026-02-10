@@ -126,7 +126,7 @@ const Portfolio = () => {
         { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
         { name: 'Cloudflare', icon: <i class="devicon-cloudflare-plain colored"></i> },
         { name: 'Nginx', icon: <i class="devicon-nginx-original colored"></i> },
-        { name: 'Wireshark', icon: '🦈' },
+        { name: 'Wireshark', icon: <img src="/icons/wireshark.svg" style={{ width: 48 }} /> },
         { name: 'Burp Suite', icon: '🔐' },
         { name: 'Metasploit', icon: '🎯' },
       ]
