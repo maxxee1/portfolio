@@ -206,7 +206,6 @@ const Portfolio = () => {
       tags: ['Python', 'Neural Networks', 'Scikit-learn'],
       links: {
         github: 'https://github.com/maxxee1/mlp-grade-prediction',
-        demo: 'https://paging-simulator-one.vercel.app',
         viewCode: true
       }
     },
@@ -224,6 +223,7 @@ const Portfolio = () => {
       tags: ['C++', 'OS', 'Algorithms'],
       links: {
         github: 'https://github.com/maxxee1/memory-simulator',
+        demo: 'https://paging-simulator-one.vercel.app',
         viewCode: true
       }
     },
