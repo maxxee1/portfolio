@@ -117,17 +117,6 @@ const Portfolio = () => {
   const t = translations[currentLang];
 
   const skillsData = {
-    cybersecurity: {
-      title: { es: 'Ciberseguridad & Infraestructura Cloud', en: 'Cybersecurity & Cloud Infrastructure' },
-      skills: [
-        { name: 'Bash', icon: <i class="devicon-bash-plain"></i> },
-        { name: 'Docker', icon: <i class="devicon-docker-plain colored"></i> },
-        { name: 'Kubernetes', icon: <i class="devicon-kubernetes-plain colored"></i> },
-        { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
-        { name: 'Cloudflare', icon: <i class="devicon-cloudflare-plain colored"></i> },
-        { name: 'Nginx', icon: <i class="devicon-nginx-original colored"></i> },
-      ]
-    },
     backend: {
       title: { es: 'Backend & Datos', en: 'Backend & Data' },
       skills: [
@@ -141,6 +130,17 @@ const Portfolio = () => {
         { name: 'SupaBase', icon: <i class="devicon-supabase-plain colored"></i> },
         { name: 'Vercel', icon: <i class="devicon-vercel-original colored"></i> },
         { name: 'Arduino', icon: <i class="devicon-arduino-plain colored"></i> },
+      ]
+    },
+    cybersecurity: {
+      title: { es: 'Infraestructura Cloud', en: 'Cloud & Infrastructure' },
+      skills: [
+        { name: 'Bash', icon: <i class="devicon-bash-plain"></i> },
+        { name: 'Docker', icon: <i class="devicon-docker-plain colored"></i> },
+        { name: 'Kubernetes', icon: <i class="devicon-kubernetes-plain colored"></i> },
+        { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
+        { name: 'Cloudflare', icon: <i class="devicon-cloudflare-plain colored"></i> },
+        { name: 'Nginx', icon: <i class="devicon-nginx-original colored"></i> },
       ]
     },
     frontend: {
