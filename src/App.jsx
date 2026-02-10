@@ -241,7 +241,7 @@ const Portfolio = () => {
       tags: ['C++', 'Pthreads', 'Concurrency'],
       links: {
         github: 'https://github.com/maxxee1/doom-thread-simulator',
-        viewCode: true
+        viewCode: 'https://github.com/maxxee1/doom-thread-simulator/tree/main/src'
       }
     },
     {
