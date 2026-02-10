@@ -246,7 +246,7 @@ const Portfolio = () => {
     },
     {
       id: 6,
-      image: "images/proyects/npc.png",
+      image: "images/projects/npc.png",
       title: {
         es: 'Chat con Named Pipes',
         en: 'Named Pipes Chat'
