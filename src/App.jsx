@@ -322,7 +322,7 @@ const Portfolio = () => {
       title: { es: 'OSINT Avanzado', en: 'Advanced OSINT' },
       provider: { es: 'Inteligencia de Fuentes Abiertas', en: 'Open Source Intelligence' },
       status: 'in-progress',
-      icon: '🔎'
+      image: 'oa.png'
     },
     {
       id: 6,
