@@ -13,6 +13,26 @@ const Portfolio = () => {
   const [openPanels, setOpenPanels] = useState({});
   const togglePanel = (id) => setOpenPanels(prev => ({ ...prev, [id]: !prev[id] }));
 
+  // Proyectos en teléfono: la tarjeta crece (o se encoge) desde su centro, hacia arriba
+  // y hacia abajo a la vez. Mientras dura la transición de altura (index.css, 0.35s) se
+  // desplaza la página lo mismo que se movió el centro de la tarjeta en cada frame.
+  const toggleProject = (id, event) => {
+    const card = event.currentTarget.closest('.project-card');
+    togglePanel(id);
+    if (!card || !window.matchMedia('(max-width: 767px)').matches) return;
+
+    const rect = card.getBoundingClientRect();
+    const startCenter = rect.top + rect.height / 2;
+    const until = performance.now() + 450;
+    const keepCentered = () => {
+      const r = card.getBoundingClientRect();
+      const drift = r.top + r.height / 2 - startCenter;
+      if (Math.abs(drift) > 0.5) window.scrollBy(0, drift);
+      if (performance.now() < until) requestAnimationFrame(keepCentered);
+    };
+    requestAnimationFrame(keepCentered);
+  };
+
   const copyCode = async (code) => {
     try {
       await navigator.clipboard.writeText(code);
@@ -909,7 +929,7 @@ const Portfolio = () => {
                     type="button"
                     className="collapsible-toggle"
                     style={styles.collapsibleToggle}
-                    onClick={() => togglePanel(`project-${project.id}`)}
+                    onClick={(event) => toggleProject(`project-${project.id}`, event)}
                     aria-expanded={!!openPanels[`project-${project.id}`]}
                   >
                     {typeof project.title === 'object' ? project.title[currentLang] : project.title}
