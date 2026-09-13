@@ -1002,15 +1002,17 @@ const Portfolio = () => {
         </h3>
         <div style={styles.compGrid}>
           <div style={styles.compCard}>
-            <h3 style={styles.compTitle}>CTF UDP 2025 - Dreamlab</h3>
+            <h3 style={styles.compTitle}>CTF SEK 2026</h3>
             <div style={styles.compAchievement}>
-              {currentLang === 'es' ? '6º Lugar por Equipos' : '6th Place Team'}
+              {currentLang === 'es' ? '4º Lugar por Equipos' : '4th Place Team'}
             </div>
             <p style={styles.compDescription}>
-              {currentLang === 'es' ? '770 puntos entre 13 participantes' : '770 points among 13 participants'}
+              {currentLang === 'es'
+                ? '3.660 puntos en equipo · 2.180 de aporte individual'
+                : '3,660 team points · 2,180 individual contribution'}
             </p>
             <p style={styles.compDate}>
-              {currentLang === 'es' ? 'Fecha: Junio 2025' : 'Date: June 2025'}
+              {currentLang === 'es' ? 'Fecha: 10 de junio de 2026' : 'Date: June 10, 2026'}
             </p>
           </div>
 
@@ -1024,6 +1026,21 @@ const Portfolio = () => {
             </p>
             <p style={styles.compDate}>
               {currentLang === 'es' ? 'Fecha: Octubre 2025' : 'Date: October 2025'}
+            </p>
+          </div>
+
+          <div style={styles.compCard}>
+            <h3 style={styles.compTitle}>CTF Hackathon - Dreamlab</h3>
+            <div style={styles.compAchievement}>
+              {currentLang === 'es' ? '6º Lugar por Equipos' : '6th Place Team'}
+            </div>
+            <p style={styles.compDescription}>
+              {currentLang === 'es'
+                ? '770 puntos en equipo · 350 de aporte individual'
+                : '770 team points · 350 individual contribution'}
+            </p>
+            <p style={styles.compDate}>
+              {currentLang === 'es' ? 'Fecha: Junio 2025' : 'Date: June 2025'}
             </p>
           </div>
         </div>
