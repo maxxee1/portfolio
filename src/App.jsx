@@ -1002,7 +1002,7 @@ const Portfolio = () => {
         </h3>
         <div style={styles.compGrid}>
           <div style={styles.compCard}>
-            <h3 style={styles.compTitle}>CTF SEK 2026</h3>
+            <h3 style={styles.compTitle}>CTF Hackathon - SEK</h3>
             <div style={styles.compAchievement}>
               {currentLang === 'es' ? '4º Lugar por Equipos' : '4th Place Team'}
             </div>
@@ -1012,7 +1012,7 @@ const Portfolio = () => {
                 : '3,660 team points · 2,180 individual contribution'}
             </p>
             <p style={styles.compDate}>
-              {currentLang === 'es' ? 'Fecha: 10 de junio de 2026' : 'Date: June 10, 2026'}
+              {currentLang === 'es' ? 'Fecha: Junio 2026' : 'Date: June 2026'}
             </p>
           </div>
 
