@@ -131,10 +131,9 @@
     max-width: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    /* Foto entera dentro del banner (es cuadrada): franjas a los lados con el morado del tema */
-    object-fit: contain !important;
-    object-position: center;
-    background: linear-gradient(135deg, rgba(57, 9, 119, 0.35) 0%, rgba(90, 15, 179, 0.15) 100%);
+    /* Foto completa estirada al banner (sin recorte ni franjas): se ve "alejada", como
+       la pidió Maxi. La foto es cuadrada, así que queda algo comprimida de alto. */
+    object-fit: fill !important;
   }
 
   .hero-text {
