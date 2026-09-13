@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
@@ -135,6 +135,11 @@ const Portfolio = () => {
 
   const t = translations[currentLang];
 
+  // Íconos de marca que no están en devicon (Simple Icons, color en hex sin #)
+  const brandIcon = (slug, color) => (
+    <img src={`https://cdn.simpleicons.org/${slug}/${color}`} alt="" style={styles.skillImg} />
+  );
+
   const skillsData = {
     backend: {
       title: { es: 'Backend & Datos', en: 'Backend & Data' },
@@ -153,8 +158,8 @@ const Portfolio = () => {
         { name: 'Arduino', icon: <i class="devicon-arduino-plain colored"></i> },
       ]
     },
-    cybersecurity: {
-      title: { es: 'Infraestructura Cloud', en: 'Cloud & Infrastructure' },
+    cloud: {
+      title: { es: 'Cloud & Infraestructura', en: 'Cloud & Infrastructure' },
       skills: [
         { name: 'Bash', icon: <i class="devicon-bash-plain"></i> },
         { name: 'Docker', icon: <i class="devicon-docker-plain colored"></i> },
@@ -163,6 +168,7 @@ const Portfolio = () => {
         { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
         { name: 'Cloudflare', icon: <i class="devicon-cloudflare-plain colored"></i> },
         { name: 'Nginx', icon: <i class="devicon-nginx-original colored"></i> },
+        { name: 'Sentry', icon: brandIcon('sentry', 'a78bfa') },
       ]
     },
     frontend: {
@@ -177,6 +183,18 @@ const Portfolio = () => {
         { name: 'CSS', icon: <i class="devicon-css3-plain colored"></i> },
         { name: 'Git', icon: <i class="devicon-git-plain colored"></i> },
         { name: 'LaTeX', icon: <i class="devicon-latex-original"></i> },
+      ]
+    },
+    security: {
+      title: { es: 'Ciberseguridad & Herramientas', en: 'Cybersecurity & Tools' },
+      skills: [
+        { name: 'Wireshark', icon: brandIcon('wireshark', '1679A7') },
+        { name: 'Burp Suite', icon: brandIcon('burpsuite', 'FF6633') },
+        { name: 'OWASP ZAP', icon: brandIcon('zap', '4A9EFF') },
+        { name: 'Scapy', icon: <Network size={40} color="#5eb3f6" /> },
+        { name: 'Wazuh', icon: <ShieldCheck size={40} color="#3595F9" /> },
+        { name: 'Autopsy', icon: <HardDrive size={40} color="#22c55e" /> },
+        { name: 'FOCA', icon: <FileSearch size={40} color="#f59e0b" /> },
       ]
     }
   };
@@ -785,65 +803,28 @@ const Portfolio = () => {
       
       {/* Skills Section */}
       <section id="skills" style={styles.section}>
-      {/* Backend & Data */}
-          <h3 style={styles.skillSectionTitle}>
-            {skillsData.backend.title[currentLang]}
-          </h3>
-          <div style={styles.skillCardsGrid}>
-            {skillsData.backend.skills.map(skill => (
-              <div 
-                key={skill.name}
-                style={{
-                  ...styles.skillCard,
-                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
-                }}
-                onMouseEnter={() => setHoveredSkill(skill.name)}
-                onMouseLeave={() => setHoveredSkill(null)}
-              >
-                <div style={styles.skillIcon}>{skill.icon}</div>
-                <div style={styles.skillName}>{skill.name}</div>
+        <div style={styles.skillsMatrix}>
+          {Object.entries(skillsData).map(([key, group]) => (
+            <div key={key} style={styles.skillPanel}>
+              <h3 style={styles.skillSectionTitle}>{group.title[currentLang]}</h3>
+              <div style={styles.skillCardsGrid}>
+                {group.skills.map(skill => (
+                  <div
+                    key={skill.name}
+                    style={{
+                      ...styles.skillCard,
+                      ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
+                    }}
+                    onMouseEnter={() => setHoveredSkill(skill.name)}
+                    onMouseLeave={() => setHoveredSkill(null)}
+                  >
+                    <div style={styles.skillIcon}>{skill.icon}</div>
+                    <div style={styles.skillName}>{skill.name}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-          {/* Cybersecurity & Cloud Infrastructure */}
-          <h3 style={styles.skillSectionTitle}>
-            {skillsData.cybersecurity.title[currentLang]}
-          </h3>
-          <div style={styles.skillCardsGrid}>
-            {skillsData.cybersecurity.skills.map(skill => (
-              <div 
-                key={skill.name}
-                style={{
-                  ...styles.skillCard,
-                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
-                }}
-                onMouseEnter={() => setHoveredSkill(skill.name)}
-                onMouseLeave={() => setHoveredSkill(null)}
-              >
-                <div style={styles.skillIcon}>{skill.icon}</div>
-                <div style={styles.skillName}>{skill.name}</div>
-              </div>
-            ))}
-          </div>
-          {/* Frontend & Modern Web */}
-          <h3 style={styles.skillSectionTitle}>
-            {skillsData.frontend.title[currentLang]}
-          </h3>
-          <div style={styles.skillCardsGrid}>
-            {skillsData.frontend.skills.map(skill => (
-              <div 
-                key={skill.name}
-                style={{
-                  ...styles.skillCard,
-                  ...(hoveredSkill === skill.name ? styles.skillCardHover : {})
-                }}
-                onMouseEnter={() => setHoveredSkill(skill.name)}
-                onMouseLeave={() => setHoveredSkill(null)}
-              >
-                <div style={styles.skillIcon}>{skill.icon}</div>
-                <div style={styles.skillName}>{skill.name}</div>
-              </div>
-            ))}
+            </div>
+          ))}
         </div>
       </section>
 
@@ -1050,7 +1031,7 @@ const styles = {
     borderBottom: '1px solid rgba(57, 9, 119, 0.3)',
   },
   navContainer: {
-    maxWidth: '1200px',
+    maxWidth: '1400px',
     margin: '0 auto',
     padding: '0 2rem',
     display: 'flex',
@@ -1112,7 +1093,7 @@ const styles = {
     opacity: 0.2,
   },
   heroContent: {
-    maxWidth: '1200px',
+    maxWidth: '1400px',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '4rem',
@@ -1214,7 +1195,7 @@ const styles = {
   },
   section: {
     padding: '6rem 2rem',
-    maxWidth: '1200px',
+    maxWidth: '1400px',
     margin: '0 auto',
   },
   sectionTitle: {
@@ -1241,10 +1222,21 @@ const styles = {
     fontSize: '1.1rem',
     marginBottom: '1.5rem',
   },
+  skillsMatrix: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
+    gap: '2rem',
+  },
+  skillPanel: {
+    background: '#151515',
+    border: '1px solid #390977',
+    borderRadius: '15px',
+    padding: '2rem',
+  },
   skillSectionTitle: {
     color: '#5eb3f6',
     fontSize: '1.3rem',
-    marginTop: '2.5rem',
+    marginTop: 0,
     marginBottom: '1.5rem',
     textAlign: 'left',
     letterSpacing: '0.5px',
@@ -1253,7 +1245,11 @@ const styles = {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fill, minmax(110px, 1fr))',
     gap: '1rem',
-    marginBottom: '1rem',
+  },
+  skillImg: {
+    width: '2.5rem',
+    height: '2.5rem',
+    display: 'block',
   },
   skillCard: {
     background: '#1a1a1a',
@@ -1271,7 +1267,7 @@ const styles = {
   },
   skillCardHover: {
     transform: 'translateY(-5px)',
-    borderColor: '#5a0fb3',
+    border: '1px solid #5a0fb3',
     background: 'linear-gradient(135deg, rgba(57, 9, 119, 0.3) 0%, rgba(90, 15, 179, 0.3) 100%)',
     boxShadow: '0 8px 20px rgba(90, 15, 179, 0.3)',
   },
