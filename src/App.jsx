@@ -13,26 +13,6 @@ const Portfolio = () => {
   const [openPanels, setOpenPanels] = useState({});
   const togglePanel = (id) => setOpenPanels(prev => ({ ...prev, [id]: !prev[id] }));
 
-  // Proyectos en teléfono: la tarjeta crece (o se encoge) desde su centro, hacia arriba
-  // y hacia abajo a la vez. Mientras dura la transición de altura (index.css, 0.35s) se
-  // desplaza la página lo mismo que se movió el centro de la tarjeta en cada frame.
-  const toggleProject = (id, event) => {
-    const card = event.currentTarget.closest('.project-card');
-    togglePanel(id);
-    if (!card || !window.matchMedia('(max-width: 767px)').matches) return;
-
-    const rect = card.getBoundingClientRect();
-    const startCenter = rect.top + rect.height / 2;
-    const until = performance.now() + 450;
-    const keepCentered = () => {
-      const r = card.getBoundingClientRect();
-      const drift = r.top + r.height / 2 - startCenter;
-      if (Math.abs(drift) > 0.5) window.scrollBy(0, drift);
-      if (performance.now() < until) requestAnimationFrame(keepCentered);
-    };
-    requestAnimationFrame(keepCentered);
-  };
-
   const copyCode = async (code) => {
     try {
       await navigator.clipboard.writeText(code);
@@ -75,6 +55,8 @@ const Portfolio = () => {
       },
       experience: {
         title: 'Experiencia',
+        seeMore: 'Ver más sobre el puesto',
+        seeLess: 'Ver menos',
         soloDev: 'Solo Developer',
         intern: 'Pasante en Ingeniería de Software',
         ta: 'Profesor Auxiliar - Bases de Datos',
@@ -149,6 +131,8 @@ const Portfolio = () => {
       },
       experience: {
         title: 'Experience',
+        seeMore: 'See more about this role',
+        seeLess: 'See less',
         soloDev: 'Solo Developer',
         intern: 'Software Engineering Intern',
         ta: 'Teaching Assistant - Databases',
@@ -201,6 +185,16 @@ const Portfolio = () => {
   };
 
   const t = translations[currentLang];
+
+  // Experiencia en teléfono: cargo, empresa y fecha; el resto se abre con "Ver más".
+  // En computador el botón no se muestra y el detalle está siempre visible (index.css).
+  const expClass = (id) => `exp-item${openPanels[id] ? ' is-open' : ''}`;
+  const expToggle = (id) => (
+    <button type="button" className="exp-more" onClick={() => togglePanel(id)} aria-expanded={!!openPanels[id]}>
+      {openPanels[id] ? t.experience.seeLess : t.experience.seeMore}
+      <ChevronDown size={16} aria-hidden="true" />
+    </button>
+  );
 
   // Íconos como SVG sueltos y diferidos (loading="lazy"). Antes se usaba la fuente de
   // devicon: 130 KB de CSS que bloqueaba el render + 1,5 MB de fuente para ~30 íconos.
@@ -769,20 +763,22 @@ const Portfolio = () => {
       {/* Experience Section */}
       <section id="experience" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.experience.title}</h2>
-        <div style={styles.experienceTimeline}>
+        <div style={styles.experienceTimeline} className="exp-timeline">
           <div style={styles.timelineLine} />
 
-          <div style={styles.experienceItem}>
-            <div style={styles.timelineDot} />
+          <div style={styles.experienceItem} className={expClass('exp-gameclub')}>
+            <div style={styles.timelineDot} className="timeline-dot" />
             <h3 style={styles.experienceRole}>{t.experience.soloDev}</h3>
             <div style={styles.experienceCompany}>
               Movistar Game Club · {currentLang === 'es' ? 'Cliente' : 'Client'}
             </div>
-            <div style={styles.experienceDate}>
+            <div style={styles.experienceDate} className="exp-date">
               {currentLang === 'es'
                 ? 'Junio 2026 - Presente · Freelance · Santiago, Chile'
                 : 'June 2026 - Present · Freelance · Santiago, Chile'}
             </div>
+            <div className="exp-reveal">
+            <div className="exp-reveal-inner">
             <p style={styles.experienceSummary}>{gameClubExperience.summary[currentLang]}</p>
             <ul style={styles.experienceList}>
               {gameClubExperience.highlights.map(item => (
@@ -796,15 +792,20 @@ const Portfolio = () => {
                 <span key={tag} style={styles.tag}>{tag}</span>
               ))}
             </div>
+            </div>
+            </div>
+            {expToggle('exp-gameclub')}
           </div>
 
-          <div style={styles.experienceItem}>
-            <div style={styles.timelineDot} />
+          <div style={styles.experienceItem} className={expClass('exp-abacus')}>
+            <div style={styles.timelineDot} className="timeline-dot" />
             <h3 style={styles.experienceRole}>{t.experience.intern}</h3>
             <div style={styles.experienceCompany}>Abacus RX - Miami, FL</div>
-            <div style={styles.experienceDate}>
+            <div style={styles.experienceDate} className="exp-date">
               {currentLang === 'es' ? 'Diciembre 2025 - Marzo 2026' : 'December 2025 - March 2026'}
             </div>
+            <div className="exp-reveal">
+            <div className="exp-reveal-inner">
             <ul style={styles.experienceList}>
               <li style={styles.experienceListItem}>
                 {currentLang === 'es' 
@@ -827,15 +828,20 @@ const Portfolio = () => {
                   : 'Participation in code reviews and secure development best practices'}
               </li>
             </ul>
+            </div>
+            </div>
+            {expToggle('exp-abacus')}
           </div>
 
-          <div style={styles.experienceItem}>
-            <div style={styles.timelineDot} />
+          <div style={styles.experienceItem} className={expClass('exp-udp')}>
+            <div style={styles.timelineDot} className="timeline-dot" />
             <h3 style={styles.experienceRole}>{t.experience.ta}</h3>
             <div style={styles.experienceCompany}>Universidad Diego Portales</div>
-            <div style={styles.experienceDate}>
+            <div style={styles.experienceDate} className="exp-date">
               {currentLang === 'es' ? 'Marzo 2025 - Presente' : 'March 2025 - Present'}
             </div>
+            <div className="exp-reveal">
+            <div className="exp-reveal-inner">
             <ul style={styles.experienceList}>
               <li style={styles.experienceListItem}>
                 {currentLang === 'es'
@@ -858,6 +864,9 @@ const Portfolio = () => {
                   : 'Assisted students in database design and optimization projects'}
               </li>
             </ul>
+            </div>
+            </div>
+            {expToggle('exp-udp')}
           </div>
         </div>
       </section>
@@ -929,7 +938,7 @@ const Portfolio = () => {
                     type="button"
                     className="collapsible-toggle"
                     style={styles.collapsibleToggle}
-                    onClick={(event) => toggleProject(`project-${project.id}`, event)}
+                    onClick={() => togglePanel(`project-${project.id}`)}
                     aria-expanded={!!openPanels[`project-${project.id}`]}
                   >
                     {typeof project.title === 'object' ? project.title[currentLang] : project.title}

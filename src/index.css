@@ -11,10 +11,17 @@
   display: none;
 }
 
-/* Proyectos: en computador los envoltorios no existen para el layout */
+/* Proyectos y Experiencia: en computador los envoltorios no existen para el layout
+   y el botón "Ver más" no aparece */
 .project-reveal,
-.project-reveal-inner {
+.project-reveal-inner,
+.exp-reveal,
+.exp-reveal-inner {
   display: contents;
+}
+
+.exp-more {
+  display: none;
 }
 
 @media (max-width: 767px) {
@@ -89,21 +96,24 @@
     transition: margin 0.35s ease;
   }
 
-  /* Despliegue suave hacia arriba (rol) y hacia abajo (detalle): la fila del grid
-     anima de 0fr a 1fr, así no hace falta conocer la altura del contenido */
-  .project-reveal {
+  /* Despliegue suave hacia abajo: la fila del grid anima de 0fr a 1fr, así no hace
+     falta conocer la altura del contenido. Sirve para proyectos y experiencia. */
+  .project-reveal,
+  .exp-reveal {
     display: grid;
     grid-template-rows: 0fr;
     opacity: 0;
     transition: grid-template-rows 0.35s ease, opacity 0.35s ease;
   }
 
-  .project-card.is-open .project-reveal {
+  .project-card.is-open .project-reveal,
+  .exp-item.is-open .exp-reveal {
     grid-template-rows: 1fr;
     opacity: 1;
   }
 
-  .project-reveal-inner {
+  .project-reveal-inner,
+  .exp-reveal-inner {
     display: block;
     overflow: hidden;
     min-height: 0;
@@ -113,10 +123,58 @@
   .project-card:not(.is-open) .project-reveal-inner button {
     visibility: hidden;
   }
+
+  /* ── Experiencia: cargo, empresa y fecha + "Ver más" ── */
+  /* Menos sangría de la línea de tiempo: el texto tenía ~200px de ancho y se partía */
+  .exp-timeline {
+    padding-left: 0.75rem !important;
+  }
+
+  .exp-item {
+    padding: 1.25rem !important;
+    margin-bottom: 1rem !important;
+    margin-left: 0.75rem !important;
+  }
+
+  /* Punto centrado sobre la línea (15px de ancho, línea de 2px) */
+  .exp-item .timeline-dot {
+    top: 1.5rem !important;
+    left: calc(-1.5rem - 6.5px) !important;
+  }
+
+  .exp-item .exp-date {
+    margin-bottom: 0 !important;
+  }
+
+  .exp-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.75rem;
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid #390977;
+    border-radius: 20px;
+    color: #a855f7;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .exp-more svg {
+    transition: transform 0.25s ease;
+  }
+
+  .exp-item.is-open .exp-more svg {
+    transform: rotate(180deg);
+  }
 }
 
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
   .project-reveal,
+  .exp-reveal,
+  .exp-more svg,
   .collapsible-chevron,
   .project-card .collapsible-title {
     transition: none;
