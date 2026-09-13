@@ -680,7 +680,7 @@ const Portfolio = () => {
       </div>
 
       {/* Navigation */}
-      <nav style={styles.nav}>
+      <nav style={styles.nav} className="site-nav">
         <div style={styles.navContainer} className="nav-container">
           <div style={styles.logo} className="nav-logo" onClick={() => scrollToSection('home')}>
             {t.brand}
@@ -726,7 +726,7 @@ const Portfolio = () => {
             <h2 style={styles.heroSubtitle}>{t.hero.subtitle}</h2>
             <p style={styles.heroDescription}>{t.hero.description}</p>
 
-            <div style={styles.socialLinks}>
+            <div style={styles.socialLinks} className="hero-social">
               <a href="https://github.com/maxxee1" target="_blank" rel="noopener noreferrer" style={styles.socialLink}>
                 <Github size={30} />
               </a>

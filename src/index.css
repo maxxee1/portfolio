@@ -62,7 +62,7 @@
     left: 0;
     right: 0;
     padding: 0.5rem 2rem 1.25rem !important;
-    background: rgba(10, 10, 10, 0.98);
+    background: #0a0a0a;
     border-bottom: 1px solid rgba(57, 9, 119, 0.5);
     animation: nav-open 0.2s ease;
   }
@@ -93,10 +93,26 @@
 
 @media (max-width: 767px) {
   /* ── Portada en teléfono: foto como banner bajo la barra, texto debajo ── */
+  /* Barra más delgada en teléfono (el padding-top de .hero calza con su alto) */
+  .site-nav {
+    padding: 0.4rem 0 !important;
+  }
+
+  .nav-toggle svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* El menú desplegable arranca justo bajo la barra (padding de la barra: 0.4rem) */
+  .nav-links.is-open {
+    top: calc(100% + 0.4rem);
+  }
+
   .hero {
     min-height: auto !important;
     align-items: flex-start !important;
-    padding: 4.4rem 0 0 !important;
+    padding: 0 !important;
+    padding-top: var(--nav-h, 3rem) !important;
   }
 
   .hero-content {
@@ -111,7 +127,7 @@
 
   .hero-photo {
     width: 100% !important;
-    height: 230px !important;
+    height: 190px !important;
     max-width: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
@@ -119,7 +135,39 @@
   }
 
   .hero-text {
-    padding: 0 1.5rem 3rem;
+    padding: 0 1.5rem 2.5rem;
+  }
+
+  /* Nombre en una línea (~31px a 375px de ancho) */
+  .hero-text h1 {
+    font-size: clamp(1.5rem, 8.2vw, 2.1rem) !important;
+    white-space: nowrap;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hero-text h2 {
+    font-size: 1.2rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .hero-text > p {
+    font-size: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .hero-social {
+    gap: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .hero-social a {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .hero-social svg {
+    width: 22px;
+    height: 22px;
   }
 
   .collapsible-toggle {
