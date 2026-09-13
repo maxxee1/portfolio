@@ -736,14 +736,14 @@ const Portfolio = () => {
               <a href="mailto:maximilianoo.adonis@gmail.com" style={styles.socialLink}>
                 <Mail size={30} />
               </a>
-            </div>
-
-            <div style={styles.ctaButtons}>
-              <button onClick={() => scrollToSection('projects')} style={styles.btnPrimary}>
+              {/* "Contáctame" se quitó: ya están el botón de mail y la sección Contacto al final */}
+              <button
+                type="button"
+                onClick={() => scrollToSection('projects')}
+                style={{ ...styles.btnPrimary, ...styles.heroCta }}
+                className="hero-cta"
+              >
                 {t.hero.viewProjects}
-              </button>
-              <button onClick={() => scrollToSection('contact')} style={styles.btnSecondary}>
-                {t.hero.contactMe}
               </button>
             </div>
           </div>
@@ -1410,8 +1410,17 @@ const styles = {
   },
   socialLinks: {
     display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
     gap: '1rem',
     marginBottom: '2rem',
+  },
+  // "Ver Proyectos" en la fila de los botones sociales, con su misma altura
+  heroCta: {
+    height: '64px',
+    padding: '0 32px',
+    fontSize: '17px',
+    justifyContent: 'center',
   },
   socialLink: {
     width: '64px',
