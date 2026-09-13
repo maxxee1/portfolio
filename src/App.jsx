@@ -31,6 +31,9 @@ const Portfolio = () => {
 
   const translations = {
     es: {
+      brand: 'Mi Portafolio',
+      openMenu: 'Abrir menú',
+      closeMenu: 'Cerrar menú',
       nav: {
         home: 'Inicio',
         about: 'Sobre mí',
@@ -110,6 +113,9 @@ const Portfolio = () => {
       footer: '© 2026 Maximiliano Solorza. Todos los derechos reservados.'
     },
     en: {
+      brand: 'My Portfolio',
+      openMenu: 'Open menu',
+      closeMenu: 'Close menu',
       nav: {
         home: 'Home',
         about: 'About',
@@ -201,6 +207,22 @@ const Portfolio = () => {
       <ChevronDown size={16} aria-hidden="true" />
     </button>
   );
+
+  // Botones ES/EN: se usan en el selector flotante (computador) y dentro del menú (teléfono)
+  const langButtons = ["es", "en"].map(lang => (
+    <button
+      key={lang}
+      type="button"
+      style={{
+        ...styles.langBtn,
+        ...(currentLang === lang ? styles.langBtnActive : {})
+      }}
+      onClick={() => setCurrentLang(lang)}
+      aria-pressed={currentLang === lang}
+    >
+      {lang.toUpperCase()}
+    </button>
+  ));
 
   // Íconos como SVG sueltos y diferidos (loading="lazy"). Antes se usaba la fuente de
   // devicon: 130 KB de CSS que bloqueaba el render + 1,5 MB de fuente para ~30 íconos.
@@ -651,42 +673,30 @@ const Portfolio = () => {
 
   return (
     <div style={styles.container}>
-      {/* Language Switcher */}
-      <div style={styles.langSwitcher}>
-        <button
-          style={{
-            ...styles.langBtn,
-            ...(currentLang === 'es' ? styles.langBtnActive : {})
-          }}
-          onClick={() => setCurrentLang('es')}
-        >
-          ES
-        </button>
-        <button
-          style={{
-            ...styles.langBtn,
-            ...(currentLang === 'en' ? styles.langBtnActive : {})
-          }}
-          onClick={() => setCurrentLang('en')}
-        >
-          EN
-        </button>
+      {/* Language Switcher: flotante abajo a la derecha en computador; en teléfono/tablet
+          se oculta y vive dentro del menú hamburguesa (ver index.css) */}
+      <div style={styles.langSwitcher} className="lang-switcher-floating">
+        {langButtons}
       </div>
 
       {/* Navigation */}
       <nav style={styles.nav}>
-        <div style={styles.navContainer}>
-          <div style={styles.logo}>MS</div>
+        <div style={styles.navContainer} className="nav-container">
+          <div style={styles.logo} className="nav-logo" onClick={() => scrollToSection('home')}>
+            {t.brand}
+          </div>
           <button
+            type="button"
             style={styles.mobileMenuBtn}
+            className="nav-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="nav-links"
+            aria-label={mobileMenuOpen ? t.closeMenu : t.openMenu}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
-          <ul style={{
-            ...styles.navLinks,
-            ...(mobileMenuOpen ? styles.navLinksActive : {})
-          }}>
+          <ul id="nav-links" style={styles.navLinks} className={`nav-links${mobileMenuOpen ? ' is-open' : ''}`}>
             {Object.entries(t.nav).map(([key, value]) => (
               <li key={key}>
                 <a
@@ -700,6 +710,9 @@ const Portfolio = () => {
                 </a>
               </li>
             ))}
+            <li className="nav-lang">
+              <div style={styles.langSwitcherInline}>{langButtons}</div>
+            </li>
           </ul>
         </div>
       </nav>
@@ -1259,7 +1272,7 @@ const styles = {
   },
   langSwitcher: {
     position: 'fixed',
-    top: '20px',
+    bottom: '20px',
     right: '20px',
     zIndex: 1000,
     display: 'flex',
@@ -1302,7 +1315,16 @@ const styles = {
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  langSwitcherInline: {
+    display: 'inline-flex',
+    gap: '10px',
+    background: '#151515',
+    padding: '6px 12px',
+    borderRadius: '25px',
+    border: '1px solid #390977',
+  },
   logo: {
+    cursor: 'pointer',
     fontSize: '1.5rem',
     fontWeight: 'bold',
     background: 'linear-gradient(135deg, #390977 0%, #5a0fb3 100%)',
@@ -1311,7 +1333,9 @@ const styles = {
     backgroundClip: 'text',
   },
   mobileMenuBtn: {
-    display: 'none',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '6px',
     background: 'none',
     border: 'none',
     color: '#ffffff',
@@ -1323,9 +1347,6 @@ const styles = {
     gap: '2rem',
     margin: 0,
     padding: 0,
-  },
-  navLinksActive: {
-    display: 'flex',
   },
   navLink: {
     color: '#b4b4b4',

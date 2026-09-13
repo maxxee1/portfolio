@@ -24,6 +24,73 @@
   display: none;
 }
 
+/* ── Navegación ──────────────────────────────────────────────────────────────
+   Computador: marca a la izquierda, links a la derecha, idioma flotante abajo a la derecha.
+   Teléfono/tablet (< 1024px, los 8 links no caben): solo el botón hamburguesa; el menú
+   se despliega bajo la barra con los links y el selector de idioma adentro. */
+.nav-toggle,
+.nav-lang {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .nav-logo,
+  .lang-switcher-floating {
+    display: none !important;
+  }
+
+  .nav-container {
+    justify-content: flex-end !important;
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: flex !important;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .nav-links.is-open {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0 !important;
+    position: absolute;
+    top: calc(100% + 1rem);
+    left: 0;
+    right: 0;
+    padding: 0.5rem 2rem 1.25rem !important;
+    background: rgba(10, 10, 10, 0.98);
+    border-bottom: 1px solid rgba(57, 9, 119, 0.5);
+    animation: nav-open 0.2s ease;
+  }
+
+  .nav-links.is-open li a {
+    display: block;
+    padding: 0.75rem 0;
+    font-size: 1.05rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-links.is-open .nav-lang {
+    display: block;
+    padding-top: 1rem;
+  }
+}
+
+@keyframes nav-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-links.is-open {
+    animation: none;
+  }
+}
+
 @media (max-width: 767px) {
   .collapsible-toggle {
     cursor: pointer;
