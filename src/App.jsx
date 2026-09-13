@@ -81,6 +81,9 @@ const Portfolio = () => {
           collab: 'Colaboraciones'
         }
       },
+      skills: {
+        title: 'Habilidades'
+      },
       certifications: {
         title: 'Certificaciones',
         completed: 'Completado',
@@ -156,6 +159,9 @@ const Portfolio = () => {
           data: 'Data',
           collab: 'Collaborations'
         }
+      },
+      skills: {
+        title: 'Skills'
       },
       certifications: {
         title: 'Certifications',
@@ -994,6 +1000,7 @@ const Portfolio = () => {
       
       {/* Skills Section */}
       <section id="skills" style={styles.section}>
+        <h2 style={styles.sectionTitle}>{t.skills.title}</h2>
         <div style={styles.skillsMatrix} className="skills-matrix">
           {Object.entries(skillsData).map(([key, group]) => (
             <div
