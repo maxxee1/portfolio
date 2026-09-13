@@ -63,6 +63,8 @@ const Portfolio = () => {
         completed: 'Completado',
         inProgress: 'En Progreso',
         viewCredential: 'Ver Credencial',
+        verify: 'Verificar',
+        code: 'Código',
         groups: {
           security: 'Ciberseguridad',
           networking: 'Redes',
@@ -133,6 +135,8 @@ const Portfolio = () => {
         completed: 'Completed',
         inProgress: 'In Progress',
         viewCredential: 'View Credential',
+        verify: 'Verify',
+        code: 'Code',
         groups: {
           security: 'Cybersecurity',
           networking: 'Networking',
@@ -524,6 +528,8 @@ const Portfolio = () => {
         es: 'Core skills B2 · Speaking B1 · Writing B1 · Junio 2026',
         en: 'Core skills B2 · Speaking B1 · Writing B1 · June 2026'
       },
+      // EnglishScore no acepta el código en la URL: se copia a mano en la página de verificación
+      verify: { url: 'https://www.englishscore.com/verify', code: '2a2a20290143' },
       status: 'completed',
       category: 'languages'
     },
@@ -1011,6 +1017,16 @@ const Portfolio = () => {
                         <a href={cert.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
                           {t.certifications.viewCredential}
                         </a>
+                      )}
+                      {cert.verify && (
+                        <>
+                          <a href={cert.verify.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
+                            {t.certifications.verify}
+                          </a>
+                          <span style={styles.certCode}>
+                            {t.certifications.code}: <code style={styles.certCodeValue}>{cert.verify.code}</code>
+                          </span>
+                        </>
                       )}
                     </div>
                   </div>
@@ -1589,6 +1605,15 @@ const styles = {
     fontSize: '0.8rem',
     marginTop: '-0.5rem',
     marginBottom: '0.75rem',
+  },
+  certCode: {
+    color: '#b4b4b4',
+    fontSize: '0.75rem',
+  },
+  certCodeValue: {
+    color: '#ffffff',
+    fontFamily: "'Consolas', 'Courier New', monospace",
+    userSelect: 'all',
   },
   certFooter: {
     display: 'flex',
