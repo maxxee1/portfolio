@@ -877,8 +877,8 @@ const Portfolio = () => {
               </li>
               <li style={styles.experienceListItem}>
                 {currentLang === 'es'
-                  ? 'Optimización de la búsqueda: paralelización en hilos y tokenización de la consulta al estilo booleano'
-                  : 'Search optimization: multithreaded parallelization and boolean-style query tokenization'}
+                  ? 'Optimización de la búsqueda: debounce del input (sin consultas de más al tipear, mínimo 3 letras) y tokenización de la consulta al estilo booleano'
+                  : 'Search optimization: input debounce (no extra queries while typing, min. 3 letters) and boolean-style query tokenization'}
               </li>
               <li style={styles.experienceListItem}>
                 {currentLang === 'es'
