@@ -49,14 +49,14 @@ const Portfolio = () => {
       },
       hero: {
         title: 'Maximiliano Solorza',
-        subtitle: 'Ingeniero de Software & Ciberseguridad',
-        description: 'Estudiante de Ingeniería Civil en Informática y Telecomunicaciones apasionado por la ciberseguridad, machine learning y desarrollo de aplicaciones seguras.',
+        subtitle: 'Ciberseguridad & IA',
+        description: 'Estudiante de Ingeniería Civil en Informática y Telecomunicaciones enfocado en ciberseguridad potenciada con inteligencia artificial.',
         viewProjects: 'Ver Proyectos',
         contactMe: 'Contáctame'
       },
       about: {
         title: 'Sobre mí',
-        p1: 'Soy un estudiante motivado y enfocado en ciberseguridad, gestión de datos y optimización de sistemas. Tengo experiencia en el desarrollo de aplicaciones web seguras, modelos predictivos de machine learning y soluciones de accesibilidad tecnológica.',
+        p1: 'Soy un estudiante motivado que quiere dedicarse a la ciberseguridad potenciada con inteligencia artificial. Tengo experiencia en el desarrollo de aplicaciones web seguras, modelos predictivos de machine learning y análisis y manipulación de tráfico de red.',
         p2: 'Competente en programación, despliegue en la nube y gestión de bases de datos. Adaptable, colaborativo y con aprendizaje rápido, siempre dispuesto a enfrentar nuevos desafíos tecnológicos.',
       },
       experience: {
@@ -81,6 +81,7 @@ const Portfolio = () => {
         filters: {
           all: 'Todos',
           ai: 'IA & Machine Learning',
+          security: 'Ciberseguridad',
           development: 'Desarrollo',
           systems: 'Sistemas',
           data: 'Datos',
@@ -107,7 +108,8 @@ const Portfolio = () => {
       },
       education: {
         title: 'Educación & Competencias',
-        competitions: 'Competencias'
+        competitions: 'Competencias',
+        currentCourses: 'Ramos destacados este semestre'
       },
       contact: {
         title: 'Contacto',
@@ -132,14 +134,14 @@ const Portfolio = () => {
       },
       hero: {
         title: 'Maximiliano Solorza',
-        subtitle: 'Software Engineer & Cybersecurity',
-        description: 'Computer and Telecommunications Engineering student passionate about cybersecurity, machine learning, and secure application development.',
+        subtitle: 'Cybersecurity & AI',
+        description: 'Computer and Telecommunications Engineering student focused on cybersecurity powered by artificial intelligence.',
         viewProjects: 'View Projects',
         contactMe: 'Contact Me'
       },
       about: {
         title: 'About Me',
-        p1: 'I am a motivated student focused on cybersecurity, data management, and systems optimization. I have experience developing secure web applications, machine learning predictive models, and technology accessibility solutions.',
+        p1: 'I am a motivated student aiming to work in cybersecurity powered by artificial intelligence. I have experience developing secure web applications, machine learning predictive models, and network traffic analysis and manipulation.',
         p2: 'Proficient in programming, cloud deployment, and database management. Adaptable, collaborative, and a fast learner, always ready to face new technological challenges.',
       },
       experience: {
@@ -164,6 +166,7 @@ const Portfolio = () => {
         filters: {
           all: 'All',
           ai: 'AI & Machine Learning',
+          security: 'Cybersecurity',
           development: 'Development',
           systems: 'Systems',
           data: 'Data',
@@ -190,7 +193,8 @@ const Portfolio = () => {
       },
       education: {
         title: 'Education & Competitions',
-        competitions: 'Competitions'
+        competitions: 'Competitions',
+        currentCourses: 'Highlighted courses this semester'
       },
       contact: {
         title: 'Contact',
@@ -367,7 +371,7 @@ const Portfolio = () => {
 
   // "Desarrollo" antes que "IA": en teléfono el chip largo de IA queda cortado en el
   // borde y así se nota que la fila de filtros se desliza.
-  const projectCategories = ['all', 'development', 'ai', 'systems', 'data', 'collab'];
+  const projectCategories = ['all', 'development', 'ai', 'security', 'systems', 'data', 'collab'];
 
   const projects = [
     {
@@ -384,6 +388,18 @@ const Portfolio = () => {
       },
       tags: ['FastAPI', 'Gemini', 'React', 'Next.js', 'GCP'],
       private: true,
+      links: {}
+    },
+    {
+      id: 11,
+      icon: '🕵️',
+      categories: ['security'],
+      title: 'Man-in-the-Middle (MITM)',
+      description: {
+        es: 'Ataque de red que intercepta, inyecta y modifica tráfico en tránsito usando Scapy y Python: envenenamiento ARP para posicionarse entre víctima y gateway, y manipulación de paquetes al vuelo.',
+        en: 'Network attack that intercepts, injects and modifies traffic in transit using Scapy and Python: ARP poisoning to sit between victim and gateway, and on-the-fly packet manipulation.'
+      },
+      tags: ['Python', 'Scapy', 'Networking', 'Security'],
       links: {}
     },
     {
@@ -1101,6 +1117,13 @@ const Portfolio = () => {
                 ? 'Enfoque en ciberseguridad, redes, bases de datos y desarrollo de software.'
                 : 'Focus on cybersecurity, networking, databases, and software development.'}
             </p>
+            <div style={styles.courseBlock}>
+              <span style={styles.courseLabel}>{t.education.currentCourses}</span>
+              <div style={styles.courseTags}>
+                <span style={styles.tag}>{currentLang === 'es' ? 'Criptografía y Ciberseguridad' : 'Cryptography & Cybersecurity'}</span>
+                <span style={styles.tag}>{currentLang === 'es' ? 'Reconocimiento de Patrones en Imágenes' : 'Image Pattern Recognition'}</span>
+              </div>
+            </div>
           </div>
 
           <div style={styles.educationItem}>
@@ -1932,6 +1955,21 @@ const styles = {
   },
   educationDescription: {
     color: '#b4b4b4',
+  },
+  courseBlock: {
+    marginTop: '1.25rem',
+  },
+  courseLabel: {
+    display: 'block',
+    color: '#5eb3f6',
+    fontSize: '0.85rem',
+    fontWeight: '600',
+    marginBottom: '0.75rem',
+  },
+  courseTags: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.5rem',
   },
   compGrid: {
     display: 'grid',
