@@ -92,6 +92,36 @@
 }
 
 @media (max-width: 767px) {
+  /* ── Portada en teléfono: foto como banner bajo la barra, texto debajo ── */
+  .hero {
+    min-height: auto !important;
+    align-items: flex-start !important;
+    padding: 4.4rem 0 0 !important;
+  }
+
+  .hero-content {
+    width: 100%;
+    grid-template-columns: 1fr !important;
+    gap: 1.75rem !important;
+  }
+
+  .hero-image {
+    order: -1;
+  }
+
+  .hero-photo {
+    width: 100% !important;
+    height: 230px !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    object-position: center 30%;
+  }
+
+  .hero-text {
+    padding: 0 1.5rem 3rem;
+  }
+
   .collapsible-toggle {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;

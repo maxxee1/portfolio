@@ -718,10 +718,10 @@ const Portfolio = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" style={styles.hero}>
+      <section id="home" style={styles.hero} className="hero">
         <div style={styles.heroBackground} />
-        <div style={styles.heroContent}>
-          <div style={styles.heroText}>
+        <div style={styles.heroContent} className="hero-content">
+          <div style={styles.heroText} className="hero-text">
             <h1 style={styles.heroTitle}>{t.hero.title}</h1>
             <h2 style={styles.heroSubtitle}>{t.hero.subtitle}</h2>
             <p style={styles.heroDescription}>{t.hero.description}</p>
@@ -748,11 +748,12 @@ const Portfolio = () => {
             </div>
           </div>
 
-          <div style={styles.heroImage}>
+          <div style={styles.heroImage} className="hero-image">
             <img
+              className="hero-photo"
               src="/images/profile.webp"
               srcSet="/images/profile-440.webp 440w, /images/profile.webp 880w"
-              sizes="(max-width: 550px) 80vw, 440px"
+              sizes="(max-width: 767px) 100vw, 440px"
               alt="Maximiliano Solorza"
               width="440"
               height="440"
