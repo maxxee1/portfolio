@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
@@ -46,12 +46,16 @@ const Portfolio = () => {
         demo: 'Demo',
         website: 'Website',
         privateProject: 'Proyecto privado de cliente',
+        roles: {
+          collaborator: 'Colaborador'
+        },
         filters: {
           all: 'Todos',
           ai: 'IA & Machine Learning',
           development: 'Desarrollo',
           systems: 'Sistemas',
-          data: 'Datos'
+          data: 'Datos',
+          collab: 'Colaboraciones'
         }
       },
       certifications: {
@@ -107,12 +111,16 @@ const Portfolio = () => {
         demo: 'Demo',
         website: 'Website',
         privateProject: 'Private client project',
+        roles: {
+          collaborator: 'Collaborator'
+        },
         filters: {
           all: 'All',
           ai: 'AI & Machine Learning',
           development: 'Development',
           systems: 'Systems',
-          data: 'Data'
+          data: 'Data',
+          collab: 'Collaborations'
         }
       },
       certifications: {
@@ -265,7 +273,7 @@ const Portfolio = () => {
     tags: ['Python', 'FastAPI', 'Gemini', 'React', 'TypeScript', 'Next.js', 'Cloud Run', 'BigQuery', 'Secret Manager', 'Redis', 'Docker']
   };
 
-  const projectCategories = ['all', 'ai', 'development', 'systems', 'data'];
+  const projectCategories = ['all', 'ai', 'development', 'systems', 'data', 'collab'];
 
   const projects = [
     {
@@ -281,6 +289,39 @@ const Portfolio = () => {
         en: 'Multichannel chatbot (WhatsApp + Instagram) with semantic FAQ and Gemini, a ticket dashboard with AI routing and a campaign CRM. Deployed on Google Cloud Run + BigQuery.'
       },
       tags: ['FastAPI', 'Gemini', 'React', 'Next.js', 'GCP'],
+      private: true,
+      links: {}
+    },
+    {
+      id: 9,
+      icon: '💳',
+      role: 'collaborator',
+      categories: ['ai', 'development', 'collab'],
+      title: 'OptiWallet',
+      // TODO: descripción final (la pasa Maxi)
+      description: {
+        es: 'Fintech que te dice con qué tarjeta pagar para obtener el mejor precio, con todos los comercios en un mapa. Scrapers en Node.js ejecutados en el servidor y panel de administración donde la IA analiza las ofertas y las clasifica por comercio, categoría y subcategoría.',
+        en: 'Fintech app that tells you which card to pay with to get the best price, with every merchant on a map. Server-side Node.js scrapers and an admin panel where AI analyzes offers and classifies them by merchant, category and subcategory.'
+      },
+      // TODO: stack real
+      tags: ['Node.js', 'Web Scraping', 'AI', 'Maps'],
+      // TODO: links (github / demo / website)
+      links: {}
+    },
+    {
+      id: 10,
+      icon: '🗺️',
+      role: 'collaborator',
+      categories: ['development', 'collab'],
+      title: 'UDP Map',
+      // TODO: descripción final (la pasa Maxi)
+      description: {
+        es: 'App para la comunidad de la Universidad Diego Portales: mapas del campus, salas y caminos, todos los eventos de la U y un foro para la comunidad.',
+        en: 'App for the Universidad Diego Portales community: campus maps, classrooms and routes, every university event, and a community forum.'
+      },
+      // TODO: stack real
+      tags: ['Maps', 'Events', 'Community Forum'],
+      // TODO: links (github / demo / website)
       links: {}
     },
     {
@@ -756,6 +797,11 @@ const Portfolio = () => {
                 </div>
               )}
               <div style={styles.projectContent}>
+                {project.role && (
+                  <span style={styles.roleBadge}>
+                    <Users size={14} /> {t.projects.roles[project.role]}
+                  </span>
+                )}
                 <h3 style={styles.projectTitle}>
                   {typeof project.title === 'object' ? project.title[currentLang] : project.title}
                 </h3>
@@ -768,11 +814,12 @@ const Portfolio = () => {
                   ))}
                 </div>
                 <div style={styles.projectLinks}>
-                  {project.links.github ? (
+                  {project.links.github && (
                     <a href={project.links.github} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
                       <Github size={16} /> {t.projects.viewProject}
                     </a>
-                  ) : (
+                  )}
+                  {project.private && (
                     <span style={{ ...styles.projectLink, color: '#b4b4b4', cursor: 'default' }}>
                       <Lock size={16} /> {t.projects.privateProject}
                     </span>
@@ -1416,6 +1463,19 @@ const styles = {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
+  },
+  roleBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    alignSelf: 'flex-start',
+    background: 'rgba(94, 179, 246, 0.15)',
+    color: '#5eb3f6',
+    padding: '3px 10px',
+    borderRadius: '15px',
+    fontSize: '0.75rem',
+    fontWeight: '600',
+    marginBottom: '0.75rem',
   },
   projectTitle: {
     color: '#ffffff',
