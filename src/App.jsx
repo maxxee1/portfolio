@@ -573,13 +573,13 @@ const Portfolio = () => {
 
             <div style={styles.socialLinks}>
               <a href="https://github.com/maxxee1" target="_blank" rel="noopener noreferrer" style={styles.socialLink}>
-                <Github size={24} />
+                <Github size={30} />
               </a>
               <a href="https://linkedin.com/in/maximilianosolorza" target="_blank" rel="noopener noreferrer" style={styles.socialLink}>
-                <Linkedin size={24} />
+                <Linkedin size={30} />
               </a>
               <a href="mailto:maximilianoo.adonis@gmail.com" style={styles.socialLink}>
-                <Mail size={24} />
+                <Mail size={30} />
               </a>
             </div>
 
@@ -598,8 +598,8 @@ const Portfolio = () => {
               src="/images/profile.jpeg"
               alt="Maximiliano Solorza"
               style={{
-                width: '320px',
-                height: '320px',
+                width: 'min(440px, 80vw)',
+                height: 'min(440px, 80vw)',
                 objectFit: 'cover',
                 borderRadius: '50%',
                 boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
@@ -1031,7 +1031,7 @@ const styles = {
     borderBottom: '1px solid rgba(57, 9, 119, 0.3)',
   },
   navContainer: {
-    maxWidth: '1400px',
+    maxWidth: '1600px',
     margin: '0 auto',
     padding: '0 2rem',
     display: 'flex',
@@ -1093,7 +1093,7 @@ const styles = {
     opacity: 0.2,
   },
   heroContent: {
-    maxWidth: '1400px',
+    maxWidth: '1600px',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '4rem',
@@ -1104,7 +1104,8 @@ const styles = {
     zIndex: 1,
   },
   heroTitle: {
-    fontSize: '3.5rem',
+    fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)',
+    lineHeight: '1.15',
     marginBottom: '1rem',
     background: 'linear-gradient(135deg, #390977 0%, #5a0fb3 100%)',
     WebkitBackgroundClip: 'text',
@@ -1112,14 +1113,14 @@ const styles = {
     backgroundClip: 'text',
   },
   heroSubtitle: {
-    fontSize: '1.5rem',
+    fontSize: 'clamp(1.4rem, 2.2vw, 2rem)',
     color: '#b4b4b4',
     marginBottom: '1.5rem',
   },
   heroDescription: {
     color: '#b4b4b4',
     marginBottom: '2rem',
-    fontSize: '1.1rem',
+    fontSize: '1.25rem',
   },
   socialLinks: {
     display: 'flex',
@@ -1127,8 +1128,8 @@ const styles = {
     marginBottom: '2rem',
   },
   socialLink: {
-    width: '50px',
-    height: '50px',
+    width: '64px',
+    height: '64px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1195,7 +1196,7 @@ const styles = {
   },
   section: {
     padding: '6rem 2rem',
-    maxWidth: '1400px',
+    maxWidth: '1600px',
     margin: '0 auto',
   },
   sectionTitle: {
