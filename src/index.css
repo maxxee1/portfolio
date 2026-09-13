@@ -244,6 +244,35 @@
     display: none !important;
   }
 
+  /* ── Filtros de proyectos: una sola fila con scroll horizontal ── */
+  .filter-bar {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    gap: 0.5rem !important;
+    overflow-x: auto;
+    margin: -0.5rem -2rem 1.25rem !important;
+    padding: 0.25rem 2rem !important;
+    scroll-snap-type: x proximity;
+    scroll-padding: 0 2rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    /* Bordes desvanecidos: se nota que hay más filtros hacia el lado */
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 1.5rem, #000 calc(100% - 2.5rem), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 1.5rem, #000 calc(100% - 2.5rem), transparent 100%);
+  }
+
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-bar button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    scroll-snap-align: start;
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+  }
+
   /* ── Proyectos: una columna, sin imagen, solo el título hasta tocarlo ── */
   .projects-grid {
     grid-template-columns: 1fr !important;

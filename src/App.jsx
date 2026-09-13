@@ -894,7 +894,7 @@ const Portfolio = () => {
       {/* Projects Section */}
       <section id="projects" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.projects.title}</h2>
-        <div style={styles.filterBar}>
+        <div style={styles.filterBar} className="filter-bar">
           {projectCategories.map(category => {
             const count = category === 'all'
               ? projects.length
@@ -902,7 +902,11 @@ const Portfolio = () => {
             return (
               <button
                 key={category}
-                onClick={() => setProjectFilter(category)}
+                onClick={(event) => {
+                  setProjectFilter(category);
+                  // En teléfono la barra scrollea en horizontal: centrar el filtro elegido
+                  event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }}
                 style={{
                   ...styles.filterBtn,
                   ...(projectFilter === category ? styles.filterBtnActive : {})
