@@ -7,6 +7,23 @@ const Portfolio = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredSkill, setHoveredSkill] = useState(null);
   const [projectFilter, setProjectFilter] = useState('all');
+  const [copiedCode, setCopiedCode] = useState(null);
+
+  const copyCode = async (code) => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch {
+      // Fallback para navegadores sin Clipboard API (o sin contexto seguro)
+      const input = document.createElement('textarea');
+      input.value = code;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+    }
+    setCopiedCode(code);
+    setTimeout(() => setCopiedCode(current => (current === code ? null : current)), 2000);
+  };
 
   const translations = {
     es: {
@@ -65,6 +82,8 @@ const Portfolio = () => {
         viewCredential: 'Ver Credencial',
         verify: 'Verificar',
         code: 'Código',
+        copyCode: 'Clic para copiar',
+        copied: '¡Copiado!',
         groups: {
           security: 'Ciberseguridad',
           networking: 'Redes',
@@ -137,6 +156,8 @@ const Portfolio = () => {
         viewCredential: 'View Credential',
         verify: 'Verify',
         code: 'Code',
+        copyCode: 'Click to copy',
+        copied: 'Copied!',
         groups: {
           security: 'Cybersecurity',
           networking: 'Networking',
@@ -1024,7 +1045,15 @@ const Portfolio = () => {
                             {t.certifications.verify}
                           </a>
                           <span style={styles.certCode}>
-                            {t.certifications.code}: <code style={styles.certCodeValue}>{cert.verify.code}</code>
+                            {t.certifications.code}:{' '}
+                            <button
+                              type="button"
+                              onClick={() => copyCode(cert.verify.code)}
+                              title={t.certifications.copyCode}
+                              style={styles.certCodeValue}
+                            >
+                              {copiedCode === cert.verify.code ? t.certifications.copied : cert.verify.code}
+                            </button>
                           </span>
                         </>
                       )}
@@ -1613,7 +1642,13 @@ const styles = {
   certCodeValue: {
     color: '#ffffff',
     fontFamily: "'Consolas', 'Courier New', monospace",
-    userSelect: 'all',
+    fontSize: '0.75rem',
+    background: 'rgba(255, 255, 255, 0.08)',
+    border: '1px dashed #5a0fb3',
+    borderRadius: '6px',
+    padding: '2px 8px',
+    minWidth: '9.5em',
+    cursor: 'copy',
   },
   certFooter: {
     display: 'flex',
