@@ -3,11 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a0a" />
     <title>maximiliano-portfolio</title>
+    <!-- Fondo oscuro desde el primer byte: sin esto se ve una página en blanco hasta que carga el JS -->
+    <style>html,body{margin:0;background:#0a0a0a;color:#fff}</style>
+    <!-- Los íconos de skills vienen de estos CDN: adelantar el DNS -->
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
   </head>
   <body>
+    <!-- scripts/prerender.mjs inyecta aquí el HTML ya renderizado en el build -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

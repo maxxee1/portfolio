@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Mail, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
@@ -178,54 +178,61 @@ const Portfolio = () => {
 
   const t = translations[currentLang];
 
-  // Íconos de marca que no están en devicon (Simple Icons, color en hex sin #)
+  // Íconos como SVG sueltos y diferidos (loading="lazy"). Antes se usaba la fuente de
+  // devicon: 130 KB de CSS que bloqueaba el render + 1,5 MB de fuente para ~30 íconos.
+  const DEVICON = 'https://cdn.jsdelivr.net/gh/devicons/devicon@2.17.0/icons';
+  const devIcon = (name, variant = 'original') => (
+    <img src={`${DEVICON}/${name}/${name}-${variant}.svg`} alt="" loading="lazy" decoding="async" width="40" height="40" style={styles.skillImg} />
+  );
+
+  // Íconos de marca que no están en devicon, o monocromos (Simple Icons, color en hex sin #)
   const brandIcon = (slug, color) => (
-    <img src={`https://cdn.simpleicons.org/${slug}/${color}`} alt="" style={styles.skillImg} />
+    <img src={`https://cdn.simpleicons.org/${slug}/${color}`} alt="" loading="lazy" decoding="async" width="40" height="40" style={styles.skillImg} />
   );
 
   const skillsData = {
     backend: {
       title: { es: 'Backend & Datos', en: 'Backend & Data' },
       skills: [
-        { name: 'C++', icon: <i class="devicon-cplusplus-plain colored"></i> },
-        { name: 'Java', icon: <i class="devicon-java-plain colored"></i> },
-        { name: 'Python', icon: <i class="devicon-python-plain colored"></i> },
-        { name: 'Node.js', icon: <i class="devicon-nodejs-plain colored"></i> },
-        { name: 'Express', icon: <i class="devicon-express-original"></i> },
-        { name: 'FastAPI', icon: <i class="devicon-fastapi-plain colored"></i> },
-        { name: 'PostgreSQL', icon: <i class="devicon-postgresql-plain colored"></i> },
-        { name: 'MongoDB', icon: <i class="devicon-mongodb-plain colored"></i> },
-        { name: 'Redis', icon: <i class="devicon-redis-plain colored"></i> },
-        { name: 'SupaBase', icon: <i class="devicon-supabase-plain colored"></i> },
-        { name: 'Vercel', icon: <i class="devicon-vercel-original"></i> },
-        { name: 'Arduino', icon: <i class="devicon-arduino-plain colored"></i> },
+        { name: 'C++', icon: devIcon('cplusplus') },
+        { name: 'Java', icon: devIcon('java') },
+        { name: 'Python', icon: devIcon('python') },
+        { name: 'Node.js', icon: devIcon('nodejs') },
+        { name: 'Express', icon: brandIcon('express', 'ffffff') },
+        { name: 'FastAPI', icon: devIcon('fastapi') },
+        { name: 'PostgreSQL', icon: devIcon('postgresql') },
+        { name: 'MongoDB', icon: devIcon('mongodb') },
+        { name: 'Redis', icon: devIcon('redis') },
+        { name: 'SupaBase', icon: devIcon('supabase') },
+        { name: 'Vercel', icon: brandIcon('vercel', 'ffffff') },
+        { name: 'Arduino', icon: devIcon('arduino') },
       ]
     },
     cloud: {
       title: { es: 'Cloud & Infraestructura', en: 'Cloud & Infrastructure' },
       skills: [
-        { name: 'Bash', icon: <i class="devicon-bash-plain"></i> },
-        { name: 'Docker', icon: <i class="devicon-docker-plain colored"></i> },
-        { name: 'Kubernetes', icon: <i class="devicon-kubernetes-plain colored"></i> },
-        { name: 'Google Cloud', icon: <i class="devicon-googlecloud-plain colored"></i> },
-        { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
-        { name: 'Cloudflare', icon: <i class="devicon-cloudflare-plain colored"></i> },
-        { name: 'Nginx', icon: <i class="devicon-nginx-original colored"></i> },
+        { name: 'Bash', icon: brandIcon('gnubash', 'ffffff') },
+        { name: 'Docker', icon: devIcon('docker') },
+        { name: 'Kubernetes', icon: devIcon('kubernetes') },
+        { name: 'Google Cloud', icon: devIcon('googlecloud') },
+        { name: 'AWS', icon: devIcon('amazonwebservices', 'plain-wordmark') },
+        { name: 'Cloudflare', icon: devIcon('cloudflare') },
+        { name: 'Nginx', icon: devIcon('nginx') },
         { name: 'Sentry', icon: brandIcon('sentry', 'a78bfa') },
       ]
     },
     frontend: {
       title: { es: 'Frontend & Web Moderno', en: 'Frontend & Modern Web' },
       skills: [
-        { name: 'React', icon: <i class="devicon-react-original colored"></i> },
-        { name: 'Next.js', icon: <i class="devicon-nextjs-plain"></i> },
-        { name: 'Tailwind', icon: <i class="devicon-tailwindcss-original colored"></i> },
-        { name: 'TypeScript', icon: <i class="devicon-typescript-plain colored"></i> },
-        { name: 'JavaScript', icon: <i class="devicon-javascript-plain colored"></i> },
-        { name: 'HTML', icon: <i class="devicon-html5-plain colored"></i> },
-        { name: 'CSS', icon: <i class="devicon-css3-plain colored"></i> },
-        { name: 'Git', icon: <i class="devicon-git-plain colored"></i> },
-        { name: 'LaTeX', icon: <i class="devicon-latex-original"></i> },
+        { name: 'React', icon: devIcon('react') },
+        { name: 'Next.js', icon: brandIcon('nextdotjs', 'ffffff') },
+        { name: 'Tailwind', icon: devIcon('tailwindcss') },
+        { name: 'TypeScript', icon: devIcon('typescript') },
+        { name: 'JavaScript', icon: devIcon('javascript') },
+        { name: 'HTML', icon: devIcon('html5') },
+        { name: 'CSS', icon: devIcon('css3') },
+        { name: 'Git', icon: devIcon('git') },
+        { name: 'LaTeX', icon: brandIcon('latex', 'ffffff') },
       ]
     },
     security: {
@@ -361,7 +368,7 @@ const Portfolio = () => {
     },
     {
       id: 1,
-      image: "images/projects/gcf.png",
+      image: "images/projects/gcf.webp",
       categories: ['ai'],
       title: {
         es: 'Predicción Atardecer Rosa (gcForest)',
@@ -379,7 +386,7 @@ const Portfolio = () => {
     },
     {
       id: 2,
-      image: "images/projects/proxivision.png",
+      image: "images/projects/proxivision.webp",
       categories: ['development'],
       title: {
         es: 'ProxiVision - Proyecto TIC',
@@ -397,7 +404,7 @@ const Portfolio = () => {
     },
     {
       id: 3,
-      image: "images/projects/mlp.png",
+      image: "images/projects/mlp.webp",
       categories: ['ai'],
       title: {
         es: 'Predicción de Calificaciones (MLP)',
@@ -415,7 +422,7 @@ const Portfolio = () => {
     },
     {
       id: 4,
-      image: "images/projects/ms.png",
+      image: "images/projects/ms.webp",
       categories: ['systems'],
       title: {
         es: 'Simulador de Memoria',
@@ -452,7 +459,7 @@ const Portfolio = () => {
     },
     {
       id: 6,
-      image: "images/projects/npc.png",
+      image: "images/projects/npc.webp",
       categories: ['systems'],
       title: {
         es: 'Chat con Named Pipes',
@@ -470,7 +477,7 @@ const Portfolio = () => {
     },
     {
       id: 7,
-      image: "images/projects/neo4j.png",
+      image: "images/projects/neo4j.webp",
       categories: ['data'],
       title: {
         es: 'Anti-Lavado de Dinero (AML)',
@@ -496,7 +503,7 @@ const Portfolio = () => {
       provider: 'Cisco Networking Academy',
       status: 'completed',
       url: 'https://www.credly.com/badges/ef56a8d5-1ba8-4dde-90b2-295ad5da6b3c/public_url',
-      image: 'itc.png',
+      image: 'itc.webp',
       category: 'security'
     },
     {
@@ -505,7 +512,7 @@ const Portfolio = () => {
       provider: 'Cisco Networking Academy',
       status: 'completed',
       url: 'https://www.credly.com/badges/0e8d7cb2-4e8d-4aa0-bfaa-24977276b72e/public_url',
-      image: 'ce.png',
+      image: 'ce.webp',
       category: 'security'
     },
     {
@@ -514,7 +521,7 @@ const Portfolio = () => {
       provider: 'Cisco Networking Academy',
       status: 'completed',
       url: 'https://www.credly.com/badges/98ddfe39-d619-4956-91f4-7d4080b0960f/public_url',
-      image: 'ne.png',
+      image: 'ne.webp',
       category: 'networking'
     },
     {
@@ -522,7 +529,7 @@ const Portfolio = () => {
       title: 'Ethical Hacking',
       provider: 'Cisco Networking Academy',
       status: 'in-progress',
-      image: 'eh.png',
+      image: 'eh.webp',
       category: 'security'
     },
     {
@@ -530,7 +537,7 @@ const Portfolio = () => {
       title: { es: 'OSINT Avanzado', en: 'Advanced OSINT' },
       provider: { es: 'Inteligencia de Fuentes Abiertas', en: 'Open Source Intelligence' },
       status: 'in-progress',
-      image: 'oa.png',
+      image: 'oa.webp',
       category: 'security'
     },
     {
@@ -538,7 +545,7 @@ const Portfolio = () => {
       title: 'Ethical Hacking: Metasploit & Python',
       provider: { es: 'Herramientas y Scripting', en: 'Tools & Scripting' },
       status: 'in-progress',
-      image: 'oau.png',
+      image: 'oau.webp',
       category: 'security'
     },
     {
@@ -560,7 +567,7 @@ const Portfolio = () => {
       title: 'English for Developers',
       provider: 'FreeCodeCamp',
       status: 'in-progress',
-      image: 'efd.png',
+      image: 'efd.webp',
       category: 'languages'
     }
   ];
@@ -594,8 +601,20 @@ const Portfolio = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Como mucho un cálculo por frame (leer offsetTop fuerza layout) y listener pasivo
+    // para no frenar el scroll en el teléfono.
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        handleScroll();
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const scrollToSection = (sectionId) => {
@@ -694,8 +713,14 @@ const Portfolio = () => {
 
           <div style={styles.heroImage}>
             <img
-              src="/images/profile.jpeg"
+              src="/images/profile.webp"
+              srcSet="/images/profile-440.webp 440w, /images/profile.webp 880w"
+              sizes="(max-width: 550px) 80vw, 440px"
               alt="Maximiliano Solorza"
+              width="440"
+              height="440"
+              fetchPriority="high"
+              decoding="async"
               style={{
                 width: 'min(440px, 80vw)',
                 height: 'min(440px, 80vw)',
@@ -847,6 +872,10 @@ const Portfolio = () => {
                   alt={typeof project.title === 'object'
                     ? project.title[currentLang]
                     : project.title}
+                  loading="lazy"
+                  decoding="async"
+                  width="960"
+                  height="640"
                   style={styles.projectImage}
                 />
               ) : (
@@ -1014,6 +1043,10 @@ const Portfolio = () => {
                       <img
                         src={`/images/credentials/${cert.image}`}
                         alt={typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+                        loading="lazy"
+                        decoding="async"
+                        width="240"
+                        height="240"
                         style={{ width: '140%', height: '140%', objectFit: 'cover' }}
                       />
                     ) : (
@@ -1325,12 +1358,6 @@ const styles = {
     textAlign: 'center',
     position: 'relative',
     paddingBottom: '20px',
-  },
-  projectImage: {
-  width: '100%',
-  height: '180px',
-  objectFit: 'cover',
-  display: 'block',
   },
   aboutContent: {
     background: '#151515',
