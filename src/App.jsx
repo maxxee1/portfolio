@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, ChevronDown, ArrowUp, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
+import { Mail, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, ChevronDown, ArrowUp, Network, ShieldCheck, HardDrive, FileSearch, GraduationCap } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
@@ -42,7 +42,7 @@ const Portfolio = () => {
         about: 'Sobre mí',
         experience: 'Experiencia',
         projects: 'Proyectos',
-        skills: 'Skills',
+        skills: 'Habilidades',
         education: 'Educación',
         certifications: 'Certificaciones',
         contact: 'Contacto'
@@ -58,6 +58,12 @@ const Portfolio = () => {
         title: 'Sobre mí',
         p1: 'Soy un estudiante motivado que quiere dedicarse a la ciberseguridad potenciada con inteligencia artificial. Tengo experiencia en el desarrollo de aplicaciones web seguras, modelos predictivos de machine learning y análisis y manipulación de tráfico de red.',
         p2: 'Competente en programación, despliegue en la nube y gestión de bases de datos. Adaptable, colaborativo y con aprendizaje rápido, siempre dispuesto a enfrentar nuevos desafíos tecnológicos.',
+        facts: {
+          year: { label: 'Formación', value: '4º año de Ingeniería Civil en Informática y Telecomunicaciones' },
+          focus: { label: 'Foco', value: 'Ciberseguridad & Inteligencia Artificial' },
+          location: { label: 'Ubicación', value: 'Santiago de Chile' },
+          languages: { label: 'Idiomas', value: 'Español (nativo) · Inglés B2 · Alemán (aprendiendo)' }
+        }
       },
       experience: {
         title: 'Experiencia',
@@ -143,6 +149,12 @@ const Portfolio = () => {
         title: 'About Me',
         p1: 'I am a motivated student aiming to work in cybersecurity powered by artificial intelligence. I have experience developing secure web applications, machine learning predictive models, and network traffic analysis and manipulation.',
         p2: 'Proficient in programming, cloud deployment, and database management. Adaptable, collaborative, and a fast learner, always ready to face new technological challenges.',
+        facts: {
+          year: { label: 'Education', value: '4th year of Computer & Telecommunications Engineering' },
+          focus: { label: 'Focus', value: 'Cybersecurity & Artificial Intelligence' },
+          location: { label: 'Location', value: 'Santiago, Chile' },
+          languages: { label: 'Languages', value: 'Spanish (native) · English B2 · German (learning)' }
+        }
       },
       experience: {
         title: 'Experience',
@@ -814,7 +826,23 @@ const Portfolio = () => {
         <h2 style={styles.sectionTitle}>{t.about.title}</h2>
         <div style={styles.aboutContent}>
           <p style={styles.aboutText}>{t.about.p1}</p>
-          <p style={styles.aboutText}>{t.about.p2}</p>
+          <p style={{ ...styles.aboutText, marginBottom: 0 }}>{t.about.p2}</p>
+          <div style={styles.factsGrid}>
+            {[
+              { icon: <GraduationCap size={20} />, ...t.about.facts.year },
+              { icon: <ShieldCheck size={20} />, ...t.about.facts.focus },
+              { icon: <MapPin size={20} />, ...t.about.facts.location },
+              { icon: <Languages size={20} />, ...t.about.facts.languages },
+            ].map(fact => (
+              <div key={fact.label} style={styles.factItem}>
+                <span style={styles.factIcon}>{fact.icon}</span>
+                <div>
+                  <div style={styles.factLabel}>{fact.label}</div>
+                  <div style={styles.factValue}>{fact.value}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -1570,6 +1598,37 @@ const styles = {
     color: '#b4b4b4',
     fontSize: '1.1rem',
     marginBottom: '1.5rem',
+  },
+  factsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
+    gap: '1.25rem',
+    marginTop: '2rem',
+    paddingTop: '2rem',
+    borderTop: '1px solid rgba(57, 9, 119, 0.5)',
+  },
+  factItem: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '0.85rem',
+  },
+  factIcon: {
+    color: '#a855f7',
+    flexShrink: 0,
+    marginTop: '2px',
+  },
+  factLabel: {
+    color: '#5eb3f6',
+    fontSize: '0.8rem',
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px',
+    marginBottom: '2px',
+  },
+  factValue: {
+    color: '#e5e5e5',
+    fontSize: '0.95rem',
+    lineHeight: '1.4',
   },
   skillsMatrix: {
     display: 'grid',
