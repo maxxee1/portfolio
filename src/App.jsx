@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
+import { Mail, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, ChevronDown, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
@@ -8,6 +8,10 @@ const Portfolio = () => {
   const [hoveredSkill, setHoveredSkill] = useState(null);
   const [projectFilter, setProjectFilter] = useState('all');
   const [copiedCode, setCopiedCode] = useState(null);
+  // Acordeones de Skills y Certificaciones: solo colapsan en teléfono (ver index.css).
+  // En computador el contenido se ve siempre, sin importar este estado.
+  const [openPanels, setOpenPanels] = useState({});
+  const togglePanel = (id) => setOpenPanels(prev => ({ ...prev, [id]: !prev[id] }));
 
   const copyCode = async (code) => {
     try {
@@ -937,11 +941,26 @@ const Portfolio = () => {
       
       {/* Skills Section */}
       <section id="skills" style={styles.section}>
-        <div style={styles.skillsMatrix}>
+        <div style={styles.skillsMatrix} className="skills-matrix">
           {Object.entries(skillsData).map(([key, group]) => (
-            <div key={key} style={styles.skillPanel}>
-              <h3 style={styles.skillSectionTitle}>{group.title[currentLang]}</h3>
-              <div style={styles.skillCardsGrid}>
+            <div
+              key={key}
+              style={styles.skillPanel}
+              className={`collapsible skill-panel${openPanels[`skill-${key}`] ? ' is-open' : ''}`}
+            >
+              <h3 style={styles.skillSectionTitle} className="collapsible-title">
+                <button
+                  type="button"
+                  className="collapsible-toggle"
+                  style={styles.collapsibleToggle}
+                  onClick={() => togglePanel(`skill-${key}`)}
+                  aria-expanded={!!openPanels[`skill-${key}`]}
+                >
+                  {group.title[currentLang]}
+                  <ChevronDown size={22} className="collapsible-chevron" aria-hidden="true" />
+                </button>
+              </h3>
+              <div style={styles.skillCardsGrid} className="collapsible-body">
                 {group.skills.map(skill => (
                   <div
                     key={skill.name}
@@ -1050,12 +1069,27 @@ const Portfolio = () => {
       <section id="certifications" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.certifications.title}</h2>
         {certGroups.map(group => (
-          <div key={group} style={styles.certGroup}>
-            <h3 style={styles.skillSectionTitle}>{t.certifications.groups[group]}</h3>
-            <div style={styles.certGrid}>
+          <div
+            key={group}
+            style={styles.certGroup}
+            className={`collapsible cert-group${openPanels[`cert-${group}`] ? ' is-open' : ''}`}
+          >
+            <h3 style={styles.skillSectionTitle} className="collapsible-title">
+              <button
+                type="button"
+                className="collapsible-toggle"
+                style={styles.collapsibleToggle}
+                onClick={() => togglePanel(`cert-${group}`)}
+                aria-expanded={!!openPanels[`cert-${group}`]}
+              >
+                {t.certifications.groups[group]}
+                <ChevronDown size={22} className="collapsible-chevron" aria-hidden="true" />
+              </button>
+            </h3>
+            <div style={styles.certGrid} className="collapsible-body">
               {certifications.filter(cert => cert.category === group).map(cert => (
                 <div key={cert.id} style={styles.certCard}>
-                  <div style={styles.certBadge}>
+                  <div style={styles.certBadge} className="cert-badge">
                     {cert.image ? (
                       <img
                         src={`/images/credentials/${cert.image}`}
@@ -1399,6 +1433,15 @@ const styles = {
     border: '1px solid #390977',
     borderRadius: '15px',
     padding: '2rem',
+  },
+  collapsibleToggle: {
+    all: 'unset',
+    boxSizing: 'border-box',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: '1rem',
   },
   skillSectionTitle: {
     color: '#5eb3f6',

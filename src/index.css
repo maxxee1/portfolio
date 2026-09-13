@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ── Acordeones de Skills y Certificaciones ─────────────────────────────────
+   En computador no hay acordeón: el contenido se ve siempre y la flecha no aparece.
+   En teléfono cada grupo es un rectángulo con el título y una flecha; al tocarlo se
+   expande. Va en CSS (no en JS) para que el HTML prerenderizado ya llegue colapsado
+   al teléfono, sin salto de contenido al cargar. Los !important pisan los estilos inline. */
+.collapsible-chevron {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .collapsible-toggle {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .collapsible-chevron {
+    display: block;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
+
+  .collapsible.is-open .collapsible-chevron {
+    transform: rotate(180deg);
+  }
+
+  .collapsible:not(.is-open) .collapsible-body {
+    display: none !important;
+  }
+
+  .collapsible-title {
+    font-size: 1.1rem !important;
+  }
+
+  .collapsible:not(.is-open) .collapsible-title {
+    margin-bottom: 0 !important;
+  }
+
+  .collapsible.is-open .collapsible-title {
+    margin-bottom: 1rem !important;
+  }
+
+  .skills-matrix {
+    gap: 1rem !important;
+  }
+
+  .skill-panel {
+    padding: 1rem 1.25rem !important;
+  }
+
+  /* En computador los grupos de certificaciones no tienen caja; en teléfono sí */
+  .cert-group {
+    background: #151515;
+    border: 1px solid #390977;
+    border-radius: 15px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Tarjetas de certificación sin imagen en teléfono */
+  .cert-badge {
+    display: none !important;
+  }
+}
