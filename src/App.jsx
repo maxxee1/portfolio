@@ -549,8 +549,9 @@ const Portfolio = () => {
         es: 'Core skills B2 · Speaking B1 · Writing B1 · Junio 2026',
         en: 'Core skills B2 · Speaking B1 · Writing B1 · June 2026'
       },
-      // EnglishScore no acepta el código en la URL: se copia a mano en la página de verificación
-      verify: { url: 'https://www.englishscore.com/verify', code: '2a2a20290143' },
+      // Es la misma URL a la que redirige el formulario de englishscore.com/verify:
+      // devuelve el certificado en PDF servido por EnglishScore.
+      verify: { url: 'https://api2.englishscore.com/verify/2a2a20290143', code: '2a2a20290143' },
       status: 'completed',
       category: 'languages'
     },
