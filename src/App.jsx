@@ -1225,7 +1225,9 @@ const styles = {
   },
   skillsMatrix: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))',
+    // Máximo 2 columnas: cada columna mide al menos la mitad del contenedor.
+    // Bajo ~900px (tablet/teléfono) pasa a 1 columna.
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, max(420px, calc((100% - 3rem) / 2))), 1fr))',
     gap: '2rem',
   },
   skillPanel: {
