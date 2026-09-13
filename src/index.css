@@ -92,6 +92,18 @@
 }
 
 @media (max-width: 767px) {
+  /* ── Menos espacio entre secciones en teléfono ── */
+  section:not(.hero) {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+
+  section:not(.hero) > h2 {
+    font-size: 2rem !important;
+    margin-bottom: 1.5rem !important;
+    padding-bottom: 0 !important;
+  }
+
   /* ── Portada en teléfono: foto como banner bajo la barra, texto debajo ── */
   /* Barra más delgada en teléfono (el padding-top de .hero calza con su alto) */
   .site-nav {

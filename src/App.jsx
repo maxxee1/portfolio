@@ -1090,7 +1090,7 @@ const Portfolio = () => {
           </div>
         </div>
 
-        <h3 style={{...styles.sectionTitle, marginTop: '4rem', fontSize: '2rem'}}>
+        <h3 style={{...styles.sectionTitle, marginTop: '2.5rem', fontSize: '2rem'}}>
           {t.education.competitions}
         </h3>
         <div style={styles.compGrid}>
@@ -1490,13 +1490,13 @@ const styles = {
     opacity: 0.3,
   },
   section: {
-    padding: '6rem 2rem',
+    padding: '3.5rem 2rem',
     maxWidth: '1600px',
     margin: '0 auto',
   },
   sectionTitle: {
     fontSize: '2.5rem',
-    marginBottom: '3rem',
+    marginBottom: '2rem',
     textAlign: 'center',
     position: 'relative',
     paddingBottom: '20px',
