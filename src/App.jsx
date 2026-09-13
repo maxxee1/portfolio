@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
@@ -62,7 +62,12 @@ const Portfolio = () => {
         title: 'Certificaciones',
         completed: 'Completado',
         inProgress: 'En Progreso',
-        viewCredential: 'Ver Credencial'
+        viewCredential: 'Ver Credencial',
+        groups: {
+          security: 'Ciberseguridad',
+          networking: 'Redes',
+          languages: 'Idiomas'
+        }
       },
       education: {
         title: 'Educación & Competencias',
@@ -127,7 +132,12 @@ const Portfolio = () => {
         title: 'Certifications',
         completed: 'Completed',
         inProgress: 'In Progress',
-        viewCredential: 'View Credential'
+        viewCredential: 'View Credential',
+        groups: {
+          security: 'Cybersecurity',
+          networking: 'Networking',
+          languages: 'Languages'
+        }
       },
       education: {
         title: 'Education & Competitions',
@@ -461,7 +471,8 @@ const Portfolio = () => {
       provider: 'Cisco Networking Academy',
       status: 'completed',
       url: 'https://www.credly.com/badges/ef56a8d5-1ba8-4dde-90b2-295ad5da6b3c/public_url',
-      image: 'itc.png'
+      image: 'itc.png',
+      category: 'security'
     },
     {
       id: 2,
@@ -469,7 +480,8 @@ const Portfolio = () => {
       provider: 'Cisco Networking Academy',
       status: 'completed',
       url: 'https://www.credly.com/badges/0e8d7cb2-4e8d-4aa0-bfaa-24977276b72e/public_url',
-      image: 'ce.png'
+      image: 'ce.png',
+      category: 'security'
     },
     {
       id: 3,
@@ -477,37 +489,55 @@ const Portfolio = () => {
       provider: 'Cisco Networking Academy',
       status: 'completed',
       url: 'https://www.credly.com/badges/98ddfe39-d619-4956-91f4-7d4080b0960f/public_url',
-      image: 'ne.png'
+      image: 'ne.png',
+      category: 'networking'
     },
     {
       id: 4,
       title: 'Ethical Hacking',
       provider: 'Cisco Networking Academy',
       status: 'in-progress',
-      image: 'eh.png'
+      image: 'eh.png',
+      category: 'security'
     },
     {
       id: 5,
       title: { es: 'OSINT Avanzado', en: 'Advanced OSINT' },
       provider: { es: 'Inteligencia de Fuentes Abiertas', en: 'Open Source Intelligence' },
       status: 'in-progress',
-      image: 'oa.png'
+      image: 'oa.png',
+      category: 'security'
     },
     {
       id: 6,
       title: 'Ethical Hacking: Metasploit & Python',
       provider: { es: 'Herramientas y Scripting', en: 'Tools & Scripting' },
       status: 'in-progress',
-      image: 'oau.png'
+      image: 'oau.png',
+      category: 'security'
+    },
+    {
+      id: 8,
+      title: { es: 'Inglés CEFR B2 (Upper Intermediate)', en: 'English CEFR B2 (Upper Intermediate)' },
+      provider: 'Universidad Diego Portales × EnglishScore',
+      details: {
+        es: 'Habilidades core B2 (499) · Speaking B1 · Writing B1 · Junio 2026',
+        en: 'Core skills B2 (499) · Speaking B1 · Writing B1 · June 2026'
+      },
+      status: 'completed',
+      category: 'languages'
     },
     {
       id: 7,
       title: 'English for Developers',
       provider: 'FreeCodeCamp',
       status: 'in-progress',
-      image: 'efd.png'
+      image: 'efd.png',
+      category: 'languages'
     }
   ];
+
+  const certGroups = ['security', 'networking', 'languages'];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -945,53 +975,50 @@ const Portfolio = () => {
       {/* Certifications Section */}
       <section id="certifications" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.certifications.title}</h2>
-        <div style={styles.certGrid}>
-          {certifications.map(cert => (
-            <div key={cert.id} style={styles.certCard}>
-              <div
-                  style={{
-                    width: '120px',
-                    height: '120px',
-                    borderRadius: '50%',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 1rem auto'
-                  }}
-                >
-                  <img
-                    src={`/images/credentials/${cert.image}`}
-                    alt={typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
-                    style={{
-                      width: '140%',
-                      height: '140%',
-                      objectFit: 'cover'
-                    }}
-                  />
+        {certGroups.map(group => (
+          <div key={group} style={styles.certGroup}>
+            <h3 style={styles.skillSectionTitle}>{t.certifications.groups[group]}</h3>
+            <div style={styles.certGrid}>
+              {certifications.filter(cert => cert.category === group).map(cert => (
+                <div key={cert.id} style={styles.certCard}>
+                  <div style={styles.certBadge}>
+                    {cert.image ? (
+                      <img
+                        src={`/images/credentials/${cert.image}`}
+                        alt={typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+                        style={{ width: '140%', height: '140%', objectFit: 'cover' }}
+                      />
+                    ) : (
+                      <Languages size={38} color="#a855f7" />
+                    )}
+                  </div>
+                  <div style={styles.certBody}>
+                    <h4 style={styles.certTitle}>
+                      {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
+                    </h4>
+                    <p style={styles.certProvider}>
+                      {typeof cert.provider === 'object' ? cert.provider[currentLang] : cert.provider}
+                    </p>
+                    {cert.details && <p style={styles.certDetails}>{cert.details[currentLang]}</p>}
+                    <div style={styles.certFooter}>
+                      <span style={{
+                        ...styles.certStatus,
+                        ...(cert.status === 'completed' ? styles.certStatusCompleted : styles.certStatusInProgress)
+                      }}>
+                        {cert.status === 'completed' ? t.certifications.completed : t.certifications.inProgress}
+                      </span>
+                      {cert.url && (
+                        <a href={cert.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
+                          {t.certifications.viewCredential}
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              <h3 style={styles.certTitle}>
-                {typeof cert.title === 'object' ? cert.title[currentLang] : cert.title}
-              </h3>
-              <p style={styles.certProvider}>
-                {typeof cert.provider === 'object' ? cert.provider[currentLang] : cert.provider}
-              </p>
-              <span style={{
-                ...styles.certStatus,
-                ...(cert.status === 'completed' ? styles.certStatusCompleted : styles.certStatusInProgress)
-              }}>
-                {cert.status === 'completed' ? t.certifications.completed : t.certifications.inProgress}
-              </span>
-              {cert.url && (
-                <div style={{ marginTop: '1rem' }}>
-                  <a href={cert.url} target="_blank" rel="noopener noreferrer" style={styles.certLink}>
-                    {t.certifications.viewCredential}
-                  </a>
-                </div>
-              )}
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       {/* Contact Section */}
@@ -1522,18 +1549,52 @@ const styles = {
     justifyContent: 'center',
     gap: '6px',
   },
+  certGroup: {
+    marginBottom: '2.5rem',
+  },
   certGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-    gap: '2rem',
+    // Máximo 3 columnas; baja a 2 y a 1 en pantallas chicas.
+    // auto-fill (no auto-fit): un grupo con 1 o 2 tarjetas no las estira a todo el ancho.
+    gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, max(300px, calc((100% - 3.5rem) / 3))), 1fr))',
+    gap: '1.5rem',
   },
   certCard: {
     background: '#151515',
-    padding: '2rem',
+    padding: '1.25rem 1.5rem',
     borderRadius: '15px',
     border: '1px solid #390977',
     transition: 'all 0.3s ease',
-    textAlign: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '1.25rem',
+  },
+  certBadge: {
+    width: '80px',
+    height: '80px',
+    minWidth: '80px',
+    borderRadius: '50%',
+    overflow: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'rgba(57, 9, 119, 0.3)',
+  },
+  certBody: {
+    flex: 1,
+    minWidth: 0,
+  },
+  certDetails: {
+    color: '#b4b4b4',
+    fontSize: '0.8rem',
+    marginTop: '-0.5rem',
+    marginBottom: '0.75rem',
+  },
+  certFooter: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: '0.75rem',
   },
   certIcon: {
     width: '80px',
@@ -1558,8 +1619,7 @@ const styles = {
     display: 'inline-block',
     padding: '5px 15px',
     borderRadius: '15px',
-    fontSize: '0.85rem',
-    marginBottom: '1rem',
+    fontSize: '0.8rem',
   },
   certStatusCompleted: {
     background: 'rgba(34, 197, 94, 0.2)',
@@ -1571,7 +1631,8 @@ const styles = {
   },
   certLink: {
     display: 'inline-block',
-    padding: '10px 25px',
+    padding: '4px 14px',
+    fontSize: '0.8rem',
     background: 'transparent',
     border: '1px solid #390977',
     borderRadius: '20px',
