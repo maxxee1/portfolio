@@ -361,7 +361,9 @@ const Portfolio = () => {
     tags: ['Python', 'FastAPI', 'Gemini', 'React', 'TypeScript', 'Next.js', 'Cloud Run', 'BigQuery', 'Secret Manager', 'Redis', 'Docker']
   };
 
-  const projectCategories = ['all', 'ai', 'development', 'systems', 'data', 'collab'];
+  // "Desarrollo" antes que "IA": en teléfono el chip largo de IA queda cortado en el
+  // borde y así se nota que la fila de filtros se desliza.
+  const projectCategories = ['all', 'development', 'ai', 'systems', 'data', 'collab'];
 
   const projects = [
     {
