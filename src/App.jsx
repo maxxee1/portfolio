@@ -864,28 +864,33 @@ const Portfolio = () => {
             </div>
             <div className="exp-reveal">
             <div className="exp-reveal-inner">
+            <p style={styles.experienceSummary}>
+              {currentLang === 'es'
+                ? 'Construí un sistema de trazabilidad para aseguradoras de accidentes laborales de trayecto: reúne toda la información del caso (accidente, médico, diagnóstico, medicamentos, efectos secundarios, fechas, lugar, ruta y jurisdicciones) para sustentar la demanda.'
+                : 'Built a traceability system for insurers of work-commute accidents: it gathers the full case record (accident, physician, diagnosis, medication, side effects, dates, location, route and jurisdictions) to back the claim.'}
+            </p>
             <ul style={styles.experienceList}>
               <li style={styles.experienceListItem}>
-                {currentLang === 'es' 
-                  ? 'Desarrollo y mantenimiento de aplicaciones web utilizando tecnologías modernas'
-                  : 'Development and maintenance of web applications using modern technologies'}
+                {currentLang === 'es'
+                  ? 'Generación automática del Excel y del reporte de la demanda a partir de los datos del caso'
+                  : 'Automatic generation of the claim’s Excel and report from the case data'}
               </li>
               <li style={styles.experienceListItem}>
                 {currentLang === 'es'
-                  ? 'Colaboración en la implementación de sistemas de gestión de datos para el sector farmacéutico'
-                  : 'Collaboration in implementing data management systems for the pharmaceutical sector'}
+                  ? 'Optimización de la búsqueda: paralelización en hilos y tokenización de la consulta al estilo booleano'
+                  : 'Search optimization: multithreaded parallelization and boolean-style query tokenization'}
               </li>
               <li style={styles.experienceListItem}>
                 {currentLang === 'es'
-                  ? 'Optimización de procesos backend y análisis de rendimiento de aplicaciones'
-                  : 'Backend process optimization and application performance analysis'}
-              </li>
-              <li style={styles.experienceListItem}>
-                {currentLang === 'es'
-                  ? 'Participación en revisiones de código y mejores prácticas de desarrollo seguro'
-                  : 'Participation in code reviews and secure development best practices'}
+                  ? 'Segunda aplicación en Kotlin Multiplatform para generar reportes de inspecciones'
+                  : 'Second app in Kotlin Multiplatform to generate inspection reports'}
               </li>
             </ul>
+            <div style={{ ...styles.projectTags, marginTop: '1rem', marginBottom: 0 }}>
+              {['Visual Basic', 'Kotlin Multiplatform', 'SQL Server'].map(tag => (
+                <span key={tag} style={styles.tag}>{tag}</span>
+              ))}
+            </div>
             </div>
             </div>
             {expToggle('exp-abacus')}
@@ -922,6 +927,11 @@ const Portfolio = () => {
                   : 'Assisted students in database design and optimization projects'}
               </li>
             </ul>
+            <div style={{ ...styles.projectTags, marginTop: '1rem', marginBottom: 0 }}>
+              {['PostgreSQL', 'SQL', 'Triggers', currentLang === 'es' ? 'Procedimientos almacenados' : 'Stored Procedures', currentLang === 'es' ? 'Optimización' : 'Query Optimization'].map(tag => (
+                <span key={tag} style={styles.tag}>{tag}</span>
+              ))}
+            </div>
             </div>
             </div>
             {expToggle('exp-udp')}
