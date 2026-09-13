@@ -521,8 +521,8 @@ const Portfolio = () => {
       title: { es: 'Inglés CEFR B2 (Upper Intermediate)', en: 'English CEFR B2 (Upper Intermediate)' },
       provider: 'Universidad Diego Portales × EnglishScore',
       details: {
-        es: 'Habilidades core B2 (499) · Speaking B1 · Writing B1 · Junio 2026',
-        en: 'Core skills B2 (499) · Speaking B1 · Writing B1 · June 2026'
+        es: 'Core skills B2 · Speaking B1 · Writing B1 · Junio 2026',
+        en: 'Core skills B2 · Speaking B1 · Writing B1 · June 2026'
       },
       status: 'completed',
       category: 'languages'
