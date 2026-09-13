@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Mail, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, ChevronDown, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
+import { Mail, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock, Users, Languages, ChevronDown, ArrowUp, Network, ShieldCheck, HardDrive, FileSearch } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
@@ -11,6 +11,8 @@ const Portfolio = () => {
   // Acordeones de Skills y Certificaciones: solo colapsan en teléfono (ver index.css).
   // En computador el contenido se ve siempre, sin importar este estado.
   const [openPanels, setOpenPanels] = useState({});
+  // Botón "volver arriba": aparece al pasar la portada
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const togglePanel = (id) => setOpenPanels(prev => ({ ...prev, [id]: !prev[id] }));
 
   const copyCode = async (code) => {
@@ -32,6 +34,7 @@ const Portfolio = () => {
   const translations = {
     es: {
       brand: 'Mi Portafolio',
+      backToTop: 'Volver arriba',
       openMenu: 'Abrir menú',
       closeMenu: 'Cerrar menú',
       nav: {
@@ -114,6 +117,7 @@ const Portfolio = () => {
     },
     en: {
       brand: 'My Portfolio',
+      backToTop: 'Back to top',
       openMenu: 'Open menu',
       closeMenu: 'Close menu',
       nav: {
@@ -658,10 +662,12 @@ const Portfolio = () => {
       requestAnimationFrame(() => {
         ticking = false;
         handleScroll();
+        setShowBackToTop(window.scrollY > 600);
       });
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // por si la página carga ya scrolleada (recarga a mitad de página)
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -677,6 +683,20 @@ const Portfolio = () => {
     <div style={styles.container}>
       {/* Language Switcher: flotante abajo a la derecha en computador; en teléfono/tablet
           se oculta y vive dentro del menú hamburguesa (ver index.css) */}
+      <button
+        type="button"
+        className={`back-to-top${showBackToTop ? ' is-visible' : ''}`}
+        onClick={() => {
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+        }}
+        aria-label={t.backToTop}
+        title={t.backToTop}
+        tabIndex={showBackToTop ? 0 : -1}
+      >
+        <ArrowUp size={22} aria-hidden="true" />
+      </button>
+
       <div style={styles.langSwitcher} className="lang-switcher-floating">
         {langButtons}
       </div>
