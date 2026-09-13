@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, ExternalLink, Code, Globe, Menu, X, Lock } from 'lucide-react';
 
 const Portfolio = () => {
   const [currentLang, setCurrentLang] = useState('en');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [hoveredSkill, setHoveredSkill] = useState(null);
+  const [projectFilter, setProjectFilter] = useState('all');
 
   const translations = {
     es: {
@@ -33,6 +34,7 @@ const Portfolio = () => {
       },
       experience: {
         title: 'Experiencia',
+        soloDev: 'Solo Developer',
         intern: 'Pasante en Ingeniería de Software',
         ta: 'Profesor Auxiliar - Bases de Datos',
         present: 'Presente'
@@ -42,7 +44,15 @@ const Portfolio = () => {
         viewProject: 'Ver Proyecto',
         viewCode: 'View Code',
         demo: 'Demo',
-        website: 'Website'
+        website: 'Website',
+        privateProject: 'Proyecto privado de cliente',
+        filters: {
+          all: 'Todos',
+          ai: 'IA & Machine Learning',
+          development: 'Desarrollo',
+          systems: 'Sistemas',
+          data: 'Datos'
+        }
       },
       certifications: {
         title: 'Certificaciones',
@@ -85,6 +95,7 @@ const Portfolio = () => {
       },
       experience: {
         title: 'Experience',
+        soloDev: 'Solo Developer',
         intern: 'Software Engineering Intern',
         ta: 'Teaching Assistant - Databases',
         present: 'Present'
@@ -94,7 +105,15 @@ const Portfolio = () => {
         viewProject: 'View Project',
         viewCode: 'View Code',
         demo: 'Demo',
-        website: 'Website'
+        website: 'Website',
+        privateProject: 'Private client project',
+        filters: {
+          all: 'All',
+          ai: 'AI & Machine Learning',
+          development: 'Development',
+          systems: 'Systems',
+          data: 'Data'
+        }
       },
       certifications: {
         title: 'Certifications',
@@ -125,8 +144,10 @@ const Portfolio = () => {
         { name: 'Python', icon: <i class="devicon-python-plain colored"></i> },
         { name: 'Node.js', icon: <i class="devicon-nodejs-plain colored"></i> },
         { name: 'Express', icon: <i class="devicon-express-original"></i> },
+        { name: 'FastAPI', icon: <i class="devicon-fastapi-plain colored"></i> },
         { name: 'PostgreSQL', icon: <i class="devicon-postgresql-plain colored"></i> },
         { name: 'MongoDB', icon: <i class="devicon-mongodb-plain colored"></i> },
+        { name: 'Redis', icon: <i class="devicon-redis-plain colored"></i> },
         { name: 'SupaBase', icon: <i class="devicon-supabase-plain colored"></i> },
         { name: 'Vercel', icon: <i class="devicon-vercel-original"></i> },
         { name: 'Arduino', icon: <i class="devicon-arduino-plain colored"></i> },
@@ -138,6 +159,7 @@ const Portfolio = () => {
         { name: 'Bash', icon: <i class="devicon-bash-plain"></i> },
         { name: 'Docker', icon: <i class="devicon-docker-plain colored"></i> },
         { name: 'Kubernetes', icon: <i class="devicon-kubernetes-plain colored"></i> },
+        { name: 'Google Cloud', icon: <i class="devicon-googlecloud-plain colored"></i> },
         { name: 'AWS', icon: <i class="devicon-amazonwebservices-plain-wordmark colored"></i> },
         { name: 'Cloudflare', icon: <i class="devicon-cloudflare-plain colored"></i> },
         { name: 'Nginx', icon: <i class="devicon-nginx-original colored"></i> },
@@ -147,7 +169,9 @@ const Portfolio = () => {
       title: { es: 'Frontend & Web Moderno', en: 'Frontend & Modern Web' },
       skills: [
         { name: 'React', icon: <i class="devicon-react-original colored"></i> },
+        { name: 'Next.js', icon: <i class="devicon-nextjs-plain"></i> },
         { name: 'Tailwind', icon: <i class="devicon-tailwindcss-original colored"></i> },
+        { name: 'TypeScript', icon: <i class="devicon-typescript-plain colored"></i> },
         { name: 'JavaScript', icon: <i class="devicon-javascript-plain colored"></i> },
         { name: 'HTML', icon: <i class="devicon-html5-plain colored"></i> },
         { name: 'CSS', icon: <i class="devicon-css3-plain colored"></i> },
@@ -157,10 +181,94 @@ const Portfolio = () => {
     }
   };
 
+  const gameClubExperience = {
+    summary: {
+      es: 'Único desarrollador de la plataforma de atención al cliente con IA y del CRM de Movistar Game Club, red de clubes gamer en Santiago. Proyecto construido de punta a punta a partir de requerimientos de alto nivel.',
+      en: 'Sole developer of the AI customer-service platform and CRM for Movistar Game Club, a network of gaming clubs in Santiago. Built end to end from high-level requirements.'
+    },
+    highlights: [
+      {
+        lead: { es: 'Arquitectura y diseño end-to-end', en: 'End-to-end architecture & design' },
+        text: {
+          es: 'El cliente solo entregó requerimientos a alto nivel; yo tomé todas las decisiones de arquitectura, stack, modelo de datos y diseño de UI/UX, y me encargué del desarrollo, despliegue y operación.',
+          en: 'The client only provided high-level requirements; I made every architecture, stack, data-model and UI/UX design decision, and owned development, deployment and operations.'
+        }
+      },
+      {
+        lead: { es: 'Chatbot IA multicanal', en: 'Multichannel AI chatbot' },
+        text: {
+          es: 'Bot de atención en FastAPI para WhatsApp e Instagram sobre un único flujo compartido: FAQ con matching en 3 niveles (keywords → fuzzy → embeddings semánticos) y fallback a Gemini con memoria conversacional acotada y conocimiento del negocio editable desde Google Sheets.',
+          en: 'FastAPI customer-service bot for WhatsApp and Instagram on a single shared flow: 3-tier FAQ matching (keywords → fuzzy → semantic embeddings) with a Gemini fallback using bounded conversational memory and business knowledge editable from Google Sheets.'
+        }
+      },
+      {
+        lead: { es: 'Flujo conversacional y tickets', en: 'Conversation flow & ticketing' },
+        text: {
+          es: 'Máquina de estados con feedback, reintentos, escalamiento a tickets y encuestas de satisfacción (CSAT), más un buffer anti-fragmentación de mensajes en Redis.',
+          en: 'State machine with feedback, retries, escalation to tickets and satisfaction surveys (CSAT), plus an anti-fragmentation message buffer on Redis.'
+        }
+      },
+      {
+        lead: { es: 'Cóndor IA: ruteo inteligente', en: 'Cóndor AI: smart routing' },
+        text: {
+          es: 'Clasificación automática de tickets con IA según la taxonomía del negocio y ruteo por nivel y sede al trabajador adecuado, con asignación ponderada por carga, desempeño y rotación.',
+          en: 'AI ticket classification against the business taxonomy and routing by tier and location to the right agent, with assignment weighted by workload, performance and rotation.'
+        }
+      },
+      {
+        lead: { es: 'Panel de soporte', en: 'Support dashboard' },
+        text: {
+          es: 'SPA en React + TypeScript + Tailwind: gestión de tickets, historial completo de chats, toma de la conversación por agentes humanos, borradores de respuesta con IA, roles y ajustes del bot en caliente.',
+          en: 'React + TypeScript + Tailwind SPA: ticket management, full chat history, human agent takeover, AI-drafted replies, roles and live bot settings.'
+        }
+      },
+      {
+        lead: { es: 'Cóndor CRM', en: 'Cóndor CRM' },
+        text: {
+          es: 'Segundo producto en Next.js 15 sobre Vercel: segmentación de clientes por comportamiento de compra en BigQuery y campañas por email (SendGrid) y WhatsApp redactadas con IA, con plantillas editables y controles de entregabilidad.',
+          en: 'Second product built with Next.js 15 on Vercel: customer segmentation by purchase behavior on BigQuery and AI-drafted email (SendGrid) and WhatsApp campaigns, with editable templates and deliverability safeguards.'
+        }
+      },
+      {
+        lead: { es: 'Google Cloud Platform', en: 'Google Cloud Platform' },
+        text: {
+          es: 'Despliegue con Docker en Cloud Run (modos de costo/rendimiento sin redeploy), BigQuery para tickets, mensajes e índice de embeddings, Secret Manager para credenciales, IAM de mínimo privilegio con service accounts, Cloud Logging con logs JSON estructurados y scripts de infraestructura idempotentes con migraciones de esquema.',
+          en: 'Docker deployment on Cloud Run (cost/performance modes without redeploying), BigQuery for tickets, messages and the embeddings index, Secret Manager for credentials, least-privilege IAM with service accounts, Cloud Logging with structured JSON logs, and idempotent infrastructure scripts with schema migrations.'
+        }
+      },
+      {
+        lead: { es: 'Seguridad y calidad', en: 'Security & quality' },
+        text: {
+          es: 'Validación de firmas de webhooks de Meta, sesiones JWT en cookies HttpOnly, rate limiting por IP y por cuenta, CSP estricta, consultas parametrizadas y una suite de ~500 tests con pytest.',
+          en: 'Meta webhook signature validation, JWT sessions in HttpOnly cookies, per-IP and per-account rate limiting, strict CSP, parameterized queries and a ~500-test pytest suite.'
+        }
+      }
+    ],
+    tags: ['Python', 'FastAPI', 'Gemini', 'React', 'TypeScript', 'Next.js', 'Cloud Run', 'BigQuery', 'Secret Manager', 'Redis', 'Docker']
+  };
+
+  const projectCategories = ['all', 'ai', 'development', 'systems', 'data'];
+
   const projects = [
+    {
+      id: 8,
+      icon: '🎮',
+      categories: ['ai', 'development'],
+      title: {
+        es: 'Game Club: Soporte con IA & CRM',
+        en: 'Game Club: AI Support Platform & CRM'
+      },
+      description: {
+        es: 'Chatbot multicanal (WhatsApp + Instagram) con FAQ semántica y Gemini, panel de tickets con ruteo por IA y CRM de campañas. Desplegado en Google Cloud Run + BigQuery.',
+        en: 'Multichannel chatbot (WhatsApp + Instagram) with semantic FAQ and Gemini, a ticket dashboard with AI routing and a campaign CRM. Deployed on Google Cloud Run + BigQuery.'
+      },
+      tags: ['FastAPI', 'Gemini', 'React', 'Next.js', 'GCP'],
+      links: {}
+    },
     {
       id: 1,
       image: "images/projects/gcf.png",
+      categories: ['ai'],
       title: {
         es: 'Predicción Atardecer Rosa (gcForest)',
         en: 'Pink Sunset Prediction (gcForest)'
@@ -178,6 +286,7 @@ const Portfolio = () => {
     {
       id: 2,
       image: "images/projects/proxivision.png",
+      categories: ['development'],
       title: {
         es: 'ProxiVision - Proyecto TIC',
         en: 'ProxiVision - TIC Project'
@@ -195,6 +304,7 @@ const Portfolio = () => {
     {
       id: 3,
       image: "images/projects/mlp.png",
+      categories: ['ai'],
       title: {
         es: 'Predicción de Calificaciones (MLP)',
         en: 'Grade Prediction (MLP)'
@@ -212,6 +322,7 @@ const Portfolio = () => {
     {
       id: 4,
       image: "images/projects/ms.png",
+      categories: ['systems'],
       title: {
         es: 'Simulador de Memoria',
         en: 'Memory Simulator'
@@ -230,6 +341,7 @@ const Portfolio = () => {
     {
       id: 5,
       icon: '🔀',
+      categories: ['systems'],
       title: {
         es: 'Simulador de Hilos DOOM',
         en: 'DOOM Thread Simulator'
@@ -247,6 +359,7 @@ const Portfolio = () => {
     {
       id: 6,
       image: "images/projects/npc.png",
+      categories: ['systems'],
       title: {
         es: 'Chat con Named Pipes',
         en: 'Named Pipes Chat'
@@ -264,6 +377,7 @@ const Portfolio = () => {
     {
       id: 7,
       image: "images/projects/neo4j.png",
+      categories: ['data'],
       title: {
         es: 'Anti-Lavado de Dinero (AML)',
         en: 'Anti-Money Laundering (AML)'
@@ -491,7 +605,33 @@ const Portfolio = () => {
         <h2 style={styles.sectionTitle}>{t.experience.title}</h2>
         <div style={styles.experienceTimeline}>
           <div style={styles.timelineLine} />
-          
+
+          <div style={styles.experienceItem}>
+            <div style={styles.timelineDot} />
+            <h3 style={styles.experienceRole}>{t.experience.soloDev}</h3>
+            <div style={styles.experienceCompany}>
+              Movistar Game Club · {currentLang === 'es' ? 'Cliente' : 'Client'}
+            </div>
+            <div style={styles.experienceDate}>
+              {currentLang === 'es'
+                ? 'Junio 2026 - Presente · Freelance · Santiago, Chile'
+                : 'June 2026 - Present · Freelance · Santiago, Chile'}
+            </div>
+            <p style={styles.experienceSummary}>{gameClubExperience.summary[currentLang]}</p>
+            <ul style={styles.experienceList}>
+              {gameClubExperience.highlights.map(item => (
+                <li key={item.lead.en} style={styles.experienceListItem}>
+                  <strong style={styles.experienceLead}>{item.lead[currentLang]}:</strong> {item.text[currentLang]}
+                </li>
+              ))}
+            </ul>
+            <div style={{ ...styles.projectTags, marginTop: '1rem', marginBottom: 0 }}>
+              {gameClubExperience.tags.map(tag => (
+                <span key={tag} style={styles.tag}>{tag}</span>
+              ))}
+            </div>
+          </div>
+
           <div style={styles.experienceItem}>
             <div style={styles.timelineDot} />
             <h3 style={styles.experienceRole}>{t.experience.intern}</h3>
@@ -559,8 +699,30 @@ const Portfolio = () => {
       {/* Projects Section */}
       <section id="projects" style={styles.section}>
         <h2 style={styles.sectionTitle}>{t.projects.title}</h2>
+        <div style={styles.filterBar}>
+          {projectCategories.map(category => {
+            const count = category === 'all'
+              ? projects.length
+              : projects.filter(p => p.categories.includes(category)).length;
+            return (
+              <button
+                key={category}
+                onClick={() => setProjectFilter(category)}
+                style={{
+                  ...styles.filterBtn,
+                  ...(projectFilter === category ? styles.filterBtnActive : {})
+                }}
+              >
+                {t.projects.filters[category]}
+                <span style={styles.filterCount}>{count}</span>
+              </button>
+            );
+          })}
+        </div>
         <div style={styles.projectsGrid}>
-          {projects.map(project => (
+          {projects
+            .filter(project => projectFilter === 'all' || project.categories.includes(projectFilter))
+            .map(project => (
             <div key={project.id} style={styles.projectCard}>
               {project.image ? (
                 <img
@@ -588,9 +750,15 @@ const Portfolio = () => {
                   ))}
                 </div>
                 <div style={styles.projectLinks}>
-                  <a href={project.links.github} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
-                    <Github size={16} /> {t.projects.viewProject}
-                  </a>
+                  {project.links.github ? (
+                    <a href={project.links.github} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
+                      <Github size={16} /> {t.projects.viewProject}
+                    </a>
+                  ) : (
+                    <span style={{ ...styles.projectLink, color: '#b4b4b4', cursor: 'default' }}>
+                      <Lock size={16} /> {t.projects.privateProject}
+                    </span>
+                  )}
                   {project.links.viewCode && (
                     <a href={project.links.github} target="_blank" rel="noopener noreferrer" style={styles.projectLink}>
                       <Code size={16} /> {t.projects.viewCode}
@@ -1162,6 +1330,47 @@ const styles = {
     color: '#b4b4b4',
     fontSize: '0.9rem',
     marginBottom: '1rem',
+  },
+  experienceSummary: {
+    color: '#d4d4d4',
+    marginBottom: '0.5rem',
+  },
+  experienceLead: {
+    color: '#ffffff',
+    fontWeight: '600',
+  },
+  filterBar: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '0.75rem',
+    marginTop: '-1.5rem',
+    marginBottom: '2.5rem',
+  },
+  filterBtn: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    background: '#151515',
+    border: '1px solid #390977',
+    color: '#b4b4b4',
+    padding: '8px 18px',
+    borderRadius: '25px',
+    cursor: 'pointer',
+    fontWeight: '600',
+    fontSize: '14px',
+    transition: 'all 0.3s ease',
+  },
+  filterBtnActive: {
+    background: 'linear-gradient(135deg, #390977 0%, #5a0fb3 100%)',
+    border: '1px solid transparent',
+    color: '#ffffff',
+  },
+  filterCount: {
+    fontSize: '12px',
+    background: 'rgba(255, 255, 255, 0.1)',
+    padding: '1px 8px',
+    borderRadius: '10px',
   },
   experienceList: {
     listStyle: 'none',
