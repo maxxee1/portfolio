@@ -11,6 +11,12 @@
   display: none;
 }
 
+/* Proyectos: en computador los envoltorios no existen para el layout */
+.project-reveal,
+.project-reveal-inner {
+  display: contents;
+}
+
 @media (max-width: 767px) {
   .collapsible-toggle {
     cursor: pointer;
@@ -63,5 +69,56 @@
   /* Tarjetas de certificación sin imagen en teléfono */
   .cert-badge {
     display: none !important;
+  }
+
+  /* ── Proyectos: una columna, sin imagen, solo el título hasta tocarlo ── */
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .project-image {
+    display: none !important;
+  }
+
+  .project-content {
+    padding: 1rem 1.25rem !important;
+  }
+
+  .project-card .collapsible-title {
+    transition: margin 0.35s ease;
+  }
+
+  /* Despliegue suave hacia arriba (rol) y hacia abajo (detalle): la fila del grid
+     anima de 0fr a 1fr, así no hace falta conocer la altura del contenido */
+  .project-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.35s ease, opacity 0.35s ease;
+  }
+
+  .project-card.is-open .project-reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .project-reveal-inner {
+    display: block;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .project-card:not(.is-open) .project-reveal-inner a,
+  .project-card:not(.is-open) .project-reveal-inner button {
+    visibility: hidden;
+  }
+}
+
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .project-reveal,
+  .collapsible-chevron,
+  .project-card .collapsible-title {
+    transition: none;
   }
 }

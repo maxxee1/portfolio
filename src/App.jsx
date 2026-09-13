@@ -865,11 +865,15 @@ const Portfolio = () => {
             );
           })}
         </div>
-        <div style={styles.projectsGrid}>
+        <div style={styles.projectsGrid} className="projects-grid">
           {projects
             .filter(project => projectFilter === 'all' || project.categories.includes(projectFilter))
             .map(project => (
-            <div key={project.id} style={styles.projectCard}>
+            <div
+              key={project.id}
+              style={styles.projectCard}
+              className={`collapsible project-card${openPanels[`project-${project.id}`] ? ' is-open' : ''}`}
+            >
               {project.image ? (
                 <img
                   src={project.image}
@@ -881,21 +885,39 @@ const Portfolio = () => {
                   width="960"
                   height="640"
                   style={styles.projectImage}
+                  className="project-image"
                 />
               ) : (
-                <div style={styles.projectImage}>
+                <div style={styles.projectImage} className="project-image">
                   <span style={styles.projectIcon}>{project.icon}</span>
                 </div>
               )}
-              <div style={styles.projectContent}>
+              <div style={styles.projectContent} className="project-content">
+                {/* En teléfono, lo que está dentro de .project-reveal se despliega al tocar el
+                    título (arriba el rol, abajo el detalle). En computador son display: contents. */}
                 {project.role && (
-                  <span style={styles.roleBadge}>
-                    <Users size={14} /> {t.projects.roles[project.role]}
-                  </span>
+                  <div className="project-reveal">
+                    <div className="project-reveal-inner">
+                      <span style={styles.roleBadge}>
+                        <Users size={14} /> {t.projects.roles[project.role]}
+                      </span>
+                    </div>
+                  </div>
                 )}
-                <h3 style={styles.projectTitle}>
-                  {typeof project.title === 'object' ? project.title[currentLang] : project.title}
+                <h3 style={styles.projectTitle} className="collapsible-title">
+                  <button
+                    type="button"
+                    className="collapsible-toggle"
+                    style={styles.collapsibleToggle}
+                    onClick={() => togglePanel(`project-${project.id}`)}
+                    aria-expanded={!!openPanels[`project-${project.id}`]}
+                  >
+                    {typeof project.title === 'object' ? project.title[currentLang] : project.title}
+                    <ChevronDown size={22} className="collapsible-chevron" aria-hidden="true" />
+                  </button>
                 </h3>
+                <div className="project-reveal">
+                <div className="project-reveal-inner">
                 <p style={styles.projectDescription}>
                   {typeof project.description === 'object' ? project.description[currentLang] : project.description}
                 </p>
@@ -930,6 +952,8 @@ const Portfolio = () => {
                       <Globe size={16} /> {t.projects.website}
                     </a>
                   )}
+                </div>
+                </div>
                 </div>
               </div>
             </div>
