@@ -1293,7 +1293,7 @@ const Portfolio = () => {
             </div>
           </div>
 
-          <div style={{...styles.ctaButtons, marginTop: '2rem', justifyContent: 'center'}}>
+          <div style={{...styles.ctaButtons, marginTop: '2rem', justifyContent: 'center'}} className="contact-cta">
             <a href="https://linkedin.com/in/maximilianosolorza" target="_blank" rel="noopener noreferrer" style={styles.btnPrimary}>
               <Linkedin size={20} style={{marginRight: '8px'}} /> LinkedIn
             </a>
