@@ -42,7 +42,7 @@ export function Education() {
         ))}
       </div>
 
-      <h3 className="mt-14 mb-6 text-xl font-semibold text-chalk">
+      <h3 className="mt-10 mb-5 text-xl font-semibold text-chalk">
         {t(ui.education.competitions)}
       </h3>
 

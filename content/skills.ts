@@ -3,14 +3,15 @@ import type { Localized } from "@/lib/i18n";
 /** Los íconos se piden a CDN como SVG sueltos y diferidos. La fuente de devicon
  *  pesaba 130 KB de CSS bloqueante + 1,5 MB de fuente para ~30 íconos. */
 export type SkillIcon =
-  | { source: "devicon"; name: string; variant?: string }
+  | { source: "devicon"; name: string; variant?: string; invert?: boolean }
   | { source: "simple"; slug: string; color: string }
   | { source: "lucide"; name: LucideSkillIcon; color: string };
 
-export type LucideSkillIcon = "network" | "shield-check" | "hard-drive" | "file-search";
+export type LucideSkillIcon = "network" | "shield-check" | "hard-drive" | "file-search" | "bot";
 
 export type Skill = {
-  name: string;
+  /** Las marcas se escriben igual en los dos idiomas; lo demás se traduce. */
+  name: string | Localized;
   icon: SkillIcon;
 };
 
@@ -20,10 +21,11 @@ export type SkillGroup = {
   skills: readonly Skill[];
 };
 
-const devicon = (name: string, variant = "original"): SkillIcon => ({
+const devicon = (name: string, variant = "original", invert = false): SkillIcon => ({
   source: "devicon",
   name,
   variant,
+  invert,
 });
 
 const simple = (slug: string, color: string): SkillIcon => ({
@@ -77,7 +79,9 @@ export const skillGroups: readonly SkillGroup[] = [
       { name: "HTML", icon: devicon("html5") },
       { name: "CSS", icon: devicon("css3") },
       { name: "Git", icon: devicon("git") },
-      { name: "LaTeX", icon: simple("latex", "ffffff") },
+      // El de Simple Icons es el pájaro, no la marca: devicon trae el logotipo de
+      // siempre, pero dibujado en negro, así que se invierte para el fondo oscuro.
+      { name: "LaTeX", icon: devicon("latex", "original", true) },
     ],
   },
   {
@@ -91,6 +95,18 @@ export const skillGroups: readonly SkillGroup[] = [
       { name: "Wazuh", icon: { source: "lucide", name: "shield-check", color: "#3595F9" } },
       { name: "Autopsy", icon: { source: "lucide", name: "hard-drive", color: "#22c55e" } },
       { name: "FOCA", icon: { source: "lucide", name: "file-search", color: "#f59e0b" } },
+    ],
+  },
+  {
+    id: "ai",
+    title: { es: "IA & Agentes", en: "AI & Agents" },
+    skills: [
+      { name: "Claude Code", icon: simple("claude", "D97757") },
+      { name: "MCP", icon: simple("modelcontextprotocol", "ffffff") },
+      {
+        name: { es: "Multiagentes", en: "Multi-agent" },
+        icon: { source: "lucide", name: "bot", color: "#a855f7" },
+      },
     ],
   },
 ];

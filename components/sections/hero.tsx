@@ -18,7 +18,7 @@ export function Hero() {
   ];
 
   return (
-    <section id="home" className="relative overflow-hidden pt-28 pb-16 sm:pt-36 sm:pb-24">
+    <section id="home" className="relative overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-16">
       {/* Fondo: malla tenue + halo violeta detrás del retrato */}
       <div aria-hidden className="grid-backdrop pointer-events-none absolute inset-0" />
       <div
