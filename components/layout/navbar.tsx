@@ -56,8 +56,9 @@ export function Navbar({ active, menuOpen, onOpenMenu }: NavbarProps) {
               onClick={() => setLocale(code)}
               aria-pressed={locale === code}
               className={cn(
+                // Mismo énfasis que el selector de tema: activo = círculo bg-card + texto de acento.
                 "h-8 rounded-full px-2.5 text-xs font-bold transition-colors sm:h-9 sm:px-3",
-                locale === code ? "bg-accent text-on-accent shadow-sm" : "text-muted hover:text-heading",
+                locale === code ? "bg-card text-accent shadow-sm" : "text-muted hover:text-heading",
               )}
             >
               {code.toUpperCase()}

@@ -1,6 +1,15 @@
 "use client";
 
-import { ArrowLeft, ChevronRight, Download, ExternalLink, FileUser, X } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronRight,
+  Download,
+  ExternalLink,
+  FileUser,
+  X,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -50,7 +59,7 @@ export function CvDownload() {
         aria-haspopup="dialog"
         aria-label={t(ui.cv.open)}
         title={t(ui.cv.open)}
-        className="inline-flex h-9 items-center gap-2 rounded-full bg-accent-soft pr-3.5 pl-3 text-sm font-bold text-accent transition-colors hover:bg-accent hover:text-on-accent sm:h-10"
+        className="inline-flex h-9 items-center gap-2 rounded-full bg-tile pr-3.5 pl-3 text-sm font-bold text-heading transition-colors hover:bg-accent hover:text-on-accent active:bg-accent active:text-on-accent sm:h-10"
       >
         <FileUser size={17} />
         {t(ui.cv.open)}
@@ -74,6 +83,7 @@ export function CvDownload() {
 
             {selected ? (
               <Viewer
+                key={selected.id}
                 resume={selected}
                 onBack={() => setSelected(null)}
                 onClose={close}
@@ -153,6 +163,10 @@ function Chooser({
 }
 
 /** Visor del PDF elegido, con volver / abrir en pestaña / descargar / cerrar. */
+const ZOOM_MIN = 50;
+const ZOOM_MAX = 250;
+const ZOOM_STEP = 25;
+
 function Viewer({
   resume,
   onBack,
@@ -165,6 +179,11 @@ function Viewer({
   closeRef: CloseRef;
 }) {
   const { t } = useLanguage();
+  // El Viewer se remonta por CV (key en el padre), así que parte en 100% solo.
+  const [zoom, setZoom] = useState(100);
+
+  const changeZoom = (delta: number) =>
+    setZoom((value) => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, value + delta)));
 
   return (
     <div className="card animate-fade-in relative flex w-full max-w-4xl flex-col overflow-hidden">
@@ -191,13 +210,40 @@ function Viewer({
         </div>
 
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          {/* Zoom propio (reemplaza la barra nativa del visor). */}
+          <div className="flex items-center rounded-full bg-tile p-1">
+            <button
+              type="button"
+              onClick={() => changeZoom(-ZOOM_STEP)}
+              disabled={zoom <= ZOOM_MIN}
+              aria-label={t(ui.cv.zoomOut)}
+              title={t(ui.cv.zoomOut)}
+              className="grid size-7 place-items-center rounded-full text-accent transition-colors hover:bg-accent hover:text-on-accent disabled:pointer-events-none disabled:opacity-40 sm:size-8"
+            >
+              <ZoomOut size={15} />
+            </button>
+            <span className="w-9 text-center font-mono text-[11px] font-bold text-heading tabular-nums">
+              {zoom}%
+            </span>
+            <button
+              type="button"
+              onClick={() => changeZoom(ZOOM_STEP)}
+              disabled={zoom >= ZOOM_MAX}
+              aria-label={t(ui.cv.zoomIn)}
+              title={t(ui.cv.zoomIn)}
+              className="grid size-7 place-items-center rounded-full text-accent transition-colors hover:bg-accent hover:text-on-accent disabled:pointer-events-none disabled:opacity-40 sm:size-8"
+            >
+              <ZoomIn size={15} />
+            </button>
+          </div>
+
           <a
             href={resume.file}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t(ui.cv.openTab)}
             title={t(ui.cv.openTab)}
-            className="grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-tile hover:text-heading"
+            className="hidden size-9 place-items-center rounded-full text-muted transition-colors hover:bg-tile hover:text-heading sm:grid"
           >
             <ExternalLink size={17} />
           </a>
@@ -221,11 +267,11 @@ function Viewer({
         </div>
       </header>
 
-      {/* El visor nativo del navegador renderiza el PDF. navpanes=0 oculta el panel
-          de miniaturas (el CV es de una página). La key fuerza recarga al cambiar. */}
+      {/* El visor nativo renderiza el PDF; toolbar=0 quita su barra y navpanes=0 las
+          miniaturas. El zoom se pasa por el parámetro y la key fuerza recarga al cambiar. */}
       <iframe
-        key={resume.id}
-        src={`${resume.file}#view=FitH&navpanes=0&toolbar=1`}
+        key={`${resume.id}-${zoom}`}
+        src={`${resume.file}#toolbar=0&navpanes=0&statusbar=0&zoom=${zoom}`}
         title={`${t(ui.cv.title)} — ${resume.native}`}
         className={cn("min-h-0 w-full flex-1 bg-tile")}
       />
