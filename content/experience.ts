@@ -128,7 +128,6 @@ export const experience: readonly Experience[] = [
     },
     company: "Abacus RX - Miami, FL",
     logo: "abacus.webp",
-    logoZoom: 1.35,
     meta: {
       es: "Diciembre 2025 - Marzo 2026",
       en: "December 2025 - March 2026",

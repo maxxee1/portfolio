@@ -80,9 +80,9 @@ function SkillTile({ skill, label }: { skill: Skill; label: string }) {
   return (
     <li
       id={skillAnchorId(skill)}
-      className="skill-tile flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-tile px-2 py-4 text-center ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 hover:ring-accent/40"
+      className="skill-tile flex flex-col items-center justify-center gap-2 rounded-2xl bg-tile px-2 py-3 text-center ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 hover:ring-accent/40"
     >
-      <span className="grid size-10 place-items-center">
+      <span className="grid size-8 place-items-center">
         {url ? (
           // Íconos sueltos y diferidos desde CDN: son SVG de ~1 KB, no pasan por
           // el optimizador de Next (no tendría nada que optimizar).
@@ -90,12 +90,12 @@ function SkillTile({ skill, label }: { skill: Skill; label: string }) {
           <img
             src={url}
             alt=""
-            width={36}
-            height={36}
+            width={28}
+            height={28}
             loading="lazy"
             decoding="async"
             className={cn(
-              "size-9 object-contain",
+              "size-7 object-contain",
               whiteLogo && "invert dark:invert-0",
               blackLogo && "dark:invert",
             )}

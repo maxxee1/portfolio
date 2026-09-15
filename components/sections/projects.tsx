@@ -67,7 +67,7 @@ export function Projects() {
 
   return (
     <Section id="projects" title={t(ui.projects.title)} action={filters}>
-      <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(16.5rem,1fr))]">
         {visible.map((project, index) => (
           <Reveal key={project.id} delay={Math.min(index, 5) * 0.05} className="h-full">
             <ProjectCard project={project} />
@@ -106,14 +106,14 @@ function ProjectCard({ project }: { project: Project }) {
   );
 
   return (
-    <article className="card group flex h-full flex-col p-4">
-      <div className="relative h-44 overflow-hidden rounded-xl bg-tile">
+    <article className="card group flex h-full flex-col p-3">
+      <div className="relative h-32 overflow-hidden rounded-xl bg-tile">
         {project.image ? (
           <Image
             src={project.image}
             alt={title}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 420px"
+            sizes="(max-width: 640px) 100vw, 300px"
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
@@ -122,7 +122,7 @@ function ProjectCard({ project }: { project: Project }) {
             <div aria-hidden className="absolute -right-10 -bottom-16 size-40 rounded-full bg-hero-glow blur-2xl" />
             <span
               aria-hidden
-              className="relative grid size-20 place-items-center rounded-2xl bg-hero-chip text-4xl ring-1 ring-hero-ring/40 backdrop-blur transition-transform duration-500 group-hover:scale-110"
+              className="relative grid size-16 place-items-center rounded-2xl bg-hero-chip text-3xl ring-1 ring-hero-ring/40 backdrop-blur transition-transform duration-500 group-hover:scale-110"
             >
               {project.emoji}
             </span>
@@ -142,18 +142,18 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col px-1 pt-4">
-        <h3 className="text-lg leading-snug font-bold text-heading">{title}</h3>
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-body">{t(project.description)}</p>
+      <div className="flex flex-1 flex-col px-1 pt-3">
+        <h3 className="text-base leading-snug font-bold text-heading">{title}</h3>
+        <p className="mt-1.5 flex-1 text-[13px] leading-relaxed text-body">{t(project.description)}</p>
 
-        <div className="mt-4 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-1.5">
           {project.tags.map((tag) => (
             <TechTag key={tag} tag={tag} />
           ))}
         </div>
 
         {(actions.length > 0 || project.private) && (
-          <div className="mt-5 flex flex-wrap items-center gap-2 border-t border-line pt-4">
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-line pt-3">
             {actions.map(({ href, label, Icon }, index) => (
               <a
                 key={label}
@@ -161,7 +161,7 @@ function ProjectCard({ project }: { project: Project }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "inline-flex h-9 items-center gap-1.5 rounded-xl px-3.5 text-xs font-bold transition-colors",
+                  "inline-flex h-8 items-center gap-1.5 rounded-lg px-3 text-xs font-bold transition-colors",
                   index === 0
                     ? "bg-accent text-on-accent hover:opacity-90"
                     : "text-heading ring-1 ring-line hover:bg-tile",
@@ -171,7 +171,7 @@ function ProjectCard({ project }: { project: Project }) {
               </a>
             ))}
             {project.private && (
-              <span className="inline-flex h-9 items-center gap-1.5 text-xs font-medium text-muted">
+              <span className="inline-flex h-8 items-center gap-1.5 text-xs font-medium text-muted">
                 <Lock size={14} /> {t(ui.projects.privateProject)}
               </span>
             )}
