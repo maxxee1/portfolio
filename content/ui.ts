@@ -7,6 +7,13 @@ export const ui = {
   openMenu: { es: "Abrir menú", en: "Open menu" },
   closeMenu: { es: "Cerrar menú", en: "Close menu" },
   switchLanguage: { es: "Cambiar idioma", en: "Switch language" },
+  cv: {
+    open: { es: "Ver CV", en: "View resume" },
+    title: { es: "Curriculum Vitae", en: "Resume" },
+    download: { es: "Descargar PDF", en: "Download PDF" },
+    openTab: { es: "Abrir en pestaña nueva", en: "Open in new tab" },
+    close: { es: "Cerrar", en: "Close" },
+  },
   theme: {
     group: { es: "Tema", en: "Theme" },
     light: { es: "Claro", en: "Light" },

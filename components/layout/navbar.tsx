@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import Image from "next/image";
 
 import { useLanguage } from "@/components/providers/language-provider";
+import { CvDownload } from "@/components/ui/cv-download";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { profile } from "@/content/profile";
 import { ui, type SectionId } from "@/content/ui";
@@ -61,6 +62,8 @@ export function Navbar({ active, menuOpen, onOpenMenu }: NavbarProps) {
             </button>
           ))}
         </div>
+
+        <CvDownload />
 
         <ThemeToggle />
 

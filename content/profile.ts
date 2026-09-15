@@ -19,6 +19,11 @@ export const profile = {
   },
   email: "maximilianoo.adonis@gmail.com",
   location: { es: "Santiago, Chile", en: "Santiago, Chile" },
+  // CV en /public. Cambia el archivo por el real manteniendo el nombre.
+  cv: {
+    file: "/cv.pdf",
+    filename: "Maximiliano-Solorza-CV.pdf",
+  },
   social: {
     github: "https://github.com/maxxee1",
     linkedin: "https://linkedin.com/in/maximilianosolorza",
