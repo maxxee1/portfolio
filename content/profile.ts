@@ -37,10 +37,10 @@ export const profile = {
 
 export type Resume = {
   id: "es" | "en" | "de";
-  /** Nombre del idioma en su propia lengua (se muestra grande). */
+  /** Palabra "CV" en el idioma del documento; NO se traduce con la interfaz. */
+  title: string;
+  /** Nombre del idioma en su propia lengua; tampoco se traduce. */
   native: string;
-  /** Nombre del idioma traducido a la interfaz (subtítulo). */
-  language: Localized;
   /** Archivo en /public/cv. Reemplaza el PDF manteniendo el nombre. */
   file: string;
   /** Nombre con el que se descarga. */
@@ -50,22 +50,22 @@ export type Resume = {
 export const resumes: readonly Resume[] = [
   {
     id: "es",
+    title: "Curriculum",
     native: "Español",
-    language: { es: "Español", en: "Spanish" },
     file: "/cv/maximiliano-solorza-cv-es.pdf",
     filename: "Maximiliano-Solorza-CV-ES.pdf",
   },
   {
     id: "en",
+    title: "Resume",
     native: "English",
-    language: { es: "Inglés", en: "English" },
     file: "/cv/maximiliano-solorza-cv-en.pdf",
     filename: "Maximiliano-Solorza-Resume-EN.pdf",
   },
   {
     id: "de",
+    title: "Lebenslauf",
     native: "Deutsch",
-    language: { es: "Alemán", en: "German" },
     file: "/cv/maximiliano-solorza-cv-de.pdf",
     filename: "Maximiliano-Solorza-Lebenslauf-DE.pdf",
   },

@@ -131,16 +131,13 @@ function Chooser({
             <button
               type="button"
               onClick={() => onPick(resume)}
-              className="group flex w-full items-center gap-3 rounded-2xl bg-tile p-3 text-left ring-1 ring-transparent transition-all hover:ring-accent/40"
+              className="group flex w-full items-center gap-3 rounded-2xl bg-tile px-4 py-3.5 text-left ring-1 ring-transparent transition-all hover:ring-accent/40"
             >
-              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-hero font-mono text-xs font-bold text-hero-str uppercase">
-                {resume.id}
-              </span>
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-[15px] font-bold text-heading">
-                  {resume.native}
+                  {resume.title}
                 </span>
-                <span className="block truncate text-xs text-muted">{t(resume.language)}</span>
+                <span className="block truncate text-xs text-muted">{resume.native}</span>
               </span>
               <ChevronRight
                 size={18}
@@ -187,7 +184,7 @@ function Viewer({
           <div className="min-w-0">
             <p className="truncate text-sm font-bold text-heading">{t(ui.cv.title)}</p>
             <p className="truncate text-xs text-muted">
-              {resume.native} · {t(resume.language)}
+              {resume.title} · {resume.native}
             </p>
           </div>
         </div>
