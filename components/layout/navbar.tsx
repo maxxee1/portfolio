@@ -62,7 +62,7 @@ export function Navbar({ active, menuOpen, onOpenMenu }: NavbarProps) {
           ))}
         </div>
 
-        <ThemeToggle label={t(ui.toggleTheme)} />
+        <ThemeToggle />
 
         <button
           type="button"

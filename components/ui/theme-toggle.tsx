@@ -1,51 +1,66 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
+import { Monitor, Moon, Sun } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useLayoutEffect, useSyncExternalStore } from "react";
 
-import { applyTheme, readStoredTheme, THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
+import { useLanguage } from "@/components/providers/language-provider";
+import { ui } from "@/content/ui";
+import {
+  applyChoice,
+  DEFAULT_CHOICE,
+  readChoice,
+  setChoice,
+  subscribeChoice,
+  type ThemeChoice,
+} from "@/lib/theme";
+import { cn } from "@/lib/utils";
 
-/* La fuente de verdad es la clase .dark de <html> (la pone el script de <head>);
-   React solo se suscribe a ella. */
+// Orden del control: claro · sistema · oscuro (igual que el conmutador de referencia).
+const OPTIONS: readonly { value: ThemeChoice; Icon: LucideIcon; label: keyof typeof ui.theme }[] = [
+  { value: "light", Icon: Sun, label: "light" },
+  { value: "system", Icon: Monitor, label: "system" },
+  { value: "dark", Icon: Moon, label: "dark" },
+];
 
-function subscribe(onChange: () => void) {
-  const observer = new MutationObserver(onChange);
-  observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-  return () => observer.disconnect();
-}
-
-function readTheme(): Theme {
-  return document.documentElement.classList.contains("dark") ? "dark" : "light";
-}
-
-export function ThemeToggle({ label }: { label: string }) {
-  const theme = useSyncExternalStore(subscribe, readTheme, () => "dark" as Theme);
+/** Selector de tres modos: claro / sistema / oscuro. */
+export function ThemeToggle() {
+  const { t } = useLanguage();
+  const choice = useSyncExternalStore(subscribeChoice, readChoice, () => DEFAULT_CHOICE);
 
   // En desarrollo, Strict Mode remonta y React devuelve <html> a su className de JSX:
   // se vuelve a aplicar la preferencia guardada antes de pintar. En producción no hace nada.
   useLayoutEffect(() => {
-    applyTheme(readStoredTheme());
+    applyChoice(readChoice());
   }, []);
 
-  const toggle = () => {
-    const next: Theme = readTheme() === "dark" ? "light" : "dark";
-    try {
-      window.localStorage.setItem(THEME_STORAGE_KEY, next);
-    } catch {
-      // Sin almacenamiento el cambio igual se aplica, solo que no persiste.
-    }
-    applyTheme(next);
-  };
-
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      aria-label={label}
-      title={label}
-      className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:bg-tile hover:text-heading"
+    <div
+      role="group"
+      aria-label={t(ui.theme.group)}
+      className="flex items-center rounded-full bg-tile p-1"
     >
-      {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-    </button>
+      {OPTIONS.map(({ value, Icon, label }) => {
+        const selected = choice === value;
+        return (
+          <button
+            key={value}
+            type="button"
+            onClick={() => setChoice(value)}
+            aria-pressed={selected}
+            title={t(ui.theme[label])}
+            aria-label={t(ui.theme[label])}
+            className={cn(
+              "grid size-8 place-items-center rounded-full transition-colors sm:size-9",
+              selected
+                ? "bg-card text-accent shadow-sm"
+                : "text-muted hover:text-heading",
+            )}
+          >
+            <Icon size={16} />
+          </button>
+        );
+      })}
+    </div>
   );
 }

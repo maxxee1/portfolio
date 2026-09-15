@@ -7,7 +7,12 @@ export const ui = {
   openMenu: { es: "Abrir menú", en: "Open menu" },
   closeMenu: { es: "Cerrar menú", en: "Close menu" },
   switchLanguage: { es: "Cambiar idioma", en: "Switch language" },
-  toggleTheme: { es: "Cambiar tema claro/oscuro", en: "Toggle light/dark theme" },
+  theme: {
+    group: { es: "Tema", en: "Theme" },
+    light: { es: "Claro", en: "Light" },
+    system: { es: "Sistema", en: "System" },
+    dark: { es: "Oscuro", en: "Dark" },
+  },
 
   nav: {
     home: { es: "Inicio", en: "Home" },
