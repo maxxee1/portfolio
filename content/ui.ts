@@ -10,6 +10,8 @@ export const ui = {
   cv: {
     open: { es: "Ver CV", en: "View resume" },
     title: { es: "Curriculum Vitae", en: "Resume" },
+    choose: { es: "Elige un idioma", en: "Choose a language" },
+    back: { es: "Volver a los idiomas", en: "Back to languages" },
     download: { es: "Descargar PDF", en: "Download PDF" },
     openTab: { es: "Abrir en pestaña nueva", en: "Open in new tab" },
     close: { es: "Cerrar", en: "Close" },

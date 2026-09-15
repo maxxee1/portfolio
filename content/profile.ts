@@ -19,11 +19,6 @@ export const profile = {
   },
   email: "maximilianoo.adonis@gmail.com",
   location: { es: "Santiago, Chile", en: "Santiago, Chile" },
-  // CV en /public. Cambia el archivo por el real manteniendo el nombre.
-  cv: {
-    file: "/cv.pdf",
-    filename: "Maximiliano-Solorza-CV.pdf",
-  },
   social: {
     github: "https://github.com/maxxee1",
     linkedin: "https://linkedin.com/in/maximilianosolorza",
@@ -39,6 +34,42 @@ export const profile = {
     ],
   } satisfies Localized<string[]>,
 } as const;
+
+export type Resume = {
+  id: "es" | "en" | "de";
+  /** Nombre del idioma en su propia lengua (se muestra grande). */
+  native: string;
+  /** Nombre del idioma traducido a la interfaz (subtítulo). */
+  language: Localized;
+  /** Archivo en /public/cv. Reemplaza el PDF manteniendo el nombre. */
+  file: string;
+  /** Nombre con el que se descarga. */
+  filename: string;
+};
+
+export const resumes: readonly Resume[] = [
+  {
+    id: "es",
+    native: "Español",
+    language: { es: "Español", en: "Spanish" },
+    file: "/cv/maximiliano-solorza-cv-es.pdf",
+    filename: "Maximiliano-Solorza-CV-ES.pdf",
+  },
+  {
+    id: "en",
+    native: "English",
+    language: { es: "Inglés", en: "English" },
+    file: "/cv/maximiliano-solorza-cv-en.pdf",
+    filename: "Maximiliano-Solorza-Resume-EN.pdf",
+  },
+  {
+    id: "de",
+    native: "Deutsch",
+    language: { es: "Alemán", en: "German" },
+    file: "/cv/maximiliano-solorza-cv-de.pdf",
+    filename: "Maximiliano-Solorza-Lebenslauf-DE.pdf",
+  },
+];
 
 export const facts: readonly Fact[] = [
   {
