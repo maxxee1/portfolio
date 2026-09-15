@@ -20,9 +20,21 @@ export function Education() {
         {education.map((item, index) => (
           <Reveal key={item.id} delay={index * 0.05} className="h-full">
             <article className="card flex h-full gap-4 p-6 sm:gap-5 sm:p-7">
-              <span className="grid size-12 shrink-0 place-items-center rounded-full bg-tile text-accent">
-                <GraduationCap size={22} />
-              </span>
+              {item.logo ? (
+                <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-full bg-black ring-1 ring-line">
+                  <Image
+                    src={`/images/education/${item.logo}`}
+                    alt={item.school}
+                    width={48}
+                    height={48}
+                    className="size-full object-cover"
+                  />
+                </span>
+              ) : (
+                <span className="grid size-12 shrink-0 place-items-center rounded-full bg-tile text-accent">
+                  <GraduationCap size={22} />
+                </span>
+              )}
 
               <div className="min-w-0">
                 <h3 className="text-lg leading-snug font-bold text-heading">{t(item.degree)}</h3>

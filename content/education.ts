@@ -4,6 +4,8 @@ export type Education = {
   id: string;
   degree: Localized;
   school: string;
+  /** Logo en /public/images/education (llena el círculo). */
+  logo?: string;
   period: Localized;
   description?: Localized;
   courses?: readonly Localized[];
@@ -44,6 +46,7 @@ export const education: readonly Education[] = [
       en: "Computer and Telecommunications Engineering",
     },
     school: "Universidad Diego Portales",
+    logo: "university.webp",
     period: { es: "Marzo 2023 - Junio 2028", en: "March 2023 - June 2028" },
     description: {
       es: "Enfoque en ciberseguridad, redes, bases de datos y desarrollo de software.",
@@ -61,6 +64,7 @@ export const education: readonly Education[] = [
       en: "Advanced Physics and Mathematics Track",
     },
     school: "Liceo Arturo Alessandri Palma",
+    logo: "school.webp",
     period: { es: "Marzo 2019 - Diciembre 2022", en: "March 2019 - December 2022" },
   },
 ];
