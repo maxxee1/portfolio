@@ -85,36 +85,29 @@ export function Hero() {
               {t(profile.tagline)}
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            {/* Una sola línea también en teléfono: proyectos se estira y el resto son iconos */}
+            <div className="mt-8 flex items-center gap-2 sm:gap-3">
               <a
                 href="#projects"
-                className="inline-flex h-12 items-center gap-2 rounded-xl bg-hero-btn px-6 text-sm font-bold text-hero-btn-text shadow-lg shadow-hero-btn/25 transition hover:opacity-90"
+                className="inline-flex h-11 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-hero-btn px-3 text-sm font-bold whitespace-nowrap text-hero-btn-text shadow-lg shadow-hero-btn/25 transition hover:opacity-90 sm:h-12 sm:flex-none sm:px-6"
               >
-                {t(ui.hero.viewProjects)} <ArrowRight size={16} />
+                {t(ui.hero.viewProjects)} <ArrowRight size={16} className="shrink-0" />
               </a>
-              <a
-                href={`mailto:${profile.email}`}
-                className="inline-flex h-12 items-center gap-2 rounded-xl px-5 text-sm font-bold text-hero-text ring-1 ring-hero-ring transition hover:bg-hero-chip"
-              >
-                <Mail size={16} /> {t(ui.contact.emailMe)}
-              </a>
-              <div className="flex gap-3">
-                {[
-                  { href: profile.social.github, label: "GitHub", Icon: GithubIcon },
-                  { href: profile.social.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
-                ].map(({ href, label, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="grid size-12 place-items-center rounded-xl bg-hero-chip text-hero-text ring-1 ring-hero-ring/40 transition hover:ring-hero-ring"
-                  >
-                    <Icon className="size-5" />
-                  </a>
-                ))}
-              </div>
+              {[
+                { href: `mailto:${profile.email}`, label: t(ui.contact.email), Icon: Mail, external: false },
+                { href: profile.social.github, label: "GitHub", Icon: GithubIcon, external: true },
+                { href: profile.social.linkedin, label: "LinkedIn", Icon: LinkedinIcon, external: true },
+              ].map(({ href, label, Icon, external }) => (
+                <a
+                  key={href}
+                  href={href}
+                  {...(external && { target: "_blank", rel: "noopener noreferrer" })}
+                  aria-label={label}
+                  className="grid size-11 shrink-0 place-items-center rounded-xl bg-hero-chip text-hero-text ring-1 ring-hero-ring/40 transition hover:ring-hero-ring sm:size-12"
+                >
+                  <Icon className="size-5" />
+                </a>
+              ))}
             </div>
           </div>
         </Reveal>
