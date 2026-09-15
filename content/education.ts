@@ -4,8 +4,10 @@ export type Education = {
   id: string;
   degree: Localized;
   school: string;
-  /** Logo en /public/images/education (llena el círculo). */
+  /** Logo en /public/images/education (llena el cuadrado). */
   logo?: string;
+  /** Escala del logo dentro del chip (1 = sin zoom). */
+  logoZoom?: number;
   period: Localized;
   description?: Localized;
   courses?: readonly Localized[];
@@ -65,6 +67,7 @@ export const education: readonly Education[] = [
     },
     school: "Liceo Arturo Alessandri Palma",
     logo: "school.webp",
+    logoZoom: 1.25,
     period: { es: "Marzo 2019 - Diciembre 2022", en: "March 2019 - December 2022" },
   },
 ];

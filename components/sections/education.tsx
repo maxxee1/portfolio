@@ -21,18 +21,19 @@ export function Education() {
           <Reveal key={item.id} delay={index * 0.05} className="h-full">
             <article className="card flex h-full gap-4 p-6 sm:gap-5 sm:p-7">
               {item.logo ? (
-                <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-full bg-black ring-1 ring-line">
+                <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-black ring-1 ring-line">
                   <Image
                     src={`/images/education/${item.logo}`}
                     alt={item.school}
-                    width={48}
-                    height={48}
+                    width={56}
+                    height={56}
+                    style={item.logoZoom ? { transform: `scale(${item.logoZoom})` } : undefined}
                     className="size-full object-cover"
                   />
                 </span>
               ) : (
-                <span className="grid size-12 shrink-0 place-items-center rounded-full bg-tile text-accent">
-                  <GraduationCap size={22} />
+                <span className="grid size-14 shrink-0 place-items-center rounded-xl bg-tile text-accent">
+                  <GraduationCap size={24} />
                 </span>
               )}
 
@@ -80,12 +81,12 @@ export function Education() {
             <article className="card flex h-full flex-col p-6">
               <div className="flex items-start justify-between gap-3">
                 {competition.logo ? (
-                  <span className="grid size-12 shrink-0 place-items-center overflow-hidden rounded-xl bg-black ring-1 ring-line">
+                  <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-black ring-1 ring-line">
                     <Image
                       src={`/images/competitions/${competition.logo}`}
                       alt={competition.name}
-                      width={48}
-                      height={48}
+                      width={56}
+                      height={56}
                       className={cn(
                         "size-full",
                         competition.logoCover ? "object-cover" : "object-contain p-1.5",
@@ -95,11 +96,11 @@ export function Education() {
                 ) : (
                   <span
                     className={cn(
-                      "grid size-12 shrink-0 place-items-center rounded-xl bg-tile ring-1 ring-line",
+                      "grid size-14 shrink-0 place-items-center rounded-xl bg-tile ring-1 ring-line",
                       syntaxText(index + 3),
                     )}
                   >
-                    <Trophy size={20} />
+                    <Trophy size={22} />
                   </span>
                 )}
                 <span className="rounded-full bg-tile px-3 py-1 text-xs font-semibold text-muted">
