@@ -29,6 +29,8 @@ export type Competition = {
   date: Localized;
   /** Logo en /public/images/competitions. */
   logo?: string;
+  /** Llena el círculo (logo con fondo propio) en vez de object-contain. */
+  logoCover?: boolean;
   /** Noticia u origen (opcional). */
   link?: string;
   rankings?: readonly Ranking[];
@@ -90,6 +92,7 @@ export const competitions: readonly Competition[] = [
     },
     date: { es: "12 de noviembre de 2025", en: "November 12, 2025" },
     logo: "dreamlab.webp",
+    logoCover: true,
     link: "https://eit.udp.cl/exitosa-tercera-version-de-evento-capture-the-flag-udp-dreamlab/",
     rankings: [
       { scope: "team", rank: 9, total: 18, score: 1060, topScore: 2920 },
@@ -118,6 +121,7 @@ export const competitions: readonly Competition[] = [
     },
     date: { es: "11 de junio de 2025", en: "June 11, 2025" },
     logo: "dreamlab.webp",
+    logoCover: true,
     link: "https://eit.udp.cl/exitosa-segunda-version-de-evento-capture-the-flag-udp-dreamlab/",
     rankings: [
       { scope: "team", rank: 6, total: 13, score: 770, topScore: 1280 },

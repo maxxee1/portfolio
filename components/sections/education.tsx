@@ -74,7 +74,10 @@ export function Education() {
                       alt={competition.name}
                       width={48}
                       height={48}
-                      className="size-full object-contain p-1.5"
+                      className={cn(
+                        "size-full",
+                        competition.logoCover ? "object-cover" : "object-contain p-1.5",
+                      )}
                     />
                   </span>
                 ) : (
