@@ -41,7 +41,11 @@ export function Experience() {
                   alt={role.company}
                   width={48}
                   height={48}
-                  className="size-full object-contain p-1.5"
+                  style={role.logoZoom ? { transform: `scale(${role.logoZoom})` } : undefined}
+                  className={cn(
+                    "size-full",
+                    role.logoCover ? "object-cover" : "object-contain p-1.5",
+                  )}
                 />
               ) : (
                 <BriefcaseBusiness size={18} />

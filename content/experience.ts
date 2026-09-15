@@ -12,6 +12,10 @@ export type Experience = {
   company: string;
   /** Logo en /public/images/experience. */
   logo?: string;
+  /** Llena el círculo (object-cover, sin borde) en vez de object-contain. */
+  logoCover?: boolean;
+  /** Escala del logo dentro del chip (1 = sin zoom). */
+  logoZoom?: number;
   meta: Localized;
   /** Puesto vigente: lleva la insignia de "Presente". */
   current?: boolean;
@@ -26,6 +30,7 @@ export const experience: readonly Experience[] = [
     role: { es: "Solo Developer", en: "Solo Developer" },
     company: "Movistar Game Club",
     logo: "gameclub.webp",
+    logoZoom: 1.15,
     meta: {
       es: "Junio 2026 - Presente · Freelance · Santiago, Chile",
       en: "June 2026 - Present · Freelance · Santiago, Chile",
@@ -123,6 +128,7 @@ export const experience: readonly Experience[] = [
     },
     company: "Abacus RX - Miami, FL",
     logo: "abacus.webp",
+    logoZoom: 1.35,
     meta: {
       es: "Diciembre 2025 - Marzo 2026",
       en: "December 2025 - March 2026",
@@ -161,6 +167,7 @@ export const experience: readonly Experience[] = [
     },
     company: "Universidad Diego Portales",
     logo: "udp.webp",
+    logoCover: true,
     meta: {
       es: "Marzo 2025 - Diciembre 2025",
       en: "March 2025 - December 2025",

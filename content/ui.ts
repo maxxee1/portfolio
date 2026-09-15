@@ -103,6 +103,7 @@ export const ui = {
     of: { es: "de", en: "of" },
     leader: { es: "líder", en: "leader" },
     points: { es: "pts", en: "pts" },
+    contribution: { es: "del puntaje del equipo", en: "of the team score" },
     readNews: { es: "Ver noticia", en: "Read article" },
   },
 

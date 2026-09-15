@@ -96,6 +96,8 @@ export function Education() {
               <p className="mt-1 text-2xl font-bold text-heading">{t(competition.achievement)}</p>
               <p className="mt-1.5 text-sm text-body">{t(competition.detail)}</p>
 
+              <TeamContribution competition={competition} />
+
               {competition.rankings && (
                 <dl className="mt-6 space-y-4">
                   {competition.rankings.map((ranking) => (
@@ -122,18 +124,43 @@ export function Education() {
   );
 }
 
+/** Aporte individual al puntaje del equipo (efecto "carry"), en pequeño. */
+function TeamContribution({ competition }: { competition: (typeof competitions)[number] }) {
+  const { locale, t } = useLanguage();
+  const team = competition.rankings?.find((r) => r.scope === "team");
+  const individual = competition.rankings?.find((r) => r.scope === "individual");
+  if (!team?.score || !individual?.score) return null;
+
+  const share = (individual.score / team.score) * 100;
+  const formatted = share.toLocaleString(locale === "es" ? "es-CL" : "en-US", {
+    maximumFractionDigits: 1,
+  });
+
+  return (
+    <p className="mt-2 text-xs text-muted">
+      <span className="font-bold text-accent">{formatted}%</span> {t(ui.education.contribution)}
+    </p>
+  );
+}
+
 function RankingRow({ ranking }: { ranking: Ranking }) {
   const { locale, t } = useLanguage();
   const { rank, total, score, topScore } = ranking;
   const format = (value: number) => value.toLocaleString(locale === "es" ? "es-CL" : "en-US");
-  const topPercent = rank ? Math.max(1, Math.ceil((rank / total) * 100)) : null;
+  // Sin redondear hacia arriba: 10/75 = 13,3% (no 14%).
+  const topPercent =
+    rank !== undefined
+      ? ((rank / total) * 100).toLocaleString(locale === "es" ? "es-CL" : "en-US", {
+          maximumFractionDigits: 1,
+        })
+      : null;
 
   return (
     <div>
       <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 text-sm">
         <dt className="text-muted">{t(ui.education.rankings[ranking.scope])}</dt>
         <dd className="flex items-center gap-2">
-          {rank && (
+          {rank !== undefined && (
             <span className="font-bold text-heading">
               #{format(rank)}{" "}
               <span className="font-medium text-muted">
@@ -160,7 +187,7 @@ function RankingRow({ ranking }: { ranking: Ranking }) {
           pointsLabel={t(ui.education.points)}
         />
       ) : (
-        rank && <PositionScale rank={rank} total={total} format={format} />
+        rank !== undefined && <PositionScale rank={rank} total={total} format={format} />
       )}
     </div>
   );
@@ -198,7 +225,10 @@ function ScoreGap({
   );
 }
 
-/** Escala del #1 al último puesto con un punto donde quedó (cuando no hay puntajes). */
+/**
+ * Sin puntajes (p. ej. IEEE): barra que se llena según cuánto del total quedó por
+ * debajo. Mismo sentido que las de puntaje: peor a la izquierda, líder (#1) a la derecha.
+ */
 function PositionScale({
   rank,
   total,
@@ -208,21 +238,16 @@ function PositionScale({
   total: number;
   format: (n: number) => string;
 }) {
-  const position = total > 1 ? ((rank - 1) / (total - 1)) * 100 : 0;
+  const standing = total > 1 ? ((total - rank) / (total - 1)) * 100 : 100;
 
   return (
     <>
-      <div aria-hidden className="mt-3 px-1.5">
-        <div className="relative h-1.5 rounded-full bg-tile">
-          <span
-            className="absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-pop shadow-[0_0_10px] shadow-pop/60 ring-4 ring-pop/25"
-            style={{ left: `${position}%` }}
-          />
-        </div>
+      <div aria-hidden className="mt-2.5 h-2.5 overflow-hidden rounded-full bg-tile">
+        <div className="h-full rounded-full bg-bar" style={{ width: `${Math.max(3, standing)}%` }} />
       </div>
       <div aria-hidden className="mt-1.5 flex justify-between font-mono text-[11px] text-muted">
-        <span>#1</span>
         <span>#{format(total)}</span>
+        <span>#1</span>
       </div>
     </>
   );
