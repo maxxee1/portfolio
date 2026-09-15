@@ -8,6 +8,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { experience, type Experience as Role } from "@/content/experience";
 import { ui } from "@/content/ui";
+import { syntaxText } from "@/lib/syntax";
 import { cn } from "@/lib/utils";
 
 export function Experience() {
@@ -22,12 +23,15 @@ export function Experience() {
             {index < experience.length - 1 && (
               <span
                 aria-hidden
-                className="absolute top-12 -bottom-5 left-5 w-px bg-gradient-to-b from-brand-400/60 to-line sm:left-6"
+                className="absolute top-12 -bottom-5 left-5 w-px bg-gradient-to-b from-pop/60 to-line sm:left-6"
               />
             )}
             <span
               aria-hidden
-              className="absolute top-5 left-0 grid size-10 place-items-center rounded-full bg-horizon text-white shadow-lg shadow-brand-500/30 sm:size-12"
+              className={cn(
+                "absolute top-5 left-0 grid size-10 place-items-center rounded-full bg-card ring-1 ring-line sm:size-12",
+                syntaxText(index + 1),
+              )}
             >
               <BriefcaseBusiness size={18} />
             </span>
@@ -57,8 +61,8 @@ function RoleCard({ role }: { role: Role }) {
         {role.current && (
           <span className="inline-flex items-center gap-2 rounded-full bg-success-soft px-3 py-1 text-xs font-bold text-success">
             <span className="relative flex size-2">
-              <span className="absolute inset-0 animate-ping rounded-full bg-success opacity-60" />
-              <span className="relative size-2 rounded-full bg-success" />
+              <span className="absolute inset-0 animate-ping rounded-full bg-pop opacity-60" />
+              <span className="relative size-2 rounded-full bg-pop" />
             </span>
             {t(ui.experience.present)}
           </span>

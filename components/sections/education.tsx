@@ -8,6 +8,8 @@ import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { competitions, education, type Ranking } from "@/content/education";
 import { ui } from "@/content/ui";
+import { syntaxText } from "@/lib/syntax";
+import { cn } from "@/lib/utils";
 
 export function Education() {
   const { t } = useLanguage();
@@ -65,7 +67,12 @@ export function Education() {
           <Reveal key={competition.id} delay={index * 0.05} className="h-full">
             <article className="card flex h-full flex-col p-6">
               <div className="flex items-start justify-between gap-3">
-                <span className="grid size-12 place-items-center rounded-xl bg-horizon text-white shadow-lg shadow-brand-500/30">
+                <span
+                  className={cn(
+                    "grid size-12 place-items-center rounded-xl bg-tile ring-1 ring-line",
+                    syntaxText(index + 3),
+                  )}
+                >
                   <Trophy size={20} />
                 </span>
                 <span className="rounded-full bg-tile px-3 py-1 text-xs font-semibold text-muted">

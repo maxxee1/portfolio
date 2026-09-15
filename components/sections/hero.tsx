@@ -14,6 +14,8 @@ import { profile } from "@/content/profile";
 import { projects } from "@/content/projects";
 import { skillGroups } from "@/content/skills";
 import { ui, type SectionId } from "@/content/ui";
+import { syntaxText } from "@/lib/syntax";
+import { cn } from "@/lib/utils";
 
 type Stat = {
   href: `#${SectionId}`;
@@ -48,36 +50,42 @@ export function Hero() {
       <div className="grid gap-5 lg:grid-cols-12">
         {/* Banner principal (el de "Marketplace" de Horizon) */}
         <Reveal className="lg:col-span-8">
-          <div className="relative isolate flex h-full flex-col justify-center overflow-hidden rounded-[20px] bg-horizon px-6 py-10 sm:px-12 sm:py-14">
+          <div className="bg-hero relative isolate flex h-full flex-col justify-center overflow-hidden rounded-[20px] px-6 py-10 sm:px-12 sm:py-14">
             <div
               aria-hidden
               className="bg-dots absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_top_right,#000_10%,transparent_65%)]"
             />
-            <div aria-hidden className="absolute -right-20 -bottom-40 -z-10 size-96 rounded-full bg-white/10" />
-            <div aria-hidden className="absolute -right-4 -bottom-24 -z-10 size-56 rounded-full bg-white/10" />
+            <div aria-hidden className="absolute -right-20 -bottom-40 -z-10 size-96 rounded-full bg-hero-glow blur-2xl" />
+            <div aria-hidden className="absolute -top-24 right-1/3 -z-10 size-64 rounded-full bg-hero-glow-2 blur-2xl" />
 
-            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-bold text-white backdrop-blur">
-              <ShieldCheck size={14} /> {t(profile.role)}
+            {/* El rol, escrito como una línea de código */}
+            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-hero-chip px-3.5 py-1.5 font-mono text-xs text-hero-text ring-1 ring-hero-ring/40 backdrop-blur">
+              <ShieldCheck size={14} className="text-hero-str" />
+              <span>
+                <span className="text-hero-kw">const</span> role ={" "}
+                <span className="text-hero-str">&quot;{t(profile.role)}&quot;</span>;
+              </span>
             </span>
 
-            <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-white sm:text-5xl xl:text-6xl">
+            <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-hero-text sm:text-5xl xl:text-6xl">
               {profile.name}
+              <span aria-hidden className="text-hero-str">.</span>
             </h1>
 
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-pretty text-[#e3daff] sm:text-lg">
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-pretty text-hero-muted sm:text-lg">
               {t(profile.tagline)}
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#projects"
-                className="inline-flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-bold text-brand-500 shadow-lg shadow-brand-900/20 transition hover:bg-white/90"
+                className="inline-flex h-12 items-center gap-2 rounded-xl bg-hero-btn px-6 text-sm font-bold text-hero-btn-text shadow-lg shadow-hero-btn/25 transition hover:opacity-90"
               >
                 {t(ui.hero.viewProjects)} <ArrowRight size={16} />
               </a>
               <a
                 href={`mailto:${profile.email}`}
-                className="inline-flex h-12 items-center gap-2 rounded-xl px-5 text-sm font-bold text-white ring-1 ring-white/40 transition hover:bg-white/10"
+                className="inline-flex h-12 items-center gap-2 rounded-xl px-5 text-sm font-bold text-hero-text ring-1 ring-hero-ring transition hover:bg-hero-chip"
               >
                 <Mail size={16} /> {t(ui.contact.emailMe)}
               </a>
@@ -92,7 +100,7 @@ export function Hero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="grid size-12 place-items-center rounded-xl bg-white/10 text-white transition hover:bg-white/20"
+                    className="grid size-12 place-items-center rounded-xl bg-hero-chip text-hero-text ring-1 ring-hero-ring/40 transition hover:ring-hero-ring"
                   >
                     <Icon className="size-5" />
                   </a>
@@ -135,7 +143,12 @@ export function Hero() {
                 href={href}
                 className="card flex h-full flex-col items-start gap-3 p-4 transition-transform duration-300 hover:-translate-y-0.5 sm:flex-row sm:items-center sm:gap-4 sm:p-5"
               >
-                <span className="grid size-12 shrink-0 place-items-center rounded-full bg-tile text-accent sm:size-14">
+                <span
+                  className={cn(
+                    "grid size-12 shrink-0 place-items-center rounded-full bg-tile sm:size-14",
+                    syntaxText(index),
+                  )}
+                >
                   <Icon className="size-6" />
                 </span>
                 <span>

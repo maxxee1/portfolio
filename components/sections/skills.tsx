@@ -13,6 +13,7 @@ import {
   type Skill,
 } from "@/content/skills";
 import { ui } from "@/content/ui";
+import { syntaxText } from "@/lib/syntax";
 import { cn } from "@/lib/utils";
 
 const LUCIDE_ICONS: Record<LucideSkillIcon, LucideIcon> = {
@@ -41,7 +42,12 @@ export function Skills() {
               <div className="card h-full p-6">
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="text-lg font-bold text-heading">{t(group.title)}</h3>
-                  <span className="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-bold text-accent">
+                  <span
+                    className={cn(
+                      "rounded-full bg-tile px-2.5 py-0.5 font-mono text-xs font-bold",
+                      syntaxText(index),
+                    )}
+                  >
                     {group.skills.length}
                   </span>
                 </div>

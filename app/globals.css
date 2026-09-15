@@ -6,28 +6,9 @@
 /* El tema oscuro se activa con la clase .dark en <html> (la pone el script de layout.tsx). */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ── Paleta Horizon UI ─────────────────────────────────────────────────────── */
 @theme {
   --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-
-  --color-brand-50: #e9e3ff;
-  --color-brand-100: #c0b8fe;
-  --color-brand-200: #a195fd;
-  --color-brand-300: #8171fc;
-  --color-brand-400: #7551ff;
-  --color-brand-500: #422afb;
-  --color-brand-600: #3311db;
-  --color-brand-700: #2111a5;
-  --color-brand-800: #190793;
-  --color-brand-900: #11047a;
-  --color-brand-linear: #868cff;
-
-  --color-navy-600: #24388a;
-  --color-navy-700: #1b254b;
-  --color-navy-800: #111c44;
-  --color-navy-900: #0b1437;
-  --color-light-primary: #f4f7fe;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, Consolas, monospace;
 
   --radius-card: 20px;
 
@@ -46,8 +27,8 @@
 }
 
 /* ── Tokens semánticos ─────────────────────────────────────────────────────────
-   Cada componente usa estos nombres (bg-card, text-heading…) y el tema solo
-   cambia los valores: así no hace falta repetir dark: en cada clase. */
+   Cada componente usa estos nombres (bg-card, text-heading, text-syn-blue…) y el
+   tema solo cambia los valores: así no hace falta repetir dark: en cada clase. */
 @theme inline {
   --color-page: var(--page);
   --color-card: var(--card);
@@ -57,55 +38,137 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
   --color-accent-soft: var(--accent-soft);
+  /* Énfasis eléctrico: indicador activo, puntos, brillos. */
+  --color-pop: var(--pop);
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
   --color-warning-soft: var(--warning-soft);
+
+  /* Superficie destacada (banner de portada, tarjeta lateral, contacto). */
+  --color-hero-text: var(--hero-text);
+  --color-hero-muted: var(--hero-muted);
+  --color-hero-chip: var(--hero-chip);
+  --color-hero-btn: var(--hero-btn);
+  --color-hero-btn-text: var(--hero-btn-text);
+  --color-hero-ring: var(--hero-ring);
+  --color-hero-glow: var(--hero-glow);
+  --color-hero-glow-2: var(--hero-glow-2);
+  --color-hero-kw: var(--hero-kw);
+  --color-hero-str: var(--hero-str);
+
+  /* Colores de "resaltado de sintaxis": variedad por ítem (íconos, categorías…). */
+  --color-syn-purple: var(--syn-purple);
+  --color-syn-blue: var(--syn-blue);
+  --color-syn-green: var(--syn-green);
+  --color-syn-yellow: var(--syn-yellow);
+  --color-syn-red: var(--syn-red);
+  --color-syn-cyan: var(--syn-cyan);
+
   --shadow-card: var(--card-shadow);
 }
 
+/* Claro: blanco, verde agua y verde menta eléctrico. */
 :root {
-  --page: #f4f7fe;
+  --page: #ffffff;
   --card: #ffffff;
-  --tile: #f4f7fe;
-  --heading: #1b254b;
-  --body: #4a5578;
-  --muted: #68769f;
-  --line: #e9edf7;
-  --accent: #4318ff;
-  --accent-soft: #e9e3ff;
-  --success: #01a268;
-  --success-soft: #e6faf5;
-  --warning: #c77700;
-  --warning-soft: #fff6e5;
-  --card-border: #eef1f8;
-  --card-shadow: 14px 17px 40px 4px rgb(112 144 176 / 0.08);
+  --tile: #f0f8f6;
+  --heading: #0c2421;
+  --body: #34504b;
+  --muted: #5b7671;
+  --line: #e2edea;
+  --accent: #0f766e;
+  --on-accent: #ffffff;
+  --accent-soft: #dcf5ef;
+  --pop: #1fe89f;
+  --success: #047857;
+  --success-soft: #e0f6ec;
+  --warning: #b45309;
+  --warning-soft: #fdf3e3;
+  --card-border: #e2edea;
+  --card-shadow: 0 1px 2px rgb(12 60 52 / 0.04), 0 18px 36px -20px rgb(12 80 70 / 0.16);
+
+  --hero-from: #08453f;
+  --hero-to: #0e8a7e;
+  --hero-border: transparent;
+  --hero-text: #ffffff;
+  --hero-muted: #cdf3ea;
+  --hero-chip: rgb(255 255 255 / 0.12);
+  --hero-btn: #3dffb8;
+  --hero-btn-text: #03261f;
+  --hero-ring: rgb(255 255 255 / 0.4);
+  --hero-glow: rgb(61 255 184 / 0.16);
+  --hero-glow-2: rgb(255 255 255 / 0.08);
+  --hero-kw: #9ff5dd;
+  --hero-str: #3dffb8;
+  --dots: rgb(255 255 255 / 0.2);
+
+  --bar-from: #14b8a6;
+  --bar-to: #2cf5ad;
+
+  --syn-purple: #0f766e;
+  --syn-blue: #0e7490;
+  --syn-green: #059669;
+  --syn-yellow: #0d9488;
+  --syn-red: #047857;
+  --syn-cyan: #0891b2;
+
   color-scheme: light;
 }
 
+/* Oscuro: negro puro con la paleta de sintaxis de One Dark. */
 .dark {
-  --page: #0b1437;
-  --card: #111c44;
-  --tile: #1b254b;
-  --heading: #ffffff;
-  --body: #c5cde6;
-  --muted: #a3aed0;
-  --line: rgb(255 255 255 / 0.1);
-  --accent: #8f76ff;
-  --accent-soft: rgb(117 81 255 / 0.18);
-  --success: #05cd99;
-  --success-soft: rgb(5 205 153 / 0.14);
-  --warning: #ffb547;
-  --warning-soft: rgb(255 181 71 / 0.14);
-  --card-border: rgb(255 255 255 / 0.06);
-  --card-shadow: 0 20px 40px -24px rgb(0 0 0 / 0.45);
+  --page: #000000;
+  --card: #0a0a0a;
+  --tile: #151515;
+  --heading: #f2f2f2;
+  --body: #c8ccd4;
+  --muted: #8a8f98;
+  --line: rgb(255 255 255 / 0.08);
+  --accent: #61afef;
+  --on-accent: #000000;
+  --accent-soft: rgb(97 175 239 / 0.14);
+  --pop: #98c379;
+  --success: #98c379;
+  --success-soft: rgb(152 195 121 / 0.14);
+  --warning: #e5c07b;
+  --warning-soft: rgb(229 192 123 / 0.14);
+  --card-border: rgb(255 255 255 / 0.07);
+  --card-shadow: 0 0 #0000;
+
+  --hero-from: #0b0b0b;
+  --hero-to: #161616;
+  --hero-border: rgb(255 255 255 / 0.08);
+  --hero-text: #ffffff;
+  --hero-muted: #abb2bf;
+  --hero-chip: rgb(255 255 255 / 0.06);
+  --hero-btn: #61afef;
+  --hero-btn-text: #000000;
+  --hero-ring: rgb(255 255 255 / 0.2);
+  --hero-glow: rgb(198 120 221 / 0.16);
+  --hero-glow-2: rgb(97 175 239 / 0.12);
+  --hero-kw: #c678dd;
+  --hero-str: #98c379;
+  --dots: rgb(255 255 255 / 0.07);
+
+  --bar-from: #c678dd;
+  --bar-to: #61afef;
+
+  --syn-purple: #c678dd;
+  --syn-blue: #61afef;
+  --syn-green: #98c379;
+  --syn-yellow: #e5c07b;
+  --syn-red: #e06c75;
+  --syn-cyan: #56b6c2;
+
   color-scheme: dark;
 }
 
 /* ── Utilidades propias ─────────────────────────────────────────────────────── */
 
-/* Tarjeta base de Horizon: esquinas de 20px, fondo sólido y sombra difusa. */
+/* Tarjeta base: esquinas de 20px, fondo sólido y sombra difusa (solo en claro). */
 @utility card {
   border-radius: var(--radius-card);
   border: 1px solid var(--card-border);
@@ -113,14 +176,20 @@
   box-shadow: var(--card-shadow);
 }
 
-/* Degradado de marca de Horizon (banner, tarjeta lateral, botones principales). */
-@utility bg-horizon {
-  background-image: linear-gradient(135deg, #868cff 0%, #4318ff 100%);
+/* Superficie destacada: verde agua profundo en claro, negro con borde en oscuro. */
+@utility bg-hero {
+  background-image: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+  box-shadow: inset 0 0 0 1px var(--hero-border);
 }
 
-/* Trama de puntos para dar textura a los banners sin imágenes. */
+/* Relleno de las barras de progreso. */
+@utility bg-bar {
+  background-image: linear-gradient(90deg, var(--bar-from), var(--bar-to));
+}
+
+/* Trama de puntos para dar textura a las superficies destacadas. */
 @utility bg-dots {
-  background-image: radial-gradient(rgb(255 255 255 / 0.22) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dots) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
@@ -144,7 +213,7 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-brand-400) 30%, transparent);
+    background: color-mix(in oklab, var(--pop) 35%, transparent);
   }
 
   :focus-visible {

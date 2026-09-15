@@ -16,6 +16,7 @@ import {
   type ProjectFilter,
 } from "@/content/projects";
 import { ui } from "@/content/ui";
+import { CATEGORY_DOT } from "@/lib/syntax";
 import { cn } from "@/lib/utils";
 
 export function Projects() {
@@ -45,14 +46,14 @@ export function Projects() {
             aria-pressed={filter === option}
             className={cn(
               "inline-flex h-9 shrink-0 items-center gap-2 rounded-full px-4 text-sm font-semibold whitespace-nowrap transition-colors",
-              filter === option ? "bg-horizon text-white" : "text-muted hover:text-heading",
+              filter === option ? "bg-accent text-on-accent" : "text-muted hover:text-heading",
             )}
           >
             {t(ui.projects.filters[option])}
             <span
               className={cn(
                 "rounded-full px-1.5 text-[11px] leading-5 font-bold",
-                filter === option ? "bg-white/20" : "bg-tile",
+                filter === option ? "bg-on-accent/15" : "bg-tile",
               )}
             >
               {countByFilter(option)}
@@ -115,11 +116,12 @@ function ProjectCard({ project }: { project: Project }) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="relative grid size-full place-items-center bg-horizon">
-            <div aria-hidden className="bg-dots absolute inset-0 opacity-60" />
+          <div className="relative grid size-full place-items-center overflow-hidden rounded-xl bg-hero">
+            <div aria-hidden className="bg-dots absolute inset-0" />
+            <div aria-hidden className="absolute -right-10 -bottom-16 size-40 rounded-full bg-hero-glow blur-2xl" />
             <span
               aria-hidden
-              className="relative grid size-20 place-items-center rounded-2xl bg-white/15 text-4xl backdrop-blur transition-transform duration-500 group-hover:scale-110"
+              className="relative grid size-20 place-items-center rounded-2xl bg-hero-chip text-4xl ring-1 ring-hero-ring/40 backdrop-blur transition-transform duration-500 group-hover:scale-110"
             >
               {project.emoji}
             </span>
@@ -127,11 +129,12 @@ function ProjectCard({ project }: { project: Project }) {
         )}
 
         <div className="absolute inset-x-3 top-3 flex flex-wrap items-start justify-between gap-2">
-          <span className="rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-bold text-navy-700 backdrop-blur">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-card/90 px-2.5 py-1 text-[11px] font-bold text-heading backdrop-blur">
+            <span aria-hidden className={cn("size-1.5 rounded-full", CATEGORY_DOT[project.categories[0]])} />
             {t(ui.projects.filters[project.categories[0]])}
           </span>
           {project.role === "collaborator" && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-navy-900/70 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-black/70 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur">
               <Users size={12} /> {t(ui.projects.collaborator)}
             </span>
           )}
@@ -164,7 +167,7 @@ function ProjectCard({ project }: { project: Project }) {
                 className={cn(
                   "inline-flex h-9 items-center gap-1.5 rounded-xl px-3.5 text-xs font-bold transition-colors",
                   index === 0
-                    ? "bg-brand-500 text-white hover:bg-brand-600 dark:bg-brand-400 dark:hover:bg-brand-300"
+                    ? "bg-accent text-on-accent hover:opacity-90"
                     : "text-heading ring-1 ring-line hover:bg-tile",
                 )}
               >

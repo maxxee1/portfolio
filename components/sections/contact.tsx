@@ -22,24 +22,25 @@ export function Contact() {
     <Section id="contact" title={t(ui.contact.title)}>
       <div className="grid gap-5 lg:grid-cols-5">
         <Reveal className="lg:col-span-3">
-          <div className="relative isolate flex h-full flex-col justify-center overflow-hidden rounded-[20px] bg-horizon p-7 sm:p-10">
+          <div className="bg-hero relative isolate flex h-full flex-col justify-center overflow-hidden rounded-[20px] p-7 sm:p-10">
             <div
               aria-hidden
               className="bg-dots absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_at_bottom_right,#000_10%,transparent_65%)]"
             />
-            <div aria-hidden className="absolute -top-24 -right-24 -z-10 size-72 rounded-full bg-white/10" />
+            <div aria-hidden className="absolute -top-24 -right-24 -z-10 size-72 rounded-full bg-hero-glow blur-2xl" />
+            <div aria-hidden className="absolute -bottom-28 left-1/4 -z-10 size-64 rounded-full bg-hero-glow-2 blur-2xl" />
 
-            <span className="grid size-14 place-items-center rounded-2xl bg-white/15 text-white backdrop-blur">
+            <span className="grid size-14 place-items-center rounded-2xl bg-hero-chip text-hero-str ring-1 ring-hero-ring/40 backdrop-blur">
               <Send size={24} />
             </span>
-            <p className="mt-6 max-w-xl text-2xl leading-snug font-bold text-balance text-white sm:text-3xl">
+            <p className="mt-6 max-w-xl text-2xl leading-snug font-bold text-balance text-hero-text sm:text-3xl">
               {t(ui.contact.description)}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href={`mailto:${profile.email}`}
-                className="inline-flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-bold text-brand-500 shadow-lg shadow-brand-900/20 transition hover:bg-white/90"
+                className="inline-flex h-12 items-center gap-2 rounded-xl bg-hero-btn px-6 text-sm font-bold text-hero-btn-text shadow-lg shadow-hero-btn/25 transition hover:opacity-90"
               >
                 <Mail size={16} /> {t(ui.contact.emailMe)}
               </a>
@@ -47,7 +48,7 @@ export function Contact() {
                 href={profile.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 items-center gap-2 rounded-xl px-5 text-sm font-bold text-white ring-1 ring-white/40 transition hover:bg-white/10"
+                className="inline-flex h-12 items-center gap-2 rounded-xl px-5 text-sm font-bold text-hero-text ring-1 ring-hero-ring transition hover:bg-hero-chip"
               >
                 <LinkedinIcon className="size-4" /> LinkedIn
               </a>
@@ -55,7 +56,7 @@ export function Contact() {
                 href={profile.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 items-center gap-2 rounded-xl px-5 text-sm font-bold text-white ring-1 ring-white/40 transition hover:bg-white/10"
+                className="inline-flex h-12 items-center gap-2 rounded-xl px-5 text-sm font-bold text-hero-text ring-1 ring-hero-ring transition hover:bg-hero-chip"
               >
                 <GithubIcon className="size-4" /> GitHub
               </a>
