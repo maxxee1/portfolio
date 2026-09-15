@@ -3,15 +3,18 @@
 import { useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 
-/** Comandos que la terminal "escribe" en bucle. Decorativos: cortos para caber en la barra. */
+/** Comandos que la terminal "escribe" en bucle. Decorativos y cortos: caben en la barra
+ *  y no ejecutan nada. Tema pentesting / hacking. */
 const COMMANDS = [
-  "cd ~/portfolio",
-  "npm run dev",
-  "nmap -sV 10.0.0.7",
-  "python train.py",
-  "docker compose up",
-  "git push origin main",
-  "claude --continue",
+  "nmap -sV 10.0.0.0/24",
+  "hydra -L users.txt ssh",
+  "arpspoof -t victim gw",
+  "tcpdump -i eth0 -w cap",
+  "wireshark cap.pcap",
+  "sqlmap -u target --dbs",
+  "msfconsole -q",
+  "aircrack-ng handshake",
+  "john --wordlist hash.txt",
 ] as const;
 
 const TYPE_MS = 70;
