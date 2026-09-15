@@ -2,9 +2,8 @@
 
 import { ArrowRight, BadgeCheck, FolderKanban, Layers, Mail, MapPin, ShieldCheck, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import Image from "next/image";
-
 import { useLanguage } from "@/components/providers/language-provider";
+import { AvatarFlip } from "@/components/ui/avatar-flip";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
@@ -123,17 +122,12 @@ export function Hero() {
         {/* Tarjeta de perfil */}
         <Reveal className="lg:col-span-4" delay={0.05}>
           <div className="card flex h-full flex-col p-4">
-            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-tile sm:aspect-[4/3] lg:aspect-auto lg:min-h-72 lg:flex-1">
-              <Image
-                src={profile.photo.src}
-                alt={profile.photo.alt}
-                fill
-                loading="eager"
-                fetchPriority="high"
-                sizes="(max-width: 1024px) 100vw, 420px"
-                className="object-cover"
-              />
-            </div>
+            <AvatarFlip
+              src={profile.photo.src}
+              alt={profile.photo.alt}
+              flipLabel={t(ui.hero.flipPhoto)}
+              className="aspect-square w-full sm:aspect-[4/3] lg:aspect-auto lg:min-h-72 lg:flex-1"
+            />
           </div>
         </Reveal>
       </div>
