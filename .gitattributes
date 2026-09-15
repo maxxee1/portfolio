@@ -1,0 +1,11 @@
+# Normalizar fin de línea en texto; que git no toque los binarios.
+* text=auto
+
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
