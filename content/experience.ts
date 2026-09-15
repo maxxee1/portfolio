@@ -10,6 +10,8 @@ export type Experience = {
   id: string;
   role: Localized;
   company: string;
+  /** Logo en /public/images/experience. */
+  logo?: string;
   meta: Localized;
   /** Puesto vigente: lleva la insignia de "Presente". */
   current?: boolean;
@@ -23,6 +25,7 @@ export const experience: readonly Experience[] = [
     id: "gameclub",
     role: { es: "Solo Developer", en: "Solo Developer" },
     company: "Movistar Game Club",
+    logo: "gameclub.webp",
     meta: {
       es: "Junio 2026 - Presente · Freelance · Santiago, Chile",
       en: "June 2026 - Present · Freelance · Santiago, Chile",
@@ -119,6 +122,7 @@ export const experience: readonly Experience[] = [
       en: "Software Engineering Intern",
     },
     company: "Abacus RX - Miami, FL",
+    logo: "abacus.webp",
     meta: {
       es: "Diciembre 2025 - Marzo 2026",
       en: "December 2025 - March 2026",
@@ -156,6 +160,7 @@ export const experience: readonly Experience[] = [
       en: "Teaching Assistant - Databases",
     },
     company: "Universidad Diego Portales",
+    logo: "udp.webp",
     meta: {
       es: "Marzo 2025 - Diciembre 2025",
       en: "March 2025 - December 2025",

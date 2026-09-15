@@ -1,6 +1,7 @@
 "use client";
 
 import { BriefcaseBusiness, CalendarDays, ChevronDown } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 import { useLanguage } from "@/components/providers/language-provider";
@@ -30,11 +31,21 @@ export function Experience() {
             <span
               aria-hidden
               className={cn(
-                "absolute top-5 left-0 grid size-10 place-items-center rounded-full bg-card ring-1 ring-line sm:size-12",
-                syntaxText(index + 1),
+                "absolute top-5 left-0 grid size-10 place-items-center overflow-hidden rounded-full ring-1 ring-line sm:size-12",
+                role.logo ? "bg-white" : cn("bg-card", syntaxText(index + 1)),
               )}
             >
-              <BriefcaseBusiness size={18} />
+              {role.logo ? (
+                <Image
+                  src={`/images/experience/${role.logo}`}
+                  alt={role.company}
+                  width={48}
+                  height={48}
+                  className="size-full object-contain p-1.5"
+                />
+              ) : (
+                <BriefcaseBusiness size={18} />
+              )}
             </span>
 
             <Reveal delay={index * 0.05}>
