@@ -22,10 +22,6 @@ export const ui = {
 
   hero: {
     viewProjects: { es: "Ver Proyectos", en: "View Projects" },
-    flipPhoto: {
-      es: "Voltear foto de Maximiliano Solorza",
-      en: "Flip Maximiliano Solorza's photo",
-    },
     stats: {
       projects: { es: "Proyectos", en: "Projects" },
       technologies: { es: "Tecnologías", en: "Technologies" },

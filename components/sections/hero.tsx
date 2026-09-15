@@ -3,8 +3,8 @@
 import { ArrowRight, BadgeCheck, FolderKanban, Layers, Mail, MapPin, ShieldCheck, Trophy } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
-import { AvatarFlip } from "@/components/ui/avatar-flip";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
+import { PixelPhoto } from "@/components/ui/pixel-photo";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { certifications } from "@/content/certifications";
@@ -122,10 +122,9 @@ export function Hero() {
         {/* Tarjeta de perfil */}
         <Reveal className="lg:col-span-4" delay={0.05}>
           <div className="card flex h-full flex-col p-4">
-            <AvatarFlip
+            <PixelPhoto
               src={profile.photo.src}
               alt={profile.photo.alt}
-              flipLabel={t(ui.hero.flipPhoto)}
               className="aspect-square w-full sm:aspect-[4/3] lg:aspect-auto lg:min-h-72 lg:flex-1"
             />
           </div>

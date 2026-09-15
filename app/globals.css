@@ -214,25 +214,7 @@
   }
 }
 
-/* Parpadeo de la silueta del reverso de la foto. */
-@keyframes avatar-blink {
-  0%,
-  93%,
-  100% {
-    transform: scaleY(1);
-  }
-  96% {
-    transform: scaleY(0.08);
-  }
-}
-
 @layer components {
-  .avatar-blink {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: avatar-blink 4.8s ease-in-out infinite;
-  }
-
   .skill-tile {
     scroll-margin-block: 30vh;
   }
