@@ -50,9 +50,10 @@ export function CvDownload() {
         aria-haspopup="dialog"
         aria-label={t(ui.cv.open)}
         title={t(ui.cv.open)}
-        className="grid size-10 place-items-center rounded-full text-muted transition-colors hover:bg-tile hover:text-heading"
+        className="inline-flex h-9 items-center gap-2 rounded-full bg-accent-soft pr-3.5 pl-3 text-sm font-bold text-accent transition-colors hover:bg-accent hover:text-on-accent sm:h-10"
       >
-        <FileUser size={18} />
+        <FileUser size={17} />
+        {t(ui.cv.open)}
       </button>
 
       {open &&
@@ -220,10 +221,11 @@ function Viewer({
         </div>
       </header>
 
-      {/* El visor nativo del navegador renderiza el PDF. La key fuerza recarga al cambiar. */}
+      {/* El visor nativo del navegador renderiza el PDF. navpanes=0 oculta el panel
+          de miniaturas (el CV es de una página). La key fuerza recarga al cambiar. */}
       <iframe
         key={resume.id}
-        src={`${resume.file}#view=FitH`}
+        src={`${resume.file}#view=FitH&navpanes=0&toolbar=1`}
         title={`${t(ui.cv.title)} — ${resume.native}`}
         className={cn("min-h-0 w-full flex-1 bg-tile")}
       />

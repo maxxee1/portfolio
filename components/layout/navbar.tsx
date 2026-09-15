@@ -42,6 +42,8 @@ export function Navbar({ active, menuOpen, onOpenMenu }: NavbarProps) {
       </div>
 
       <div className="flex h-[54px] shrink-0 items-center gap-1 rounded-full bg-card px-2 shadow-card sm:h-[61px] sm:gap-2">
+        <CvDownload />
+
         <div
           role="group"
           aria-label={t(ui.switchLanguage)}
@@ -62,8 +64,6 @@ export function Navbar({ active, menuOpen, onOpenMenu }: NavbarProps) {
             </button>
           ))}
         </div>
-
-        <CvDownload />
 
         <ThemeToggle />
 
