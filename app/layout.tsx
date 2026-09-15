@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { DM_Sans } from "next/font/google";
 
 import { AppProviders } from "@/components/providers/app-providers";
+import { InlineScript } from "@/components/ui/inline-script";
 import { DEFAULT_LOCALE } from "@/lib/i18n";
 import { THEME_SCRIPT } from "@/lib/theme";
 
@@ -50,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang={DEFAULT_LOCALE} className="dark" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        <InlineScript html={THEME_SCRIPT} />
         {/* Los íconos de habilidades vienen de estos CDN: adelantar el DNS */}
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
