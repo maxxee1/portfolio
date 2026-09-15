@@ -1,10 +1,10 @@
 "use client";
 
-import { Check, Languages } from "lucide-react";
+import { Check, Copy, ExternalLink, Languages, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 
 import { useLanguage } from "@/components/providers/language-provider";
+import { Progress } from "@/components/ui/progress";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import {
@@ -13,118 +13,116 @@ import {
   type Certification,
 } from "@/content/certifications";
 import { ui } from "@/content/ui";
+import { useCopyToClipboard } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
 
 export function Certifications() {
   const { t } = useLanguage();
 
   return (
-    <Section id="certifications" eyebrow="06" title={t(ui.certifications.title)}>
-      <div className="space-y-10">
-        {CERT_GROUPS.map((group) => (
-          <div key={group}>
-            <h3 className="eyebrow mb-5">{t(ui.certifications.groups[group])}</h3>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {certificationsIn(group).map((cert, index) => (
-                <Reveal key={cert.id} delay={Math.min(index, 4) * 0.05} className="h-full">
-                  <CertificationCard cert={cert} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        ))}
+    <Section id="certifications" title={t(ui.certifications.title)}>
+      <div className="grid gap-5 lg:grid-cols-2">
+        {CERT_GROUPS.map((group, index) => {
+          const certs = certificationsIn(group);
+          const done = certs.filter((cert) => cert.status === "completed").length;
+          // El grupo más grande ocupa todo el ancho y reparte sus fichas en columnas.
+          const wide = index === 0;
+
+          return (
+            <Reveal key={group} delay={index * 0.05} className={cn("h-full", wide && "lg:col-span-2")}>
+              <div className="card h-full p-6">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 className="text-lg font-bold text-heading">
+                    {t(ui.certifications.groups[group])}
+                  </h3>
+                  <p className="text-sm text-muted">
+                    <span className="font-bold text-heading">
+                      {done}/{certs.length}
+                    </span>{" "}
+                    {t(ui.certifications.completedCount)}
+                  </p>
+                </div>
+                <Progress value={(done / certs.length) * 100} className="mt-3" />
+
+                <ul
+                  className={cn(
+                    "mt-5 grid gap-3",
+                    wide && "md:grid-cols-2 xl:grid-cols-3",
+                  )}
+                >
+                  {certs.map((cert) => (
+                    <li key={cert.id}>
+                      <CertificationTile cert={cert} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          );
+        })}
       </div>
     </Section>
   );
 }
 
-function CertificationCard({ cert }: { cert: Certification }) {
+function CertificationTile({ cert }: { cert: Certification }) {
   const { t } = useLanguage();
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const completed = cert.status === "completed";
 
-  const copyCode = async (code: string) => {
-    try {
-      await navigator.clipboard.writeText(code);
-    } catch {
-      // Navegadores sin Clipboard API (o sin contexto seguro)
-      const input = document.createElement("textarea");
-      input.value = code;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand("copy");
-      input.remove();
-    }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <article className="panel panel-interactive flex h-full gap-4 p-5">
-      <div className="grid size-16 shrink-0 place-items-center overflow-hidden rounded-full bg-violet-deep/30">
+    <article className="flex h-full items-start gap-4 rounded-2xl bg-tile p-4">
+      <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-full bg-card">
         {cert.image ? (
           <Image
             src={`/images/credentials/${cert.image}`}
             alt=""
-            width={80}
-            height={80}
+            width={72}
+            height={72}
             className="size-full scale-125 object-cover"
           />
+        ) : cert.category === "languages" ? (
+          <Languages size={24} className="text-accent" />
         ) : (
-          <Languages size={26} className="text-violet-bright" />
+          <ShieldCheck size={24} className="text-accent" />
         )}
       </div>
 
       <div className="min-w-0 flex-1">
-        <h4 className="text-sm leading-snug font-semibold text-chalk">{t(cert.title)}</h4>
-        <p className="mt-1 text-xs text-mist">{t(cert.provider)}</p>
-        {cert.details && <p className="mt-1.5 text-[11px] text-mist/80">{t(cert.details)}</p>}
+        <h4 className="text-sm leading-snug font-bold text-heading">{t(cert.title)}</h4>
+        <p className="mt-0.5 text-xs text-muted">{t(cert.provider)}</p>
+        {cert.details && <p className="mt-1 text-xs text-muted">{t(cert.details)}</p>}
 
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <span
             className={cn(
-              "rounded-full px-2.5 py-0.5 text-[11px] font-medium",
-              completed
-                ? "bg-emerald-500/15 text-emerald-400"
-                : "bg-amber-500/15 text-amber-400",
+              "rounded-full px-2.5 py-0.5 text-[11px] font-bold",
+              completed ? "bg-success-soft text-success" : "bg-warning-soft text-warning",
             )}
           >
             {completed ? t(ui.certifications.completed) : t(ui.certifications.inProgress)}
           </span>
 
-          {cert.url && (
-            <a
-              href={cert.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-line px-2.5 py-0.5 text-[11px] text-chalk transition-colors hover:border-violet-bright/50"
-            >
-              {t(ui.certifications.viewCredential)}
-            </a>
-          )}
+          {cert.url && <TileLink href={cert.url}>{t(ui.certifications.viewCredential)}</TileLink>}
 
           {cert.verify && (
             <>
-              <a
-                href={cert.verify.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border border-line px-2.5 py-0.5 text-[11px] text-chalk transition-colors hover:border-violet-bright/50"
-              >
-                {t(ui.certifications.verify)}
-              </a>
+              <TileLink href={cert.verify.url}>{t(ui.certifications.verify)}</TileLink>
               <button
                 type="button"
-                onClick={() => copyCode(cert.verify!.code)}
+                onClick={() => copy(cert.verify!.code)}
                 title={t(ui.certifications.copyCode)}
-                className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-violet/60 bg-white/5 px-2 py-0.5 font-mono text-[11px] text-chalk"
+                aria-label={`${t(ui.certifications.code)}: ${cert.verify.code}. ${t(ui.certifications.copyCode)}`}
+                className="inline-flex items-center gap-1.5 rounded-md border border-dashed border-accent/50 bg-card px-2 py-0.5 font-mono text-[11px] text-heading transition-colors hover:border-accent"
               >
                 {copied ? (
                   <>
-                    <Check size={11} /> {t(ui.certifications.copied)}
+                    <Check size={11} className="text-success" /> {t(ui.certifications.copied)}
                   </>
                 ) : (
-                  cert.verify.code
+                  <>
+                    <Copy size={11} className="text-muted" /> {cert.verify.code}
+                  </>
                 )}
               </button>
             </>
@@ -132,5 +130,18 @@ function CertificationCard({ cert }: { cert: Certification }) {
         </div>
       </div>
     </article>
+  );
+}
+
+function TileLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 text-[11px] font-bold text-accent hover:underline"
+    >
+      {children} <ExternalLink size={11} />
+    </a>
   );
 }

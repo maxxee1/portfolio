@@ -5,26 +5,34 @@ import { cn } from "@/lib/utils";
 
 type SectionProps = {
   id: SectionId;
-  title: string;
-  /** Etiqueta pequeña sobre el título. */
-  eyebrow?: string;
+  /** Sin título la sección se etiqueta con `label` (la portada ya tiene su h1). */
+  title?: string;
+  label?: string;
+  /** Contenido a la derecha del título (filtros, contadores…). */
+  action?: ReactNode;
   children: ReactNode;
   className?: string;
 };
 
-export function Section({ id, title, eyebrow, children, className }: SectionProps) {
+export function Section({ id, title, label, action, children, className }: SectionProps) {
+  const titleId = `${id}-title`;
+
   return (
-    <section id={id} className={cn("scroll-mt-24 py-12 sm:py-16", className)}>
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
-        <header className="mb-8 sm:mb-10">
-          {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-          <h2 className="text-gradient text-3xl font-semibold tracking-tight sm:text-4xl">
+    <section
+      id={id}
+      aria-labelledby={title ? titleId : undefined}
+      aria-label={title ? undefined : label}
+      className={cn("pt-10 first:pt-4 sm:pt-14 sm:first:pt-5", className)}
+    >
+      {title && (
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-x-6 gap-y-4 px-1">
+          <h2 id={titleId} className="text-2xl font-bold tracking-tight text-heading sm:text-[28px]">
             {title}
           </h2>
-          <div className="mt-5 h-px w-full bg-gradient-to-r from-violet-bright/60 via-line to-transparent" />
-        </header>
-        {children}
-      </div>
+          {action}
+        </div>
+      )}
+      {children}
     </section>
   );
 }

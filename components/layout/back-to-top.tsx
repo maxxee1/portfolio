@@ -23,9 +23,8 @@ export function BackToTop() {
       title={label}
       tabIndex={visible ? 0 : -1}
       className={cn(
-        "fixed right-5 bottom-5 z-50 grid size-11 place-items-center rounded-full",
-        "bg-gradient-to-br from-violet-deep to-violet text-white",
-        "shadow-[0_10px_30px_-10px] shadow-violet/80 transition-all duration-300",
+        "fixed right-5 bottom-5 z-30 grid size-12 place-items-center rounded-full bg-horizon text-white",
+        "shadow-lg shadow-brand-500/40 transition-all duration-300 hover:-translate-y-0.5",
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-3 opacity-0",
       )}
     >

@@ -11,6 +11,8 @@ export type Experience = {
   role: Localized;
   company: string;
   meta: Localized;
+  /** Puesto vigente: lleva la insignia de "Presente". */
+  current?: boolean;
   summary?: Localized;
   highlights: readonly ExperienceHighlight[];
   tags: readonly string[];
@@ -25,6 +27,7 @@ export const experience: readonly Experience[] = [
       es: "Junio 2026 - Presente · Freelance · Santiago, Chile",
       en: "June 2026 - Present · Freelance · Santiago, Chile",
     },
+    current: true,
     summary: {
       es: "Único desarrollador de la plataforma de atención al cliente con IA y del CRM de Movistar Game Club, red de clubes gamer en Santiago. Proyecto construido de punta a punta a partir de requerimientos de alto nivel.",
       en: "Sole developer of the AI customer-service platform and CRM for Movistar Game Club, a network of gaming clubs in Santiago. Built end to end from high-level requirements.",
@@ -155,6 +158,7 @@ export const experience: readonly Experience[] = [
       es: "Marzo 2025 - Presente",
       en: "March 2025 - Present",
     },
+    current: true,
     highlights: [
       {
         text: {

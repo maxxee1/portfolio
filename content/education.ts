@@ -9,12 +9,20 @@ export type Education = {
   courses?: readonly Localized[];
 };
 
+export type Ranking = {
+  scope: "team" | "individual" | "world";
+  rank: number;
+  total: number;
+};
+
 export type Competition = {
   id: string;
   name: string;
   achievement: Localized;
   detail: Localized;
   date: Localized;
+  /** Posición en el marcador: se dibuja como barra (más llena = mejor puesto). */
+  rankings?: readonly Ranking[];
 };
 
 export const education: readonly Education[] = [
@@ -56,6 +64,10 @@ export const competitions: readonly Competition[] = [
       en: "3,660 team points · 2,180 individual contribution",
     },
     date: { es: "Junio 2026", en: "June 2026" },
+    rankings: [
+      { scope: "team", rank: 4, total: 24 },
+      { scope: "individual", rank: 10, total: 75 },
+    ],
   },
   {
     id: "ieee-xtreme",
@@ -66,6 +78,7 @@ export const competitions: readonly Competition[] = [
       en: "924th place worldwide out of 8169 teams",
     },
     date: { es: "Octubre 2025", en: "October 2025" },
+    rankings: [{ scope: "world", rank: 924, total: 8169 }],
   },
   {
     id: "ctf-dreamlab",
@@ -76,5 +89,9 @@ export const competitions: readonly Competition[] = [
       en: "770 team points · 350 individual contribution",
     },
     date: { es: "Junio 2025", en: "June 2025" },
+    rankings: [
+      { scope: "team", rank: 6, total: 13 },
+      { scope: "individual", rank: 11, total: 43 },
+    ],
   },
 ];

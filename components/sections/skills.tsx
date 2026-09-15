@@ -13,6 +13,7 @@ import {
   type Skill,
 } from "@/content/skills";
 import { ui } from "@/content/ui";
+import { cn } from "@/lib/utils";
 
 const LUCIDE_ICONS: Record<LucideSkillIcon, LucideIcon> = {
   network: Network,
@@ -26,33 +27,51 @@ export function Skills() {
   const { t } = useLanguage();
 
   return (
-    <Section id="skills" eyebrow="04" title={t(ui.skills.title)}>
+    <Section id="skills" title={t(ui.skills.title)}>
       <div className="grid gap-5 lg:grid-cols-2">
-        {skillGroups.map((group, index) => (
-          <Reveal key={group.id} delay={index * 0.05} className="h-full">
-            <div className="panel h-full p-6">
-              <h3 className="eyebrow mb-5">{t(group.title)}</h3>
-              <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4">
-                {group.skills.map((skill) => {
-                  const label = typeof skill.name === "string" ? skill.name : t(skill.name);
-                  return <SkillCard key={label} skill={skill} label={label} />;
-                })}
-              </ul>
-            </div>
-          </Reveal>
-        ))}
+        {skillGroups.map((group, index) => {
+          // Con un número impar de grupos, el último ocupa todo el ancho.
+          const spansFull = index === skillGroups.length - 1 && skillGroups.length % 2 === 1;
+          return (
+            <Reveal
+              key={group.id}
+              delay={index * 0.05}
+              className={cn("h-full", spansFull && "lg:col-span-2")}
+            >
+              <div className="card h-full p-6">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="text-lg font-bold text-heading">{t(group.title)}</h3>
+                  <span className="rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-bold text-accent">
+                    {group.skills.length}
+                  </span>
+                </div>
+                <ul className="mt-5 grid grid-cols-[repeat(auto-fill,minmax(5.5rem,1fr))] gap-3">
+                  {group.skills.map((skill) => {
+                    const label = typeof skill.name === "string" ? skill.name : t(skill.name);
+                    return <SkillTile key={label} skill={skill} label={label} />;
+                  })}
+                </ul>
+              </div>
+            </Reveal>
+          );
+        })}
       </div>
     </Section>
   );
 }
 
-function SkillCard({ skill, label }: { skill: Skill; label: string }) {
-  const url = skillIconUrl(skill.icon);
-  const LucideSkill = skill.icon.source === "lucide" ? LUCIDE_ICONS[skill.icon.name] : null;
-  const invert = skill.icon.source === "devicon" && skill.icon.invert === true;
+function SkillTile({ skill, label }: { skill: Skill; label: string }) {
+  const { icon } = skill;
+  const url = skillIconUrl(icon);
+  const LucideSkill = icon.source === "lucide" ? LUCIDE_ICONS[icon.name] : null;
+
+  // Los logos blancos desaparecen en el tema claro y el de LaTeX (negro) en el oscuro:
+  // se invierten solo en el tema donde no se verían.
+  const whiteLogo = icon.source === "simple" && icon.color.toLowerCase() === "ffffff";
+  const blackLogo = icon.source === "devicon" && icon.invert === true;
 
   return (
-    <li className="flex flex-col items-center justify-center gap-2.5 rounded-xl border border-line bg-surface-hi/60 px-2 py-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-violet/60 hover:bg-violet-deep/20">
+    <li className="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-tile px-2 py-4 text-center ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 hover:ring-accent/40">
       <span className="grid size-10 place-items-center">
         {url ? (
           // Íconos sueltos y diferidos desde CDN: son SVG de ~1 KB, no pasan por
@@ -61,20 +80,22 @@ function SkillCard({ skill, label }: { skill: Skill; label: string }) {
           <img
             src={url}
             alt=""
-            width={40}
-            height={40}
+            width={36}
+            height={36}
             loading="lazy"
             decoding="async"
-            className={invert ? "invert" : undefined}
+            className={cn(
+              "size-9 object-contain",
+              whiteLogo && "invert dark:invert-0",
+              blackLogo && "dark:invert",
+            )}
           />
         ) : (
           LucideSkill &&
-          skill.icon.source === "lucide" && (
-            <LucideSkill size={34} color={skill.icon.color} />
-          )
+          icon.source === "lucide" && <LucideSkill size={32} color={icon.color} />
         )}
       </span>
-      <span className="text-[11px] font-semibold text-chalk">{label}</span>
+      <span className="text-xs font-semibold text-heading">{label}</span>
     </li>
   );
 }

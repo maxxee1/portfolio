@@ -7,6 +7,7 @@ export const ui = {
   openMenu: { es: "Abrir menú", en: "Open menu" },
   closeMenu: { es: "Cerrar menú", en: "Close menu" },
   switchLanguage: { es: "Cambiar idioma", en: "Switch language" },
+  toggleTheme: { es: "Cambiar tema claro/oscuro", en: "Toggle light/dark theme" },
 
   nav: {
     home: { es: "Inicio", en: "Home" },
@@ -21,7 +22,12 @@ export const ui = {
 
   hero: {
     viewProjects: { es: "Ver Proyectos", en: "View Projects" },
-    scrollHint: { es: "Desliza para explorar", en: "Scroll to explore" },
+    stats: {
+      projects: { es: "Proyectos", en: "Projects" },
+      technologies: { es: "Tecnologías", en: "Technologies" },
+      certifications: { es: "Certificaciones", en: "Certifications" },
+      competitions: { es: "Competencias", en: "Competitions" },
+    },
   },
 
   about: {
@@ -72,12 +78,19 @@ export const ui = {
       es: "Ramos destacados este semestre",
       en: "Highlighted courses this semester",
     },
+    rankings: {
+      team: { es: "Ranking por equipos", en: "Team ranking" },
+      individual: { es: "Ranking individual", en: "Individual ranking" },
+      world: { es: "Ranking mundial", en: "Worldwide ranking" },
+    },
+    of: { es: "de", en: "of" },
   },
 
   certifications: {
     title: { es: "Certificaciones", en: "Certifications" },
     completed: { es: "Completado", en: "Completed" },
     inProgress: { es: "En Progreso", en: "In Progress" },
+    completedCount: { es: "completadas", en: "completed" },
     viewCredential: { es: "Ver Credencial", en: "View Credential" },
     verify: { es: "Verificar", en: "Verify" },
     code: { es: "Código", en: "Code" },
@@ -97,6 +110,10 @@ export const ui = {
       en: "Interested in collaborating or have any questions? Feel free to reach out!",
     },
     emailMe: { es: "Escríbeme", en: "Email me" },
+    email: { es: "Correo", en: "Email" },
+    location: { es: "Ubicación", en: "Location" },
+    copyEmail: { es: "Copiar correo", en: "Copy email" },
+    copied: { es: "¡Copiado!", en: "Copied!" },
   },
 
   footer: {

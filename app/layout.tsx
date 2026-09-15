@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 
 import { AppProviders } from "@/components/providers/app-providers";
 import { DEFAULT_LOCALE } from "@/lib/i18n";
+import { THEME_SCRIPT } from "@/lib/theme";
 
 import "./globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+// DM Sans es la tipografía de Horizon UI.
+const dmSans = DM_Sans({ variable: "--font-dm-sans", subsets: ["latin"] });
 
 const SITE_URL = "https://my-portfolio-maximiliano.vercel.app";
 const TITLE = "Maximiliano Solorza — Ciberseguridad & IA";
@@ -39,18 +40,22 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#08080b",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f7fe" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1437" },
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang={DEFAULT_LOCALE} suppressHydrationWarning>
+    <html lang={DEFAULT_LOCALE} className="dark" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         {/* Los íconos de habilidades vienen de estos CDN: adelantar el DNS */}
         <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
         <link rel="dns-prefetch" href="https://cdn.simpleicons.org" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={dmSans.variable}>
         <AppProviders>{children}</AppProviders>
       </body>
     </html>

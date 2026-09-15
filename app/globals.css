@@ -1,75 +1,156 @@
 @import "tailwindcss";
 
-/* ── Tokens ──────────────────────────────────────────────────────────────────
-   Tailwind v4 genera las utilidades desde estas variables: --color-surface se
-   usa como bg-surface, text-surface, border-surface, etc. */
+/* La plantilla Horizon UI queda en el repo solo como referencia: que Tailwind no la escanee. */
+@source not "../horizon-tailwind-react-ts-main";
+
+/* El tema oscuro se activa con la clase .dark en <html> (la pone el script de layout.tsx). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ── Paleta Horizon UI ─────────────────────────────────────────────────────── */
 @theme {
-  --color-ink: #08080b;
-  --color-ink-soft: #0d0d12;
-  --color-surface: #101017;
-  --color-surface-hi: #16161f;
-  --color-line: #23232e;
-  --color-violet-deep: #390977;
-  --color-violet: #7c3aed;
-  --color-violet-bright: #a855f7;
-  --color-cyan: #5eb3f6;
-  --color-mist: #9b9bab;
-  --color-chalk: #e7e7ee;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --color-brand-50: #e9e3ff;
+  --color-brand-100: #c0b8fe;
+  --color-brand-200: #a195fd;
+  --color-brand-300: #8171fc;
+  --color-brand-400: #7551ff;
+  --color-brand-500: #422afb;
+  --color-brand-600: #3311db;
+  --color-brand-700: #2111a5;
+  --color-brand-800: #190793;
+  --color-brand-900: #11047a;
+  --color-brand-linear: #868cff;
 
-  --radius-card: 1.125rem;
+  --color-navy-600: #24388a;
+  --color-navy-700: #1b254b;
+  --color-navy-800: #111c44;
+  --color-navy-900: #0b1437;
+  --color-light-primary: #f4f7fe;
 
-  --animate-marquee: marquee 38s linear infinite;
-  --animate-float: float 7s ease-in-out infinite;
+  --radius-card: 20px;
 
-  @keyframes marquee {
+  --animate-fade-in: fade-in 0.35s ease-out both;
+
+  @keyframes fade-in {
     from {
-      transform: translateX(0);
+      opacity: 0;
+      transform: translateY(4px);
     }
     to {
-      transform: translateX(-50%);
-    }
-  }
-
-  @keyframes float {
-    0%,
-    100% {
+      opacity: 1;
       transform: translateY(0);
     }
-    50% {
-      transform: translateY(-10px);
-    }
   }
+}
+
+/* ── Tokens semánticos ─────────────────────────────────────────────────────────
+   Cada componente usa estos nombres (bg-card, text-heading…) y el tema solo
+   cambia los valores: así no hace falta repetir dark: en cada clase. */
+@theme inline {
+  --color-page: var(--page);
+  --color-card: var(--card);
+  --color-tile: var(--tile);
+  --color-heading: var(--heading);
+  --color-body: var(--body);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --shadow-card: var(--card-shadow);
+}
+
+:root {
+  --page: #f4f7fe;
+  --card: #ffffff;
+  --tile: #f4f7fe;
+  --heading: #1b254b;
+  --body: #4a5578;
+  --muted: #68769f;
+  --line: #e9edf7;
+  --accent: #4318ff;
+  --accent-soft: #e9e3ff;
+  --success: #01a268;
+  --success-soft: #e6faf5;
+  --warning: #c77700;
+  --warning-soft: #fff6e5;
+  --card-border: #eef1f8;
+  --card-shadow: 14px 17px 40px 4px rgb(112 144 176 / 0.08);
+  color-scheme: light;
+}
+
+.dark {
+  --page: #0b1437;
+  --card: #111c44;
+  --tile: #1b254b;
+  --heading: #ffffff;
+  --body: #c5cde6;
+  --muted: #a3aed0;
+  --line: rgb(255 255 255 / 0.1);
+  --accent: #8f76ff;
+  --accent-soft: rgb(117 81 255 / 0.18);
+  --success: #05cd99;
+  --success-soft: rgb(5 205 153 / 0.14);
+  --warning: #ffb547;
+  --warning-soft: rgb(255 181 71 / 0.14);
+  --card-border: rgb(255 255 255 / 0.06);
+  --card-shadow: 0 20px 40px -24px rgb(0 0 0 / 0.45);
+  color-scheme: dark;
+}
+
+/* ── Utilidades propias ─────────────────────────────────────────────────────── */
+
+/* Tarjeta base de Horizon: esquinas de 20px, fondo sólido y sombra difusa. */
+@utility card {
+  border-radius: var(--radius-card);
+  border: 1px solid var(--card-border);
+  background-color: var(--card);
+  box-shadow: var(--card-shadow);
+}
+
+/* Degradado de marca de Horizon (banner, tarjeta lateral, botones principales). */
+@utility bg-horizon {
+  background-image: linear-gradient(135deg, #868cff 0%, #4318ff 100%);
+}
+
+/* Trama de puntos para dar textura a los banners sin imágenes. */
+@utility bg-dots {
+  background-image: radial-gradient(rgb(255 255 255 / 0.22) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* La barra fija no debe tapar el título al saltar a una sección */
-    scroll-padding-top: 5.5rem;
+    /* La barra superior es sticky: el título de la sección no debe quedar debajo */
+    scroll-padding-top: 7.5rem;
     -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    background-color: var(--color-ink);
-    color: var(--color-chalk);
+    background-color: var(--page);
+    color: var(--body);
     font-family: var(--font-sans);
+    letter-spacing: -0.01em;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+    transition: background-color 0.3s ease;
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-violet-bright) 35%, transparent);
-    color: #fff;
+    background: color-mix(in oklab, var(--color-brand-400) 30%, transparent);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-violet-bright);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
   ::-webkit-scrollbar {
@@ -78,17 +159,13 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--color-ink);
+    background: var(--page);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--color-line);
+    background: color-mix(in oklab, var(--muted) 45%, transparent);
     border-radius: 999px;
-    border: 2px solid var(--color-ink);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-violet-deep);
+    border: 2px solid var(--page);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -103,76 +180,5 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
-  }
-}
-
-@layer components {
-  /* Tarjeta base: borde de un pelo, fondo apenas levantado del fondo general. */
-  .panel {
-    border-radius: var(--radius-card);
-    border: 1px solid var(--color-line);
-    background: linear-gradient(
-      180deg,
-      color-mix(in oklab, var(--color-surface) 92%, transparent),
-      color-mix(in oklab, var(--color-ink-soft) 92%, transparent)
-    );
-    backdrop-filter: blur(12px);
-  }
-
-  /* Igual que .panel pero reacciona al puntero: se ilumina el borde. */
-  .panel-interactive {
-    transition:
-      border-color 0.35s ease,
-      transform 0.35s ease,
-      box-shadow 0.35s ease;
-  }
-
-  .panel-interactive:hover {
-    border-color: color-mix(in oklab, var(--color-violet-bright) 45%, transparent);
-    box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--color-violet) 80%, transparent);
-  }
-
-  .text-gradient {
-    background: linear-gradient(
-      110deg,
-      var(--color-chalk) 0%,
-      var(--color-violet-bright) 45%,
-      var(--color-cyan) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* Etiqueta pequeña en mayúsculas que encabeza cada sección. */
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--color-cyan);
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in oklab, var(--color-violet-deep) 70%, transparent);
-    background: color-mix(in oklab, var(--color-violet-deep) 22%, transparent);
-    padding: 0.2rem 0.625rem;
-    font-size: 0.72rem;
-    font-family: var(--font-mono);
-    color: var(--color-violet-bright);
-    white-space: nowrap;
-  }
-
-  /* Malla de fondo: se desvanece hacia abajo para no competir con el contenido. */
-  .grid-backdrop {
-    background-image:
-      linear-gradient(to right, color-mix(in oklab, var(--color-line) 60%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in oklab, var(--color-line) 60%, transparent) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 35%, transparent 78%);
   }
 }

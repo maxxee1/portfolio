@@ -16,31 +16,34 @@ const FACT_ICONS: Record<Fact["id"], LucideIcon> = {
   languages: Languages,
 };
 
+/** Tarjeta "General Information" de Horizon: texto + mosaico de datos. */
 export function About() {
   const { locale, t } = useLanguage();
 
   return (
-    <Section id="about" eyebrow="01" title={t(ui.about.title)}>
-      <Reveal className="panel p-6 sm:p-10">
-        <div className="space-y-5">
+    <Section id="about" title={t(ui.about.title)}>
+      <Reveal className="card grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr] lg:gap-10">
+        <div className="space-y-4">
           {profile.about[locale].map((paragraph) => (
-            <p key={paragraph.slice(0, 32)} className="text-base leading-relaxed text-mist">
+            <p key={paragraph.slice(0, 32)} className="text-base leading-relaxed text-body">
               {paragraph}
             </p>
           ))}
         </div>
 
-        <dl className="mt-9 grid gap-6 border-t border-line pt-8 sm:grid-cols-2">
+        <dl className="grid content-start gap-3 sm:grid-cols-2 sm:gap-4">
           {facts.map((fact) => {
             const Icon = FACT_ICONS[fact.id];
             return (
-              <div key={fact.id} className="flex items-start gap-3">
-                <span className="mt-0.5 text-violet-bright">
+              <div key={fact.id} className="flex flex-col gap-3 rounded-2xl bg-tile p-4">
+                <span className="grid size-10 place-items-center rounded-full bg-card text-accent">
                   <Icon size={18} />
                 </span>
                 <div>
-                  <dt className="eyebrow mb-1">{t(fact.label)}</dt>
-                  <dd className="text-sm leading-snug text-chalk">{t(fact.value)}</dd>
+                  <dt className="text-sm text-muted">{t(fact.label)}</dt>
+                  <dd className="mt-0.5 text-[15px] leading-snug font-semibold text-heading">
+                    {t(fact.value)}
+                  </dd>
                 </div>
               </div>
             );
