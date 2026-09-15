@@ -13,6 +13,13 @@
   --radius-card: 20px;
 
   --animate-fade-in: fade-in 0.35s ease-out both;
+  --animate-caret: caret 1s steps(1) infinite;
+
+  @keyframes caret {
+    50% {
+      opacity: 0;
+    }
+  }
 
   @keyframes fade-in {
     from {

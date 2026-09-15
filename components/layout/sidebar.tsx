@@ -4,6 +4,7 @@ import { Mail, X } from "lucide-react";
 import Image from "next/image";
 
 import { NAV_ICONS } from "@/components/layout/nav-icons";
+import { SidebarTerminal } from "@/components/layout/sidebar-terminal";
 import { useLanguage } from "@/components/providers/language-provider";
 import { profile } from "@/content/profile";
 import { SECTION_IDS, ui, type SectionId } from "@/content/ui";
@@ -37,38 +38,35 @@ export function Sidebar({ active, open, isDesktop, onClose }: SidebarProps) {
         aria-label={t(ui.brand)}
         inert={!visible}
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-[290px] flex-col overflow-y-auto border-r border-line bg-card shadow-2xl shadow-black/20 transition-transform duration-300 ease-out xl:translate-x-0 xl:shadow-none",
+          "fixed inset-y-0 left-0 z-50 flex w-[240px] flex-col overflow-y-auto border-r border-line bg-card shadow-2xl shadow-black/20 transition-transform duration-300 ease-out xl:translate-x-0 xl:shadow-none",
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label={t(ui.closeMenu)}
-          className="absolute top-4 right-4 grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-tile hover:text-heading xl:hidden"
-        >
-          <X size={18} />
-        </button>
+        {/* En móvil el botón de cerrar va en su propia fila para no tapar la terminal */}
+        <div className="flex justify-end px-3 pt-3 xl:hidden">
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label={t(ui.closeMenu)}
+            className="grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-tile hover:text-heading"
+          >
+            <X size={18} />
+          </button>
+        </div>
 
-        {/* Marca */}
-        <a href="#home" onClick={onClose} className="mx-7 mt-10 flex items-center gap-3">
-          <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-hero font-mono text-sm font-bold text-hero-str">
-            {"<MS/>"}
-          </span>
-          <span className="min-w-0">
-            <span className="block text-base leading-tight font-bold text-heading">
-              {profile.name}
-            </span>
-            <span className="mt-0.5 block text-xs font-medium tracking-wide text-muted uppercase">
-              {t(ui.brand)}
-            </span>
-          </span>
+        <a
+          href="#home"
+          onClick={onClose}
+          aria-label={t(ui.nav.home)}
+          className="mx-4 mt-1 block xl:mt-6"
+        >
+          <SidebarTerminal />
         </a>
 
-        <div className="mt-9 mb-6 h-px bg-line" />
+        <div className="mt-6 mb-4 h-px bg-line" />
 
         <nav aria-label={t(ui.brand)}>
-          <ul className="space-y-1">
+          <ul className="space-y-0.5">
             {SECTION_IDS.map((id) => {
               const Icon = NAV_ICONS[id];
               const isActive = active === id;
@@ -78,18 +76,18 @@ export function Sidebar({ active, open, isDesktop, onClose }: SidebarProps) {
                     href={`#${id}`}
                     onClick={onClose}
                     aria-current={isActive ? "true" : undefined}
-                    className="group relative flex items-center gap-4 px-8 py-2.5"
+                    className="group relative flex items-center gap-3 px-6 py-2.5"
                   >
                     <Icon
-                      size={20}
+                      size={19}
                       className={cn(
-                        "transition-colors",
+                        "shrink-0 transition-colors",
                         isActive ? "text-accent" : "text-muted group-hover:text-heading",
                       )}
                     />
                     <span
                       className={cn(
-                        "text-[15px] transition-colors",
+                        "truncate text-[15px] transition-colors",
                         isActive
                           ? "font-bold text-heading"
                           : "font-medium text-muted group-hover:text-heading",
@@ -112,23 +110,23 @@ export function Sidebar({ active, open, isDesktop, onClose }: SidebarProps) {
         </nav>
 
         {/* Tarjeta inferior (la "Upgrade to PRO" de Horizon, convertida en contacto) */}
-        <div className="mt-auto px-5 pt-16 pb-8">
-          <div className="relative rounded-[20px] bg-hero px-4 pt-14 pb-5 text-center">
-            <div className="absolute -top-10 left-1/2 size-20 -translate-x-1/2 overflow-hidden rounded-full border-4 border-card bg-tile">
+        <div className="mt-auto px-4 pt-14 pb-6">
+          <div className="relative rounded-[20px] bg-hero px-3 pt-12 pb-4 text-center">
+            <div className="absolute -top-9 left-1/2 size-[72px] -translate-x-1/2 overflow-hidden rounded-full border-4 border-card bg-tile">
               <Image
                 src={profile.photo.src}
                 alt={profile.photo.alt}
-                width={80}
-                height={80}
-                sizes="80px"
+                width={72}
+                height={72}
+                sizes="72px"
                 className="size-full object-cover"
               />
             </div>
-            <p className="text-base font-bold text-hero-text">{t(profile.role)}</p>
-            <p className="mt-1 text-sm text-hero-muted">{t(profile.location)}</p>
+            <p className="text-sm font-bold text-hero-text">{t(profile.role)}</p>
+            <p className="mt-0.5 text-xs text-hero-muted">{t(profile.location)}</p>
             <a
               href={`mailto:${profile.email}`}
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-hero-btn px-6 py-2.5 text-sm font-bold text-hero-btn-text transition-opacity hover:opacity-90"
+              className="mt-4 inline-flex items-center gap-2 rounded-full bg-hero-btn px-5 py-2 text-sm font-bold text-hero-btn-text transition-opacity hover:opacity-90"
             >
               <Mail size={15} /> {t(ui.contact.emailMe)}
             </a>

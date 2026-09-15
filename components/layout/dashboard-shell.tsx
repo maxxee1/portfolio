@@ -38,7 +38,7 @@ export function DashboardShell({ children }: { children: ReactNode }) {
         onClose={() => setMenuOpen(false)}
       />
 
-      <div className="px-3 sm:px-5 xl:ml-[290px] xl:px-6">
+      <div className="px-3 sm:px-5 xl:ml-[240px] xl:px-6">
         <div className="mx-auto w-full max-w-[1400px]">
           <Navbar active={active} menuOpen={drawerOpen} onOpenMenu={() => setMenuOpen(true)} />
           <main className="pb-4">{children}</main>
