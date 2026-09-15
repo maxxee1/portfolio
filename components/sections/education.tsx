@@ -24,7 +24,7 @@ export function Education() {
                 <span className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-black ring-1 ring-line">
                   <Image
                     src={`/images/education/${item.logo}`}
-                    alt={item.school}
+                    alt={t(item.school)}
                     width={56}
                     height={56}
                     style={item.logoZoom ? { transform: `scale(${item.logoZoom})` } : undefined}
@@ -39,7 +39,7 @@ export function Education() {
 
               <div className="min-w-0">
                 <h3 className="text-lg leading-snug font-bold text-heading">{t(item.degree)}</h3>
-                <p className="mt-1 text-sm font-semibold text-accent">{item.school}</p>
+                <p className="mt-1 text-sm font-semibold text-accent">{t(item.school)}</p>
                 <p className="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
                   <CalendarDays size={14} /> {t(item.period)}
                 </p>

@@ -123,8 +123,8 @@ export const experience: readonly Experience[] = [
   {
     id: "abacus",
     role: {
-      es: "Pasante en Ingeniería de Software",
-      en: "Software Engineering Intern",
+      es: "Práctica en Ingeniería de Software",
+      en: "Software Engineering Internship",
     },
     company: "Abacus RX - Miami, FL",
     logo: "abacus.webp",

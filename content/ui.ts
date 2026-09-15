@@ -42,7 +42,7 @@ export const ui = {
       projects: { es: "Proyectos", en: "Projects" },
       technologies: { es: "Tecnologías", en: "Technologies" },
       certifications: { es: "Certificaciones", en: "Certifications" },
-      competitions: { es: "Competencias", en: "Competitions" },
+      competitions: { es: "Competiciones", en: "Competitions" },
     },
   },
 
@@ -89,8 +89,8 @@ export const ui = {
   },
 
   education: {
-    title: { es: "Educación & Competencias", en: "Education & Competitions" },
-    competitions: { es: "Competencias", en: "Competitions" },
+    title: { es: "Educación & Competiciones", en: "Education & Competitions" },
+    competitions: { es: "Competiciones", en: "Competitions" },
     currentCourses: {
       es: "Ramos destacados este semestre",
       en: "Highlighted courses this semester",

@@ -3,7 +3,7 @@ import type { Localized } from "@/lib/i18n";
 export type Education = {
   id: string;
   degree: Localized;
-  school: string;
+  school: Localized;
   /** Logo en /public/images/education (llena el cuadrado). */
   logo?: string;
   /** Escala del logo dentro del chip (1 = sin zoom). */
@@ -47,7 +47,10 @@ export const education: readonly Education[] = [
       es: "Ingeniería Civil en Informática y Telecomunicaciones",
       en: "Computer and Telecommunications Engineering",
     },
-    school: "Universidad Diego Portales",
+    school: {
+      es: "Universidad Diego Portales",
+      en: "Diego Portales University",
+    },
     logo: "university.webp",
     period: { es: "Marzo 2023 - Junio 2028", en: "March 2023 - June 2028" },
     description: {
@@ -65,10 +68,17 @@ export const education: readonly Education[] = [
       es: "Plan Avanzado en Física y Matemáticas",
       en: "Advanced Physics and Mathematics Track",
     },
-    school: "Liceo Arturo Alessandri Palma",
+    school: {
+      es: "Liceo Arturo Alessandri Palma",
+      en: "Arturo Alessandri Palma High School",
+    },
     logo: "school.webp",
     logoZoom: 1.25,
     period: { es: "Marzo 2019 - Diciembre 2022", en: "March 2019 - December 2022" },
+    description: {
+      es: "Tutor de Límites, Derivadas e Integrales: hice clases en paralelo a la profesora para apoyar a mis compañeros.",
+      en: "Tutor in limits, derivatives and integrals: taught alongside the teacher to support my classmates.",
+    },
   },
 ];
 
