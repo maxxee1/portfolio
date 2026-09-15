@@ -193,6 +193,31 @@
   background-size: 18px 18px;
 }
 
+/* Mosaico de habilidad al que se llegó desde una chapita: queda a media pantalla
+   y parpadea con el color de énfasis. */
+@keyframes skill-flash {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px var(--pop),
+      0 0 22px var(--pop);
+  }
+}
+
+@layer components {
+  .skill-tile {
+    scroll-margin-block: 30vh;
+  }
+
+  /* El retardo deja terminar el scroll suave antes de parpadear. */
+  .skill-tile:target {
+    animation: skill-flash 0.9s ease-in-out 0.6s 3;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

@@ -13,6 +13,8 @@ export type Skill = {
   /** Las marcas se escriben igual en los dos idiomas; lo demás se traduce. */
   name: string | Localized;
   icon: SkillIcon;
+  /** Otras etiquetas (de proyectos o experiencia) que llevan a esta habilidad. */
+  aliases?: readonly string[];
 };
 
 export type SkillGroup = {
@@ -45,7 +47,7 @@ export const skillGroups: readonly SkillGroup[] = [
       { name: "Node.js", icon: devicon("nodejs") },
       { name: "Express", icon: simple("express", "ffffff") },
       { name: "FastAPI", icon: devicon("fastapi") },
-      { name: "PostgreSQL", icon: devicon("postgresql") },
+      { name: "PostgreSQL", icon: devicon("postgresql"), aliases: ["SQL"] },
       { name: "MongoDB", icon: devicon("mongodb") },
       { name: "Redis", icon: devicon("redis") },
       { name: "SupaBase", icon: devicon("supabase") },
@@ -60,7 +62,11 @@ export const skillGroups: readonly SkillGroup[] = [
       { name: "Bash", icon: simple("gnubash", "ffffff") },
       { name: "Docker", icon: devicon("docker") },
       { name: "Kubernetes", icon: devicon("kubernetes") },
-      { name: "Google Cloud", icon: devicon("googlecloud") },
+      {
+        name: "Google Cloud",
+        icon: devicon("googlecloud"),
+        aliases: ["GCP", "Cloud Run", "BigQuery", "Secret Manager"],
+      },
       { name: "AWS", icon: devicon("amazonwebservices", "plain-wordmark") },
       { name: "Cloudflare", icon: devicon("cloudflare") },
       { name: "Nginx", icon: devicon("nginx") },
@@ -99,7 +105,7 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     id: "ai",
-    title: { es: "IA & Agentes", en: "AI & Agents" },
+    title: { es: "IA, Agentes & APIs", en: "AI, Agents & APIs" },
     skills: [
       { name: "Claude Code", icon: simple("claude", "D97757") },
       { name: "MCP", icon: simple("modelcontextprotocol", "ffffff") },
@@ -107,6 +113,10 @@ export const skillGroups: readonly SkillGroup[] = [
         name: { es: "Multiagentes", en: "Multi-agent" },
         icon: { source: "lucide", name: "bot", color: "#a855f7" },
       },
+      // Chatbots de WhatsApp e Instagram (Game Club) sobre la plataforma de Meta.
+      { name: "Meta for Developers", icon: simple("meta", "0467DF"), aliases: ["Meta API"] },
+      { name: "WhatsApp Cloud API", icon: simple("whatsapp", "25D366"), aliases: ["WhatsApp"] },
+      { name: "Instagram API", icon: simple("instagram", "E4405F"), aliases: ["Instagram"] },
     ],
   },
 ];
@@ -122,4 +132,34 @@ export function skillIconUrl(icon: SkillIcon): string | null {
     return `${SIMPLE_ICONS_CDN}/${icon.slug}/${icon.color}`;
   }
   return null;
+}
+
+/** id del mosaico de la habilidad en la página: "C++" → "skill-cpp". */
+export function skillAnchorId(skill: Skill): string {
+  const name = typeof skill.name === "string" ? skill.name : skill.name.en;
+  const slug = name
+    .toLowerCase()
+    .replace(/\+/g, "p")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+  return `skill-${slug}`;
+}
+
+const normalize = (text: string) => text.trim().toLowerCase();
+
+/** Nombre o alias (en cualquier idioma) → id del mosaico. */
+const SKILL_ANCHORS = new Map<string, string>(
+  skillGroups.flatMap((group) =>
+    group.skills.flatMap((skill) => {
+      const names = typeof skill.name === "string" ? [skill.name] : Object.values(skill.name);
+      return [...names, ...(skill.aliases ?? [])].map(
+        (label) => [normalize(label), skillAnchorId(skill)] as const,
+      );
+    }),
+  ),
+);
+
+/** A qué habilidad lleva una etiqueta; `null` si no está en la sección de habilidades. */
+export function skillAnchorFor(tag: string): string | null {
+  return SKILL_ANCHORS.get(normalize(tag)) ?? null;
 }

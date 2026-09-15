@@ -7,6 +7,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import {
+  skillAnchorId,
   skillGroups,
   skillIconUrl,
   type LucideSkillIcon,
@@ -77,7 +78,10 @@ function SkillTile({ skill, label }: { skill: Skill; label: string }) {
   const blackLogo = icon.source === "devicon" && icon.invert === true;
 
   return (
-    <li className="flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-tile px-2 py-4 text-center ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 hover:ring-accent/40">
+    <li
+      id={skillAnchorId(skill)}
+      className="skill-tile flex flex-col items-center justify-center gap-2.5 rounded-2xl bg-tile px-2 py-4 text-center ring-1 ring-transparent transition-all duration-300 hover:-translate-y-1 hover:ring-accent/40"
+    >
       <span className="grid size-10 place-items-center">
         {url ? (
           // Íconos sueltos y diferidos desde CDN: son SVG de ~1 KB, no pasan por

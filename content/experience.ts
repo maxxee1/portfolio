@@ -100,6 +100,8 @@ export const experience: readonly Experience[] = [
       "Python",
       "FastAPI",
       "Gemini",
+      "WhatsApp Cloud API",
+      "Instagram API",
       "React",
       "TypeScript",
       "Next.js",
@@ -155,10 +157,9 @@ export const experience: readonly Experience[] = [
     },
     company: "Universidad Diego Portales",
     meta: {
-      es: "Marzo 2025 - Presente",
-      en: "March 2025 - Present",
+      es: "Marzo 2025 - Diciembre 2025",
+      en: "March 2025 - December 2025",
     },
-    current: true,
     highlights: [
       {
         text: {

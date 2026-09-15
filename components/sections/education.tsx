@@ -3,7 +3,6 @@
 import { CalendarDays, GraduationCap, Trophy } from "lucide-react";
 
 import { useLanguage } from "@/components/providers/language-provider";
-import { Progress } from "@/components/ui/progress";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
 import { competitions, education, type Ranking } from "@/content/education";
@@ -87,7 +86,7 @@ export function Education() {
               {competition.rankings && (
                 <dl className="mt-auto space-y-4 pt-6">
                   {competition.rankings.map((ranking) => (
-                    <RankingBar key={ranking.scope} ranking={ranking} />
+                    <RankingScale key={ranking.scope} ranking={ranking} />
                   ))}
                 </dl>
               )}
@@ -99,25 +98,46 @@ export function Education() {
   );
 }
 
-function RankingBar({ ranking }: { ranking: Ranking }) {
+/**
+ * Escala del #1 (izquierda) al último puesto (derecha) con un punto donde quedó.
+ * Se lee como "dónde estoy entre todos", no como una barra que se llena.
+ */
+function RankingScale({ ranking }: { ranking: Ranking }) {
   const { locale, t } = useLanguage();
   const { rank, total } = ranking;
   const format = (value: number) => value.toLocaleString(locale === "es" ? "es-CL" : "en-US");
-  // Primer lugar = barra llena; último lugar = casi vacía.
-  const standing = ((total - rank + 1) / total) * 100;
+  const position = total > 1 ? ((rank - 1) / (total - 1)) * 100 : 0;
+  const topPercent = Math.max(1, Math.ceil((rank / total) * 100));
 
   return (
     <div>
-      <div className="flex items-baseline justify-between gap-3 text-sm">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm">
         <dt className="text-muted">{t(ui.education.rankings[ranking.scope])}</dt>
-        <dd className="font-bold text-heading">
-          #{format(rank)}{" "}
-          <span className="font-medium text-muted">
-            {t(ui.education.of)} {format(total)}
+        <dd className="flex items-center gap-2">
+          <span className="font-bold text-heading">
+            #{format(rank)}{" "}
+            <span className="font-medium text-muted">
+              {t(ui.education.of)} {format(total)}
+            </span>
+          </span>
+          <span className="rounded-full bg-success-soft px-2 py-0.5 text-[11px] font-bold text-success">
+            Top {topPercent}%
           </span>
         </dd>
       </div>
-      <Progress value={standing} className="mt-2" />
+
+      <div aria-hidden className="mt-3 px-1.5">
+        <div className="relative h-1.5 rounded-full bg-tile">
+          <span
+            className="absolute top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-pop shadow-[0_0_10px] shadow-pop/60 ring-4 ring-pop/25"
+            style={{ left: `${position}%` }}
+          />
+        </div>
+      </div>
+      <div aria-hidden className="mt-1.5 flex justify-between font-mono text-[11px] text-muted">
+        <span>#1</span>
+        <span>#{format(total)}</span>
+      </div>
     </div>
   );
 }

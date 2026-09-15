@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useLanguage } from "@/components/providers/language-provider";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { TechTag } from "@/components/ui/tech-tag";
 import { experience, type Experience as Role } from "@/content/experience";
 import { ui } from "@/content/ui";
 import { syntaxText } from "@/lib/syntax";
@@ -106,12 +107,7 @@ function RoleCard({ role }: { role: Role }) {
 
       <div className="mt-5 flex flex-wrap items-center gap-2">
         {role.tags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full bg-tile px-3 py-1 text-xs font-medium text-body"
-          >
-            {tag}
-          </span>
+          <TechTag key={tag} tag={tag} />
         ))}
       </div>
 

@@ -69,6 +69,7 @@ export const ui = {
 
   skills: {
     title: { es: "Habilidades", en: "Skills" },
+    viewInSkills: { es: "Ver en Habilidades", en: "See in Skills" },
   },
 
   education: {

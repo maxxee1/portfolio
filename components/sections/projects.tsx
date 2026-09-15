@@ -8,6 +8,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { GithubIcon } from "@/components/ui/brand-icons";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
+import { TechTag } from "@/components/ui/tech-tag";
 import {
   countByFilter,
   projects,
@@ -147,12 +148,7 @@ function ProjectCard({ project }: { project: Project }) {
 
         <div className="mt-4 flex flex-wrap gap-1.5">
           {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-full bg-tile px-2.5 py-1 text-xs font-medium text-muted"
-            >
-              {tag}
-            </span>
+            <TechTag key={tag} tag={tag} />
           ))}
         </div>
 
