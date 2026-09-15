@@ -58,14 +58,24 @@ export function Hero() {
             <div aria-hidden className="absolute -right-20 -bottom-40 -z-10 size-96 rounded-full bg-hero-glow blur-2xl" />
             <div aria-hidden className="absolute -top-24 right-1/3 -z-10 size-64 rounded-full bg-hero-glow-2 blur-2xl" />
 
-            {/* El rol, escrito como una línea de código */}
-            <span className="inline-flex w-fit items-center gap-2 rounded-full bg-hero-chip px-3.5 py-1.5 font-mono text-xs text-hero-text ring-1 ring-hero-ring/40 backdrop-blur">
-              <ShieldCheck size={14} className="text-hero-str" />
-              <span>
-                <span className="text-hero-kw">const</span> role ={" "}
-                <span className="text-hero-str">&quot;{t(profile.role)}&quot;</span>;
-              </span>
-            </span>
+            {/* Rol y ubicación, escritos como líneas de código */}
+            <div className="flex flex-wrap gap-2">
+              {[
+                { name: "role", value: t(profile.role), Icon: ShieldCheck },
+                { name: "location", value: t(profile.location), Icon: MapPin },
+              ].map(({ name, value, Icon }) => (
+                <span
+                  key={name}
+                  className="inline-flex w-fit items-center gap-2 rounded-full bg-hero-chip px-3.5 py-1.5 font-mono text-xs text-hero-text ring-1 ring-hero-ring/40 backdrop-blur"
+                >
+                  <Icon size={14} className="text-hero-str" />
+                  <span>
+                    <span className="text-hero-kw">const</span> {name} ={" "}
+                    <span className="text-hero-str">&quot;{value}&quot;</span>;
+                  </span>
+                </span>
+              ))}
+            </div>
 
             <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-hero-text sm:text-5xl xl:text-6xl">
               {profile.name}
@@ -123,12 +133,6 @@ export function Hero() {
                 sizes="(max-width: 1024px) 100vw, 420px"
                 className="object-cover"
               />
-            </div>
-            <div className="mt-4 px-1 pb-1">
-              <p className="text-lg font-bold text-heading">{profile.name}</p>
-              <p className="mt-0.5 flex items-center gap-1.5 text-sm text-muted">
-                <MapPin size={14} /> {t(profile.location)}
-              </p>
             </div>
           </div>
         </Reveal>
