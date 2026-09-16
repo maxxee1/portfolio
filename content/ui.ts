@@ -119,6 +119,7 @@ export const ui = {
     copied: { es: "¡Copiado!", en: "Copied!" },
     groups: {
       security: { es: "Ciberseguridad", en: "Cybersecurity" },
+      aws: { es: "Microcredenciales AWS", en: "AWS Microcredentials" },
       networking: { es: "Redes", en: "Networking" },
       languages: { es: "Idiomas", en: "Languages" },
     },

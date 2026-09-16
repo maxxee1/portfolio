@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Copy, ExternalLink, Languages, ShieldCheck } from "lucide-react";
+import { Check, Cloud, Copy, ExternalLink, Languages, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 import { useLanguage } from "@/components/providers/language-provider";
@@ -25,8 +25,8 @@ export function Certifications() {
         {CERT_GROUPS.map((group, index) => {
           const certs = certificationsIn(group);
           const done = certs.filter((cert) => cert.status === "completed").length;
-          // El grupo más grande ocupa todo el ancho y reparte sus fichas en columnas.
-          const wide = index === 0;
+          // Los grupos grandes ocupan todo el ancho y reparten sus fichas en columnas.
+          const wide = certs.length >= 4;
 
           return (
             <Reveal key={group} delay={index * 0.05} className={cn("h-full", wide && "lg:col-span-2")}>
@@ -83,6 +83,8 @@ function CertificationTile({ cert }: { cert: Certification }) {
           />
         ) : cert.category === "languages" ? (
           <Languages size={24} className="text-accent" />
+        ) : cert.category === "aws" ? (
+          <Cloud size={24} className="text-accent" />
         ) : (
           <ShieldCheck size={24} className="text-accent" />
         )}
