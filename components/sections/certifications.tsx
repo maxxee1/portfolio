@@ -103,14 +103,14 @@ function CertificationTile({ cert }: { cert: Certification }) {
 
   return (
     <article className="flex h-full items-start gap-4 rounded-2xl bg-tile p-4">
-      <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-full bg-card">
+      <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-card ring-1 ring-line">
         {cert.image ? (
           <Image
             src={`/images/credentials/${cert.image}`}
             alt=""
-            width={72}
-            height={72}
-            className="size-full scale-125 object-cover"
+            width={112}
+            height={112}
+            className="size-full object-cover"
           />
         ) : cert.category === "languages" ? (
           <Languages size={24} className="text-accent" />

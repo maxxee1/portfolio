@@ -26,7 +26,7 @@ export type Certification = {
   details?: Localized;
   /** Fecha de emisión, en su propia línea. */
   issued?: Localized;
-  /** Insignia en /public/images/credentials. */
+  /** Logo del emisor en /public/images/credentials. */
   image?: string;
   /** Credencial pública (Credly). */
   url?: string;
@@ -431,7 +431,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "completed",
     category: "security",
-    image: "itc.webp",
+    image: "cisco.webp",
     url: "https://www.credly.com/badges/ef56a8d5-1ba8-4dde-90b2-295ad5da6b3c/public_url",
   },
   {
@@ -454,7 +454,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "completed",
     category: "security",
-    image: "ce.webp",
+    image: "cisco.webp",
     url: "https://www.credly.com/badges/0e8d7cb2-4e8d-4aa0-bfaa-24977276b72e/public_url",
   },
   {
@@ -470,7 +470,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "in-progress",
     category: "security",
-    image: "eh.webp",
+    image: "cisco.webp",
   },
   {
     id: "osint",
@@ -491,7 +491,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "in-progress",
     category: "security",
-    image: "oa.webp",
+    image: "udemy.webp",
   },
   {
     id: "metasploit",
@@ -506,7 +506,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "in-progress",
     category: "security",
-    image: "oau.webp",
+    image: "udemy.webp",
   },
   {
     id: "networking-basics",
@@ -528,7 +528,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "completed",
     category: "networking",
-    image: "ne.webp",
+    image: "cisco.webp",
     url: "https://www.credly.com/badges/98ddfe39-d619-4956-91f4-7d4080b0960f/public_url",
   },
   {
@@ -557,6 +557,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "completed",
     category: "languages",
+    image: "englishscore.webp",
     // Misma URL a la que redirige el formulario de englishscore.com/verify:
     // devuelve el certificado en PDF servido por EnglishScore.
     verify: { url: "https://api2.englishscore.com/verify/2a2a20290143", code: "2a2a20290143" },
@@ -574,7 +575,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "in-progress",
     category: "languages",
-    image: "efd.webp",
+    image: "freecodecamp.webp",
   },
   {
     id: "aws-microcredentials",
@@ -595,6 +596,7 @@ export const certifications: readonly Certification[] = [
     },
     status: "in-progress",
     category: "cloud",
+    image: "aws.webp",
     credentials: awsMicrocredentials,
   },
 ];
