@@ -436,6 +436,21 @@ export const ui = {
       nl: "Certificaten bekijken",
     },
     close: { es: "Cerrar", en: "Close", de: "Schließen", it: "Chiudi", nl: "Sluiten" },
+    back: { es: "Volver", en: "Back", de: "Zurück", it: "Indietro", nl: "Terug" },
+    labIntro: {
+      es: "Exam Lab práctico: se aprueba resolviendo tareas en vivo sobre infraestructura real de AWS, no con preguntas de opción múltiple.",
+      en: "Hands-on Exam Lab: passed by completing live tasks on real AWS infrastructure, not by answering multiple-choice questions.",
+      de: "Praktisches Exam Lab: Bestanden wird durch Live-Aufgaben auf echter AWS-Infrastruktur, nicht durch Multiple-Choice-Fragen.",
+      it: "Exam Lab pratico: si supera svolgendo attività dal vivo su infrastruttura AWS reale, non con domande a risposta multipla.",
+      nl: "Praktisch Exam Lab: je slaagt door live taken uit te voeren op echte AWS-infrastructuur, niet met meerkeuzevragen.",
+    },
+    labTasks: {
+      es: "Lo que se implementa",
+      en: "What gets implemented",
+      de: "Was umgesetzt wird",
+      it: "Cosa si implementa",
+      nl: "Wat er wordt geïmplementeerd",
+    },
     verify: {
       es: "Verificar",
       en: "Verify",
