@@ -1,6 +1,6 @@
 import type { Localized, Text } from "@/lib/i18n";
 
-export const CERT_GROUPS = ["security", "aws", "networking", "languages"] as const;
+export const CERT_GROUPS = ["security", "networking", "languages", "cloud"] as const;
 
 export type CertGroup = (typeof CERT_GROUPS)[number];
 
@@ -92,82 +92,24 @@ export const certifications: readonly Certification[] = [
     verify: { url: "https://api2.englishscore.com/verify/2a2a20290143", code: "2a2a20290143" },
   },
   {
-    id: "aws-incident-response",
-    title: {
-      es: "AWS Respuesta a Incidentes Demostrada",
-      en: "AWS Incident Response Demonstrated",
-    },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · Seguridad", en: "Exam Lab · Security" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
-    id: "aws-application-networking",
-    title: {
-      es: "AWS Redes de Aplicaciones Demostrado",
-      en: "AWS Application Networking Demonstrated",
-    },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · Redes", en: "Exam Lab · Networking" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
-    id: "aws-serverless",
-    title: { es: "AWS Serverless Demostrado", en: "AWS Serverless Demonstrated" },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · Serverless", en: "Exam Lab · Serverless" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
-    id: "aws-agentic-ai",
-    title: { es: "AWS Agentic AI Demostrado", en: "AWS Agentic AI Demonstrated" },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · IA agéntica", en: "Exam Lab · Agentic AI" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
-    id: "aws-mlops",
-    title: { es: "AWS MLOps Demostrado", en: "AWS MLOps Demonstrated" },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · Machine Learning", en: "Exam Lab · Machine Learning" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
-    id: "aws-data-streaming",
-    title: { es: "AWS Data Streaming Demostrado", en: "AWS Data Streaming Demonstrated" },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · Análisis de datos", en: "Exam Lab · Data Analytics" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
-    id: "aws-data-lakehouse",
-    title: { es: "AWS Data Lakehouse Demostrado", en: "AWS Data Lakehouse Demonstrated" },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · Análisis de datos", en: "Exam Lab · Data Analytics" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
-    id: "aws-data-visualization",
-    title: { es: "AWS Data Visualization Demostrado", en: "AWS Data Visualization Demonstrated" },
-    provider: "AWS Skill Builder",
-    details: { es: "Exam Lab · Análisis de datos", en: "Exam Lab · Data Analytics" },
-    status: "in-progress",
-    category: "aws",
-  },
-  {
     id: "efd",
     title: "English for Developers",
     provider: "FreeCodeCamp",
     status: "in-progress",
     category: "languages",
     image: "efd.webp",
+  },
+  {
+    id: "aws-microcredentials",
+    title: { es: "Microcredenciales AWS", en: "AWS Microcredentials" },
+    provider: "AWS Skill Builder",
+    details: {
+      es: "8 Exam Labs prácticos · Seguridad, redes, serverless, IA agéntica, MLOps y análisis de datos",
+      en: "8 hands-on Exam Labs · Security, networking, serverless, agentic AI, MLOps and data analytics",
+    },
+    status: "in-progress",
+    category: "cloud",
+    url: "https://www.credly.com/users/maximiliano-adonis-solorza-madrid/badges/credly",
   },
 ];
 

@@ -83,7 +83,7 @@ function CertificationTile({ cert }: { cert: Certification }) {
           />
         ) : cert.category === "languages" ? (
           <Languages size={24} className="text-accent" />
-        ) : cert.category === "aws" ? (
+        ) : cert.category === "cloud" ? (
           <Cloud size={24} className="text-accent" />
         ) : (
           <ShieldCheck size={24} className="text-accent" />
