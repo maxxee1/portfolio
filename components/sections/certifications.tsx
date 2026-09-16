@@ -4,6 +4,7 @@ import { Check, Cloud, Copy, ExternalLink, Languages, ShieldCheck } from "lucide
 import Image from "next/image";
 
 import { useLanguage } from "@/components/providers/language-provider";
+import { CredentialList } from "@/components/ui/credential-list";
 import { Progress } from "@/components/ui/progress";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
@@ -20,8 +21,8 @@ export function Certifications() {
 
   return (
     <Section id="certifications" title={t(ui.certifications.title)}>
-      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
-        <Reveal>
+      <div className="grid gap-5 lg:grid-cols-3">
+        <Reveal className="lg:col-span-2">
           <CertificationGroup
             title={t(ui.certifications.groups.securityNetworking)}
             certs={secNet}
@@ -60,7 +61,7 @@ function CertificationGroup({ title, certs, columns }: CertificationGroupProps) 
   const done = certs.filter((cert) => cert.status === "completed").length;
 
   return (
-    <div className="card h-full p-6">
+    <div className="card flex h-full flex-col p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-lg font-bold text-heading">{title}</h3>
         <p className="text-sm text-muted">
@@ -72,7 +73,7 @@ function CertificationGroup({ title, certs, columns }: CertificationGroupProps) 
       </div>
       <Progress value={(done / certs.length) * 100} className="mt-3" />
 
-      <ul className={cn("mt-5 grid gap-3", columns && "sm:grid-cols-2")}>
+      <ul className={cn("mt-5 grid flex-1 content-between gap-3", columns && "sm:grid-cols-2")}>
         {certs.map((cert) => (
           <li key={cert.id}>
             <CertificationTile cert={cert} />
@@ -124,6 +125,14 @@ function CertificationTile({ cert }: { cert: Certification }) {
           </span>
 
           {cert.url && <TileLink href={cert.url}>{t(ui.certifications.viewCredential)}</TileLink>}
+
+          {cert.credentials && (
+            <CredentialList
+              title={t(cert.title)}
+              subtitle={t(cert.provider)}
+              credentials={cert.credentials}
+            />
+          )}
 
           {cert.verify && (
             <>

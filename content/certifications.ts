@@ -4,6 +4,15 @@ export const CERT_GROUPS = ["security", "networking", "languages", "cloud"] as c
 
 export type CertGroup = (typeof CERT_GROUPS)[number];
 
+/** Una de las microcredenciales que agrupa una ficha (se listan en un modal). */
+export type Microcredential = {
+  id: string;
+  name: Text;
+  domain: Localized;
+  /** Credencial pública en Credly. Sin ella la fila no enlaza a ninguna parte. */
+  url?: string;
+};
+
 export type Certification = {
   id: string;
   title: Text;
@@ -17,7 +26,62 @@ export type Certification = {
   url?: string;
   /** Verificación con código copiable. */
   verify?: { url: string; code: string };
+  /** Microcredenciales que agrupa la ficha: abren un modal con la lista. */
+  credentials?: readonly Microcredential[];
 };
+
+/** Exam Labs de AWS Skill Builder. La URL se agrega cuando Credly emite la insignia. */
+export const awsMicrocredentials: readonly Microcredential[] = [
+  {
+    id: "incident-response",
+    name: {
+      es: "AWS Respuesta a Incidentes Demostrada",
+      en: "AWS Incident Response Demonstrated",
+    },
+    domain: { es: "Seguridad", en: "Security" },
+  },
+  {
+    id: "application-networking",
+    name: {
+      es: "AWS Redes de Aplicaciones Demostrado",
+      en: "AWS Application Networking Demonstrated",
+    },
+    domain: { es: "Redes", en: "Networking" },
+  },
+  {
+    id: "serverless",
+    name: { es: "AWS Serverless Demostrado", en: "AWS Serverless Demonstrated" },
+    domain: { es: "Serverless", en: "Serverless" },
+  },
+  {
+    id: "agentic-ai",
+    name: { es: "AWS Agentic AI Demostrado", en: "AWS Agentic AI Demonstrated" },
+    domain: { es: "IA agéntica", en: "Agentic AI" },
+  },
+  {
+    id: "mlops",
+    name: { es: "AWS MLOps Demostrado", en: "AWS MLOps Demonstrated" },
+    domain: { es: "Machine Learning", en: "Machine Learning" },
+  },
+  {
+    id: "data-streaming",
+    name: { es: "AWS Data Streaming Demostrado", en: "AWS Data Streaming Demonstrated" },
+    domain: { es: "Análisis de datos", en: "Data Analytics" },
+  },
+  {
+    id: "data-lakehouse",
+    name: { es: "AWS Data Lakehouse Demostrado", en: "AWS Data Lakehouse Demonstrated" },
+    domain: { es: "Análisis de datos", en: "Data Analytics" },
+  },
+  {
+    id: "data-visualization",
+    name: {
+      es: "AWS Data Visualization Demostrado",
+      en: "AWS Data Visualization Demonstrated",
+    },
+    domain: { es: "Análisis de datos", en: "Data Analytics" },
+  },
+];
 
 export const certifications: readonly Certification[] = [
   {
@@ -104,15 +168,15 @@ export const certifications: readonly Certification[] = [
   },
   {
     id: "aws-microcredentials",
-    title: { es: "Microcredenciales AWS", en: "AWS Microcredentials" },
+    title: { es: "8 Microcredenciales AWS", en: "8 AWS Microcredentials" },
     provider: "AWS Skill Builder",
     details: {
-      es: "8 Exam Labs prácticos · Seguridad, redes, serverless, IA agéntica, MLOps y análisis de datos",
-      en: "8 hands-on Exam Labs · Security, networking, serverless, agentic AI, MLOps and data analytics",
+      es: "Exam Lab práctico · Seguridad, redes, serverless, IA agéntica, MLOps y análisis de datos",
+      en: "Hands-on Exam Lab · Security, networking, serverless, agentic AI, MLOps and data analytics",
     },
     status: "in-progress",
     category: "cloud",
-    url: "https://www.credly.com/users/maximiliano-adonis-solorza-madrid/badges/credly",
+    credentials: awsMicrocredentials,
   },
 ];
 
