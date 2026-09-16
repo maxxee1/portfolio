@@ -7,11 +7,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 import { Progress } from "@/components/ui/progress";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
-import {
-  CERT_GROUPS,
-  certificationsIn,
-  type Certification,
-} from "@/content/certifications";
+import { certificationsIn, type Certification } from "@/content/certifications";
 import { ui } from "@/content/ui";
 import { useCopyToClipboard } from "@/lib/hooks";
 import { cn } from "@/lib/utils";
@@ -19,49 +15,71 @@ import { cn } from "@/lib/utils";
 export function Certifications() {
   const { t } = useLanguage();
 
+  // Ciberseguridad y redes comparten tarjeta: la columna izquierda de la sección.
+  const secNet = [...certificationsIn("security"), ...certificationsIn("networking")];
+
   return (
     <Section id="certifications" title={t(ui.certifications.title)}>
-      <div className="grid gap-5 lg:grid-cols-2">
-        {CERT_GROUPS.map((group, index) => {
-          const certs = certificationsIn(group);
-          const done = certs.filter((cert) => cert.status === "completed").length;
-          // Los grupos grandes ocupan todo el ancho y reparten sus fichas en columnas.
-          const wide = certs.length >= 4;
+      <div className="grid gap-5 lg:grid-cols-2 lg:items-start">
+        <Reveal>
+          <CertificationGroup
+            title={t(ui.certifications.groups.securityNetworking)}
+            certs={secNet}
+            columns
+          />
+        </Reveal>
 
-          return (
-            <Reveal key={group} delay={index * 0.05} className={cn("h-full", wide && "lg:col-span-2")}>
-              <div className="card h-full p-6">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-lg font-bold text-heading">
-                    {t(ui.certifications.groups[group])}
-                  </h3>
-                  <p className="text-sm text-muted">
-                    <span className="font-bold text-heading">
-                      {done}/{certs.length}
-                    </span>{" "}
-                    {t(ui.certifications.completedCount)}
-                  </p>
-                </div>
-                <Progress value={(done / certs.length) * 100} className="mt-3" />
-
-                <ul
-                  className={cn(
-                    "mt-5 grid gap-3",
-                    wide && "md:grid-cols-2 xl:grid-cols-3",
-                  )}
-                >
-                  {certs.map((cert) => (
-                    <li key={cert.id}>
-                      <CertificationTile cert={cert} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          );
-        })}
+        <div className="grid gap-5">
+          <Reveal delay={0.05}>
+            <CertificationGroup
+              title={t(ui.certifications.groups.languages)}
+              certs={certificationsIn("languages")}
+            />
+          </Reveal>
+          <Reveal delay={0.1}>
+            <CertificationGroup
+              title={t(ui.certifications.groups.cloud)}
+              certs={certificationsIn("cloud")}
+            />
+          </Reveal>
+        </div>
       </div>
     </Section>
+  );
+}
+
+type CertificationGroupProps = {
+  title: string;
+  certs: readonly Certification[];
+  /** Reparte las fichas en dos columnas en vez de apilarlas. */
+  columns?: boolean;
+};
+
+function CertificationGroup({ title, certs, columns }: CertificationGroupProps) {
+  const { t } = useLanguage();
+  const done = certs.filter((cert) => cert.status === "completed").length;
+
+  return (
+    <div className="card h-full p-6">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h3 className="text-lg font-bold text-heading">{title}</h3>
+        <p className="text-sm text-muted">
+          <span className="font-bold text-heading">
+            {done}/{certs.length}
+          </span>{" "}
+          {t(ui.certifications.completedCount)}
+        </p>
+      </div>
+      <Progress value={(done / certs.length) * 100} className="mt-3" />
+
+      <ul className={cn("mt-5 grid gap-3", columns && "sm:grid-cols-2")}>
+        {certs.map((cert) => (
+          <li key={cert.id}>
+            <CertificationTile cert={cert} />
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

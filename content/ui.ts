@@ -118,8 +118,10 @@ export const ui = {
     copyCode: { es: "Clic para copiar", en: "Click to copy" },
     copied: { es: "¡Copiado!", en: "Copied!" },
     groups: {
-      security: { es: "Ciberseguridad", en: "Cybersecurity" },
-      networking: { es: "Redes", en: "Networking" },
+      securityNetworking: {
+        es: "Ciberseguridad y Redes",
+        en: "Cybersecurity & Networking",
+      },
       languages: { es: "Idiomas", en: "Languages" },
       cloud: { es: "Cloud", en: "Cloud" },
     },
