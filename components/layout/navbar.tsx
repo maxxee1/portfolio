@@ -5,10 +5,11 @@ import Image from "next/image";
 
 import { useLanguage } from "@/components/providers/language-provider";
 import { CvDownload } from "@/components/ui/cv-download";
+import { LanguagePicker } from "@/components/ui/language-picker";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { profile } from "@/content/profile";
 import { ui, type SectionId } from "@/content/ui";
-import { LOCALES } from "@/lib/i18n";
+import { MAIN_LOCALES } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type NavbarProps = {
@@ -49,7 +50,7 @@ export function Navbar({ active, menuOpen, onOpenMenu }: NavbarProps) {
           aria-label={t(ui.switchLanguage)}
           className="flex items-center rounded-full bg-tile p-1"
         >
-          {LOCALES.map((code) => (
+          {MAIN_LOCALES.map((code) => (
             <button
               key={code}
               type="button"
@@ -67,6 +68,8 @@ export function Navbar({ active, menuOpen, onOpenMenu }: NavbarProps) {
         </div>
 
         <ThemeToggle />
+
+        <LanguagePicker />
 
         <button
           type="button"

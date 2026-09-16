@@ -59,10 +59,11 @@ export function CvDownload() {
         aria-haspopup="dialog"
         aria-label={t(ui.cv.open)}
         title={t(ui.cv.open)}
-        className="inline-flex h-9 items-center gap-2 rounded-full bg-tile pr-3.5 pl-3 text-sm font-bold text-heading transition-colors hover:bg-accent hover:text-on-accent active:bg-accent active:text-on-accent sm:h-10"
+        className="inline-flex h-9 items-center gap-2 rounded-full bg-tile px-2.5 text-sm font-bold text-heading transition-colors hover:bg-accent hover:text-on-accent active:bg-accent active:text-on-accent sm:h-10 sm:pr-3.5 sm:pl-3"
       >
         <FileUser size={17} />
-        {t(ui.cv.open)}
+        {/* En el teléfono la píldora ya lleva idiomas, tema y el globo: solo el ícono. */}
+        <span className="hidden sm:inline">{t(ui.cv.open)}</span>
       </button>
 
       {open &&

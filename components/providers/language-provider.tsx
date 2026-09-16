@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 
-import { DEFAULT_LOCALE, pick, type Locale, type Text } from "@/lib/i18n";
+import { DEFAULT_LOCALE, isLocale, pick, type Locale, type Text } from "@/lib/i18n";
 
 const STORAGE_KEY = "portfolio:locale";
 
@@ -35,7 +35,7 @@ function subscribe(onChange: () => void) {
 
 function readLocale(): Locale {
   const saved = window.localStorage.getItem(STORAGE_KEY);
-  return saved === "es" || saved === "en" ? saved : DEFAULT_LOCALE;
+  return isLocale(saved) ? saved : DEFAULT_LOCALE;
 }
 
 /** En el servidor no hay preferencia guardada: el HTML sale en el idioma por defecto. */
@@ -46,7 +46,7 @@ function readServerLocale(): Locale {
 type LanguageValue = {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  /** Resuelve un texto bilingüe al idioma activo. */
+  /** Resuelve un texto traducido al idioma activo. */
   t: (text: Text) => string;
 };
 

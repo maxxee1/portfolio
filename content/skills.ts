@@ -39,7 +39,13 @@ const simple = (slug: string, color: string): SkillIcon => ({
 export const skillGroups: readonly SkillGroup[] = [
   {
     id: "backend",
-    title: { es: "Backend & Datos", en: "Backend & Data" },
+    title: {
+      es: "Backend & Datos",
+      en: "Backend & Data",
+      de: "Backend & Daten",
+      it: "Backend & Dati",
+      nl: "Backend & Data",
+    },
     skills: [
       { name: "C++", icon: devicon("cplusplus") },
       { name: "Java", icon: devicon("java") },
@@ -57,7 +63,13 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     id: "cloud",
-    title: { es: "Cloud & Infraestructura", en: "Cloud & Infrastructure" },
+    title: {
+      es: "Cloud & Infraestructura",
+      en: "Cloud & Infrastructure",
+      de: "Cloud & Infrastruktur",
+      it: "Cloud & Infrastruttura",
+      nl: "Cloud & Infrastructuur",
+    },
     skills: [
       { name: "Bash", icon: simple("gnubash", "ffffff") },
       { name: "Docker", icon: devicon("docker") },
@@ -75,7 +87,13 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     id: "frontend",
-    title: { es: "Frontend & Web Moderno", en: "Frontend & Modern Web" },
+    title: {
+      es: "Frontend & Web Moderno",
+      en: "Frontend & Modern Web",
+      de: "Frontend & modernes Web",
+      it: "Frontend & Web moderno",
+      nl: "Frontend & modern web",
+    },
     skills: [
       { name: "React", icon: devicon("react") },
       { name: "Next.js", icon: simple("nextdotjs", "ffffff") },
@@ -92,7 +110,13 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     id: "security",
-    title: { es: "Ciberseguridad & Herramientas", en: "Cybersecurity & Tools" },
+    title: {
+      es: "Ciberseguridad & Herramientas",
+      en: "Cybersecurity & Tools",
+      de: "Cybersicherheit & Werkzeuge",
+      it: "Cybersicurezza & Strumenti",
+      nl: "Cybersecurity & Tools",
+    },
     skills: [
       { name: "Wireshark", icon: simple("wireshark", "1679A7") },
       { name: "Burp Suite", icon: simple("burpsuite", "FF6633") },
@@ -105,12 +129,24 @@ export const skillGroups: readonly SkillGroup[] = [
   },
   {
     id: "ai",
-    title: { es: "IA, Agentes & APIs", en: "AI, Agents & APIs" },
+    title: {
+      es: "IA, Agentes & APIs",
+      en: "AI, Agents & APIs",
+      de: "KI, Agenten & APIs",
+      it: "IA, Agenti & API",
+      nl: "AI, Agents & API's",
+    },
     skills: [
       { name: "Claude Code", icon: simple("claude", "D97757") },
       { name: "MCP", icon: simple("modelcontextprotocol", "ffffff") },
       {
-        name: { es: "Multiagentes", en: "Multi-agent" },
+        name: {
+          es: "Multiagentes",
+          en: "Multi-agent",
+          de: "Multi-Agenten",
+          it: "Multi-agente",
+          nl: "Multi-agent",
+        },
         icon: { source: "lucide", name: "bot", color: "#a855f7" },
       },
       // Chatbots de WhatsApp e Instagram (Game Club) sobre la plataforma de Meta.
