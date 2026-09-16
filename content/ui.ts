@@ -112,7 +112,6 @@ export const ui = {
     completed: { es: "Completado", en: "Completed" },
     inProgress: { es: "En Progreso", en: "In Progress" },
     completedCount: { es: "completadas", en: "completed" },
-    viewCredential: { es: "Ver Credencial", en: "View Credential" },
     viewCredentials: { es: "Ver Credenciales", en: "View Credentials" },
     close: { es: "Cerrar", en: "Close" },
     verify: { es: "Verificar", en: "Verify" },

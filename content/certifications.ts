@@ -20,6 +20,8 @@ export type Certification = {
   status: "completed" | "in-progress";
   category: CertGroup;
   details?: Localized;
+  /** Fecha de emisión, en su propia línea. */
+  issued?: Localized;
   /** Insignia en /public/images/credentials. */
   image?: string;
   /** Credencial pública (Credly). */
@@ -88,7 +90,11 @@ export const certifications: readonly Certification[] = [
     id: "itc",
     title: "Introduction to Cybersecurity",
     provider: "Cisco Networking Academy",
-    details: { es: "Emitida el 5 de junio de 2025", en: "Issued June 5, 2025" },
+    details: {
+      es: "Amenazas, ataques y buenas prácticas para proteger datos y dispositivos",
+      en: "Threats, attacks and best practices for protecting data and devices",
+    },
+    issued: { es: "Emitida el 5 de junio de 2025", en: "Issued June 5, 2025" },
     status: "completed",
     category: "security",
     image: "itc.webp",
@@ -98,7 +104,11 @@ export const certifications: readonly Certification[] = [
     id: "jcap",
     title: "Junior Cybersecurity Analyst Career Path",
     provider: "Cisco Networking Academy",
-    details: { es: "Emitida el 7 de julio de 2025", en: "Issued July 7, 2025" },
+    details: {
+      es: "Ruta de analista junior: monitoreo en el SOC, respuesta a incidentes y análisis de tráfico",
+      en: "Junior analyst path: SOC monitoring, incident response and traffic analysis",
+    },
+    issued: { es: "Emitida el 7 de julio de 2025", en: "Issued July 7, 2025" },
     status: "completed",
     category: "security",
     image: "ce.webp",
@@ -108,6 +118,10 @@ export const certifications: readonly Certification[] = [
     id: "eh",
     title: "Ethical Hacking",
     provider: "Cisco Networking Academy",
+    details: {
+      es: "Pentesting de principio a fin: reconocimiento, escaneo, explotación y reporte",
+      en: "End-to-end pentesting: reconnaissance, scanning, exploitation and reporting",
+    },
     status: "in-progress",
     category: "security",
     image: "eh.webp",
@@ -119,6 +133,10 @@ export const certifications: readonly Certification[] = [
       es: "Inteligencia de Fuentes Abiertas",
       en: "Open Source Intelligence",
     },
+    details: {
+      es: "Búsqueda avanzada, huella digital, metadatos y geolocalización de fuentes públicas",
+      en: "Advanced search, digital footprint, metadata and geolocation from public sources",
+    },
     status: "in-progress",
     category: "security",
     image: "oa.webp",
@@ -127,6 +145,10 @@ export const certifications: readonly Certification[] = [
     id: "metasploit",
     title: "Ethical Hacking: Metasploit & Python",
     provider: { es: "Herramientas y Scripting", en: "Tools & Scripting" },
+    details: {
+      es: "Explotación con Metasploit y automatización de herramientas ofensivas en Python",
+      en: "Exploitation with Metasploit and offensive tooling automation in Python",
+    },
     status: "in-progress",
     category: "security",
     image: "oau.webp",
@@ -135,7 +157,11 @@ export const certifications: readonly Certification[] = [
     id: "networking-basics",
     title: "Networking Basics",
     provider: "Cisco Networking Academy",
-    details: { es: "Emitida el 22 de julio de 2025", en: "Issued July 22, 2025" },
+    details: {
+      es: "Modelo OSI, direccionamiento IP, enrutamiento y configuración de redes pequeñas",
+      en: "OSI model, IP addressing, routing and small-network configuration",
+    },
+    issued: { es: "Emitida el 22 de julio de 2025", en: "Issued July 22, 2025" },
     status: "completed",
     category: "networking",
     image: "ne.webp",
@@ -149,9 +175,10 @@ export const certifications: readonly Certification[] = [
     },
     provider: "Universidad Diego Portales × EnglishScore",
     details: {
-      es: "Core skills B2 · Speaking B1 · Writing B1 · Junio 2026",
-      en: "Core skills B2 · Speaking B1 · Writing B1 · June 2026",
+      es: "Core skills B2 · Speaking B1 · Writing B1",
+      en: "Core skills B2 · Speaking B1 · Writing B1",
     },
+    issued: { es: "Emitido en junio de 2026", en: "Issued June 2026" },
     status: "completed",
     category: "languages",
     // Misma URL a la que redirige el formulario de englishscore.com/verify:
@@ -162,6 +189,10 @@ export const certifications: readonly Certification[] = [
     id: "efd",
     title: "English for Developers",
     provider: "FreeCodeCamp",
+    details: {
+      es: "Inglés técnico para trabajar en equipos de desarrollo: reuniones, code reviews y documentación",
+      en: "Technical English for development teams: meetings, code reviews and documentation",
+    },
     status: "in-progress",
     category: "languages",
     image: "efd.webp",

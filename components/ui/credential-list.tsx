@@ -114,7 +114,9 @@ function CredentialRow({ credential }: { credential: Microcredential }) {
         <span className="block truncate text-xs text-muted">{t(credential.domain)}</span>
       </span>
       {credential.url ? (
-        <ExternalLink size={16} className="shrink-0 text-muted group-hover:text-accent" />
+        <span className="inline-flex shrink-0 items-center gap-1 text-xs font-bold text-accent">
+          {t(ui.certifications.verify)} <ExternalLink size={12} />
+        </span>
       ) : (
         <span className="shrink-0 rounded-full bg-warning-soft px-2.5 py-0.5 text-[11px] font-bold text-warning">
           {t(ui.certifications.inProgress)}
