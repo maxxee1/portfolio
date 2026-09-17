@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, ExternalLink, GraduationCap, Hourglass, Trophy } from "lucide-react";
+import { CalendarDays, Droplet, ExternalLink, GraduationCap, Hourglass, Trophy } from "lucide-react";
 import Image from "next/image";
 
 import { useLanguage } from "@/components/providers/language-provider";
@@ -111,6 +111,25 @@ export function Education() {
               <h4 className="mt-5 text-sm font-semibold text-muted">{competition.name}</h4>
               <p className="mt-1 text-2xl font-bold text-heading">{t(competition.achievement)}</p>
               <p className="mt-1.5 text-sm text-body">{t(competition.detail)}</p>
+
+              {competition.highlight && (
+                <p className="mt-2.5 inline-flex items-center gap-1.5 self-start rounded-full bg-success-soft px-2.5 py-1 text-xs font-bold text-success">
+                  <Droplet size={12} /> {t(competition.highlight)}
+                </p>
+              )}
+
+              {competition.categories && (
+                <ul aria-label={t(ui.education.categories)} className="mt-3 flex flex-wrap gap-1.5">
+                  {competition.categories.map((category) => (
+                    <li
+                      key={t(category)}
+                      className="rounded-full bg-tile px-2.5 py-0.5 text-[11px] font-semibold text-muted"
+                    >
+                      {t(category)}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
               <TeamContribution competition={competition} />
 

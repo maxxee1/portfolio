@@ -390,6 +390,13 @@ export const ui = {
       it: "del punteggio della squadra",
       nl: "van de teamscore",
     },
+    categories: {
+      es: "Categorías",
+      en: "Categories",
+      de: "Kategorien",
+      it: "Categorie",
+      nl: "Categorieën",
+    },
     comingSoon: {
       es: "Próximamente",
       en: "Coming soon",

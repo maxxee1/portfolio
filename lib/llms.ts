@@ -90,6 +90,8 @@ export function buildLlmsText(locale: Locale): string {
   push(`### ${t(ui.education.competitions)}`, "");
   for (const comp of competitions) {
     push(`#### ${comp.name} — ${t(comp.achievement)}`, "", `${t(comp.detail)} · ${t(comp.date)}`, "");
+    if (comp.highlight) push(`- ${t(comp.highlight)}`);
+    if (comp.categories) push(`- ${t(ui.education.categories)}: ${comp.categories.map(t).join(", ")}`);
     for (const r of comp.rankings ?? []) {
       const parts = [`${r.rank !== undefined ? `#${r.rank}` : "—"} ${t(ui.education.of)} ${r.total}`];
       if (r.rank !== undefined) parts.push(`Top ${percent(r.rank, r.total)}%`);

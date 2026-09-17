@@ -1,4 +1,4 @@
-import type { Localized } from "@/lib/i18n";
+import type { Localized, Text } from "@/lib/i18n";
 
 export type Education = {
   id: string;
@@ -35,6 +35,10 @@ export type Competition = {
   logo?: string;
   /** Llena el círculo (logo con fondo propio) en vez de object-contain. */
   logoCover?: boolean;
+  /** Categorías de desafíos del evento (según el informe de los organizadores). */
+  categories?: readonly Text[];
+  /** Logro puntual verificable, en una línea. */
+  highlight?: Localized;
   /** Noticia u origen (opcional). */
   link?: string;
   rankings?: readonly Ranking[];
@@ -136,11 +140,11 @@ export const competitions: readonly Competition[] = [
       nl: "4e plaats in teamverband",
     },
     detail: {
-      es: "Capture The Flag · Equipos de 4",
-      en: "Capture The Flag · Teams of 4",
-      de: "Capture The Flag · Teams zu viert",
-      it: "Capture The Flag · Squadre da 4",
-      nl: "Capture The Flag · Teams van 4",
+      es: "Capture The Flag · Equipo Inside",
+      en: "Capture The Flag · Team Inside",
+      de: "Capture The Flag · Team Inside",
+      it: "Capture The Flag · Squadra Inside",
+      nl: "Capture The Flag · Team Inside",
     },
     date: {
       es: "10 de junio de 2026",
@@ -149,10 +153,20 @@ export const competitions: readonly Competition[] = [
       it: "10 giugno 2026",
       nl: "10 juni 2026",
     },
+    // Informe SEK Hacker Academy: 3 primeras sangres (m.adonnis), #3 del evento.
+    highlight: {
+      es: "#3 en primeras sangres del evento (3 first bloods)",
+      en: "#3 in first bloods of the event (3 first bloods)",
+      de: "#3 bei den First Bloods des Events (3 First Bloods)",
+      it: "#3 per first blood dell'evento (3 first blood)",
+      nl: "#3 in first bloods van het evenement (3 first bloods)",
+    },
+    categories: ["Web", "Reversing", "Forensics", "Privilege Escalation", "Stegano", "Infra", "Pwn"],
     logo: "sek.webp",
     link: "https://eit.udp.cl/capture-the-flag-se-consolida-como-una-competencia-con-alta-participacion-estudiantil/",
     rankings: [
       { scope: "team", rank: 4, total: 24, score: 3660, topScore: 4320 },
+      // Empate a 2180 pts con los puestos 9 y 10 del informe.
       { scope: "individual", rank: 10, total: 75, score: 2180, topScore: 3030 },
     ],
   },
@@ -167,11 +181,11 @@ export const competitions: readonly Competition[] = [
       nl: "9e plaats in teamverband",
     },
     detail: {
-      es: "Capture The Flag · Equipos de 4",
-      en: "Capture The Flag · Teams of 4",
-      de: "Capture The Flag · Teams zu viert",
-      it: "Capture The Flag · Squadre da 4",
-      nl: "Capture The Flag · Teams van 4",
+      es: "Capture The Flag · Equipo INSAID",
+      en: "Capture The Flag · Team INSAID",
+      de: "Capture The Flag · Team INSAID",
+      it: "Capture The Flag · Squadra INSAID",
+      nl: "Capture The Flag · Team INSAID",
     },
     date: {
       es: "12 de noviembre de 2025",
@@ -180,6 +194,7 @@ export const competitions: readonly Competition[] = [
       it: "12 novembre 2025",
       nl: "12 november 2025",
     },
+    categories: ["Web", "Reversing", "Misc"],
     logo: "dreamlab.webp",
     logoCover: true,
     link: "https://eit.udp.cl/exitosa-tercera-version-de-evento-capture-the-flag-udp-dreamlab/",
@@ -212,6 +227,15 @@ export const competitions: readonly Competition[] = [
       it: "Ottobre 2025",
       nl: "Oktober 2025",
     },
+    categories: [
+      {
+        es: "Programación competitiva",
+        en: "Competitive programming",
+        de: "Wettbewerbsprogrammierung",
+        it: "Programmazione competitiva",
+        nl: "Competitief programmeren",
+      },
+    ],
     logo: "ieee.webp",
     rankings: [{ scope: "world", rank: 924, total: 8169 }],
   },
@@ -226,11 +250,11 @@ export const competitions: readonly Competition[] = [
       nl: "6e plaats in teamverband",
     },
     detail: {
-      es: "Capture The Flag · Equipos de 4 · Mi primer CTF",
-      en: "Capture The Flag · Teams of 4 · My first CTF",
-      de: "Capture The Flag · Teams zu viert · Mein erstes CTF",
-      it: "Capture The Flag · Squadre da 4 · Il mio primo CTF",
-      nl: "Capture The Flag · Teams van 4 · Mijn eerste CTF",
+      es: "Capture The Flag · Equipo INSAID · Mi primer CTF",
+      en: "Capture The Flag · Team INSAID · My first CTF",
+      de: "Capture The Flag · Team INSAID · Mein erstes CTF",
+      it: "Capture The Flag · Squadra INSAID · Il mio primo CTF",
+      nl: "Capture The Flag · Team INSAID · Mijn eerste CTF",
     },
     date: {
       es: "11 de junio de 2025",
@@ -239,12 +263,14 @@ export const competitions: readonly Competition[] = [
       it: "11 giugno 2025",
       nl: "11 juni 2025",
     },
+    categories: ["Web", "Reversing", "Privilege Escalation"],
     logo: "dreamlab.webp",
     logoCover: true,
     link: "https://eit.udp.cl/exitosa-segunda-version-de-evento-capture-the-flag-udp-dreamlab/",
     rankings: [
       { scope: "team", rank: 6, total: 13, score: 770, topScore: 1280 },
-      { scope: "individual", rank: 11, total: 43, score: 350, topScore: 570 },
+      // Empate a 350 pts con los puestos 9 y 10 del informe: cuenta como #10.
+      { scope: "individual", rank: 10, total: 43, score: 350, topScore: 570 },
     ],
   },
 ];
