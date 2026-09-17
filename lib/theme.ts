@@ -10,10 +10,10 @@ const DARK_QUERY = "(prefers-color-scheme: dark)";
 
 /**
  * Corre en <head> antes del primer pintado, así no hay destello del tema equivocado.
- * Resuelve "system" contra prefers-color-scheme.
+ * Resuelve "system" contra prefers-color-scheme y marca `js` para las apariciones (Reveal).
  * Ver node_modules/next/dist/docs/01-app/02-guides/preventing-flash-before-hydration.md
  */
-export const THEME_SCRIPT = `(function(){try{var c=localStorage.getItem("${THEME_STORAGE_KEY}");if(c!=="light"&&c!=="dark"&&c!=="system")c="${DEFAULT_CHOICE}";var d=c==="dark"||(c==="system"&&matchMedia("${DARK_QUERY}").matches);document.documentElement.classList.toggle("dark",d)}catch(e){}})()`;
+export const THEME_SCRIPT = `(function(){document.documentElement.classList.add("js");try{var c=localStorage.getItem("${THEME_STORAGE_KEY}");if(c!=="light"&&c!=="dark"&&c!=="system")c="${DEFAULT_CHOICE}";var d=c==="dark"||(c==="system"&&matchMedia("${DARK_QUERY}").matches);document.documentElement.classList.toggle("dark",d)}catch(e){}})()`;
 
 function isChoice(value: string | null): value is ThemeChoice {
   return value === "light" || value === "dark" || value === "system";

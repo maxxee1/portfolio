@@ -1,6 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence } from "motion/react";
+import * as m from "motion/react-m";
 import { Check, Globe } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 
@@ -53,18 +54,18 @@ export function LanguagePicker() {
             : "text-muted hover:bg-tile hover:text-heading",
         )}
       >
-        <motion.span
+        <m.span
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           className="grid place-items-center"
         >
           <Globe size={20} />
-        </motion.span>
+        </m.span>
       </button>
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             id={listId}
             role="listbox"
             aria-label={t(ui.moreLanguages)}
@@ -99,7 +100,7 @@ export function LanguagePicker() {
                 {locale === code && <Check size={15} className="shrink-0" />}
               </button>
             ))}
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

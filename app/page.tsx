@@ -7,10 +7,15 @@ import { Experience } from "@/components/sections/experience";
 import { Hero } from "@/components/sections/hero";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
+import { buildJsonLd } from "@/lib/json-ld";
 
 export default function HomePage() {
   return (
     <DashboardShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()).replace(/</g, "\\u003c") }}
+      />
       <Hero />
       <About />
       <Experience />
