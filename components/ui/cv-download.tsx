@@ -53,9 +53,16 @@ export function CvDownload() {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
+      {/* Enlace real al PDF en español: sin JavaScript (crawlers, lectores sin JS)
+          abre el archivo; con JavaScript abre el modal. Ctrl/Cmd+clic mantiene
+          el comportamiento normal del enlace. */}
+      <a
+        href={resumes[0].file}
+        onClick={(event) => {
+          if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+          event.preventDefault();
+          setOpen(true);
+        }}
         aria-haspopup="dialog"
         aria-label={t(ui.cv.open)}
         title={t(ui.cv.open)}
@@ -64,7 +71,7 @@ export function CvDownload() {
         <FileUser size={17} />
         {/* En el teléfono la píldora ya lleva idiomas, tema y el globo: solo el ícono. */}
         <span className="hidden sm:inline">{t(ui.cv.open)}</span>
-      </button>
+      </a>
 
       {open &&
         createPortal(

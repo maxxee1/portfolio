@@ -1,13 +1,13 @@
 "use client";
 
-import { Check, Copy, Mail, MapPin, Send } from "lucide-react";
+import { Check, Copy, FileUser, Mail, MapPin, Send } from "lucide-react";
 import type { ComponentType, ReactNode } from "react";
 
 import { useLanguage } from "@/components/providers/language-provider";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/brand-icons";
 import { Reveal } from "@/components/ui/reveal";
 import { Section } from "@/components/ui/section";
-import { profile } from "@/content/profile";
+import { profile, resumes } from "@/content/profile";
 import { ui } from "@/content/ui";
 import { useCopyToClipboard } from "@/lib/hooks";
 
@@ -90,6 +90,30 @@ export function Contact() {
               value={handle(profile.social.github)}
               href={profile.social.github}
             />
+            {/* Enlaces directos a los PDF: visibles para buscadores e IAs sin abrir el modal. */}
+            <li className="flex items-center gap-4 rounded-2xl bg-tile p-3.5">
+              <span className="grid size-11 shrink-0 place-items-center rounded-full bg-card text-accent">
+                <FileUser className="size-[18px]" />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs text-muted">{t(ui.cv.title)}</p>
+                <p className="flex flex-wrap gap-x-3 text-sm font-semibold text-heading">
+                  {resumes.map((resume) => (
+                    <a
+                      key={resume.id}
+                      href={resume.file}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      hrefLang={resume.id}
+                      type="application/pdf"
+                      className="hover:text-accent"
+                    >
+                      {resume.native}
+                    </a>
+                  ))}
+                </p>
+              </div>
+            </li>
           </ul>
         </Reveal>
       </div>

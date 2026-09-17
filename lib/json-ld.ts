@@ -1,7 +1,7 @@
 import { certifications } from "@/content/certifications";
 import { education } from "@/content/education";
 import { experience } from "@/content/experience";
-import { profile } from "@/content/profile";
+import { profile, resumes } from "@/content/profile";
 import { skillGroups } from "@/content/skills";
 import { pick } from "@/lib/i18n";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
@@ -21,6 +21,13 @@ export function buildJsonLd() {
     description: es(profile.tagline),
     address: { "@type": "PostalAddress", addressLocality: "Santiago", addressCountry: "CL" },
     sameAs: [profile.social.github, profile.social.linkedin],
+    subjectOf: resumes.map((resume) => ({
+      "@type": "DigitalDocument",
+      name: `${resume.title} — ${profile.name} (${resume.native})`,
+      url: `${SITE_URL}${resume.file}`,
+      encodingFormat: "application/pdf",
+      inLanguage: resume.id,
+    })),
     alumniOf: education.map((item) => ({ "@type": "EducationalOrganization", name: es(item.school) })),
     worksFor: experience
       .filter((job) => job.current)
