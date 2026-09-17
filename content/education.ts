@@ -166,8 +166,8 @@ export const competitions: readonly Competition[] = [
     link: "https://eit.udp.cl/capture-the-flag-se-consolida-como-una-competencia-con-alta-participacion-estudiantil/",
     rankings: [
       { scope: "team", rank: 4, total: 24, score: 3660, topScore: 4320 },
-      // Empate a 2180 pts con los puestos 9 y 10 del informe.
-      { scope: "individual", rank: 10, total: 75, score: 2180, topScore: 3030 },
+      // Empate a 2180 pts con los puestos 9 y 10 del informe: 8 por encima, cuenta como #9.
+      { scope: "individual", rank: 9, total: 75, score: 2180, topScore: 3030 },
     ],
   },
   {
