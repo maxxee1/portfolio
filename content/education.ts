@@ -155,13 +155,13 @@ export const competitions: readonly Competition[] = [
     },
     // Informe SEK Hacker Academy: 3 primeras sangres (m.adonnis), #3 del evento.
     highlight: {
-      es: "#3 en primeras sangres del evento (3 first bloods)",
-      en: "#3 in first bloods of the event (3 first bloods)",
-      de: "#3 bei den First Bloods des Events (3 First Bloods)",
-      it: "#3 per first blood dell'evento (3 first blood)",
-      nl: "#3 in first bloods van het evenement (3 first bloods)",
+      es: "#3 en primeras sangres del evento",
+      en: "#3 in first bloods of the event",
+      de: "#3 bei den First Bloods des Events",
+      it: "#3 per first blood dell'evento",
+      nl: "#3 in first bloods van het evenement",
     },
-    categories: ["Web", "Reversing", "Forensics", "Privilege Escalation", "Stegano", "Infra", "Pwn"],
+    categories: ["Web", "Reversing", "Forensics", "Privilege Escalation", "Infra", "Pwn"],
     logo: "sek.webp",
     link: "https://eit.udp.cl/capture-the-flag-se-consolida-como-una-competencia-con-alta-participacion-estudiantil/",
     rankings: [
@@ -269,8 +269,8 @@ export const competitions: readonly Competition[] = [
     link: "https://eit.udp.cl/exitosa-segunda-version-de-evento-capture-the-flag-udp-dreamlab/",
     rankings: [
       { scope: "team", rank: 6, total: 13, score: 770, topScore: 1280 },
-      // Empate a 350 pts con los puestos 9 y 10 del informe: cuenta como #10.
-      { scope: "individual", rank: 10, total: 43, score: 350, topScore: 570 },
+      // Empate a 350 pts: el informe lista a uno de los empatados como 9º.
+      { scope: "individual", rank: 9, total: 43, score: 350, topScore: 570 },
     ],
   },
 ];
