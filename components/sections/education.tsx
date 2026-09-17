@@ -133,24 +133,28 @@ export function Education() {
 
               <TeamContribution competition={competition} />
 
-              {competition.rankings && (
-                <dl className="mt-6 space-y-4">
-                  {competition.rankings.map((ranking) => (
-                    <RankingRow key={ranking.scope} ranking={ranking} />
-                  ))}
-                </dl>
-              )}
+              {/* Barras y enlace anclados al fondo: quedan a la misma altura en toda
+                  la fila, sin importar cuántos badges o categorías haya arriba. */}
+              <div className="mt-auto flex flex-col pt-6">
+                {competition.rankings && (
+                  <dl className="space-y-4">
+                    {competition.rankings.map((ranking) => (
+                      <RankingRow key={ranking.scope} ranking={ranking} />
+                    ))}
+                  </dl>
+                )}
 
-              {competition.link && (
-                <a
-                  href={competition.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 inline-flex items-center gap-1.5 self-start text-xs font-bold text-accent hover:underline"
-                >
-                  {t(ui.education.readNews)} <ExternalLink size={12} />
-                </a>
-              )}
+                {competition.link && (
+                  <a
+                    href={competition.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-flex items-center gap-1.5 self-start text-xs font-bold text-accent hover:underline"
+                  >
+                    {t(ui.education.aboutEvent)} <ExternalLink size={12} />
+                  </a>
+                )}
+              </div>
             </article>
           </Reveal>
         ))}

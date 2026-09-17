@@ -104,7 +104,7 @@ export function buildLlmsText(locale: Locale): string {
     if (team?.score && individual?.score) {
       push(`- ${percent(individual.score, team.score)}% ${t(ui.education.contribution)}`);
     }
-    if (comp.link) push(`- ${t(ui.education.readNews)}: ${comp.link}`);
+    if (comp.link) push(`- ${t(ui.education.aboutEvent)}: ${comp.link}`);
     push("");
   }
 

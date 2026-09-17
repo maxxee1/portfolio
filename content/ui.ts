@@ -425,12 +425,12 @@ export const ui = {
       it: "Nuovi CTF e hackathon in arrivo. Questa sezione continua a crescere.",
       nl: "Nieuwe CTF's en hackathons op komst. Dit onderdeel wordt steeds aangevuld.",
     },
-    readNews: {
-      es: "Ver noticia",
-      en: "Read article",
-      de: "Artikel lesen",
-      it: "Leggi la notizia",
-      nl: "Lees het artikel",
+    aboutEvent: {
+      es: "Sobre el evento",
+      en: "About the event",
+      de: "Über das Event",
+      it: "Sull'evento",
+      nl: "Over het evenement",
     },
   },
 

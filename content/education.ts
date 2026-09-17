@@ -39,7 +39,7 @@ export type Competition = {
   categories?: readonly Text[];
   /** Logro puntual verificable, en una línea. */
   highlight?: Localized;
-  /** Noticia u origen (opcional). */
+  /** Página sobre el evento (noticia u origen), opcional. */
   link?: string;
   rankings?: readonly Ranking[];
 };
