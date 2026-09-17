@@ -143,7 +143,14 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
 
       <div className="flex flex-1 flex-col px-1 pt-3">
-        <h3 className="text-base leading-snug font-bold text-heading">{title}</h3>
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-base leading-snug font-bold text-heading">{title}</h3>
+          {project.date && (
+            <span className="mt-0.5 shrink-0 text-[11px] font-semibold text-muted">
+              {t(project.date)}
+            </span>
+          )}
+        </div>
         <p className="mt-1.5 flex-1 text-[13px] leading-relaxed text-body">{t(project.description)}</p>
 
         <div className="mt-3 flex flex-wrap gap-1.5">

@@ -62,7 +62,8 @@ export function buildLlmsText(locale: Locale): string {
 
   push(`## ${t(ui.projects.title)}`, "");
   for (const project of projects) {
-    push(`### ${t(project.title)}`, "", t(project.description), "");
+    const heading = project.date ? `${t(project.title)} (${t(project.date)})` : t(project.title);
+    push(`### ${heading}`, "", t(project.description), "");
     const meta = [`Stack: ${project.tags.join(", ")}`];
     if (project.role === "collaborator") meta.push(t(ui.projects.collaborator));
     if (project.private) meta.push(t(ui.projects.privateProject));

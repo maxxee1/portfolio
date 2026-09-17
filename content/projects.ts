@@ -26,6 +26,8 @@ export type Project = {
   /** Imagen de portada; si falta se usa el emoji sobre un degradado. */
   image?: string;
   emoji?: string;
+  /** Mes y anio del proyecto, ya localizado (helper `monthDate`). */
+  date?: Localized;
   role?: "collaborator";
   private?: boolean;
   links?: {
@@ -35,6 +37,21 @@ export type Project = {
     /** Enlace directo al código; `true` reutiliza el repo de GitHub. */
     code?: string | true;
   };
+};
+
+const MONTHS = {
+  mar: { es: "Marzo", en: "March", de: "März", it: "Marzo", nl: "Maart" },
+  abr: { es: "Abril", en: "April", de: "April", it: "Aprile", nl: "April" },
+  may: { es: "Mayo", en: "May", de: "Mai", it: "Maggio", nl: "Mei" },
+  sep: { es: "Septiembre", en: "September", de: "September", it: "Settembre", nl: "September" },
+  oct: { es: "Octubre", en: "October", de: "Oktober", it: "Ottobre", nl: "Oktober" },
+  dic: { es: "Diciembre", en: "December", de: "Dezember", it: "Dicembre", nl: "December" },
+} as const;
+
+/** Construye la fecha localizada "Mes ANIO" a partir del mes y el anio. */
+const monthDate = (month: keyof typeof MONTHS, year: number): Localized => {
+  const m = MONTHS[month];
+  return { es: `${m.es} ${year}`, en: `${m.en} ${year}`, de: `${m.de} ${year}`, it: `${m.it} ${year}`, nl: `${m.nl} ${year}` };
 };
 
 export const projects: readonly Project[] = [
@@ -61,20 +78,31 @@ export const projects: readonly Project[] = [
   },
   {
     id: "mitm",
+    date: monthDate("mar", 2025),
     emoji: "🕵️",
     categories: ["security"],
-    title: "Man-in-the-Middle (MITM)",
-    description: {
-      es: "Ataque de red que intercepta, inyecta y modifica tráfico en tránsito usando Scapy y Python: envenenamiento ARP para posicionarse entre víctima y gateway, y manipulación de paquetes al vuelo.",
-      en: "Network attack that intercepts, injects and modifies traffic in transit using Scapy and Python: ARP poisoning to sit between victim and gateway, and on-the-fly packet manipulation.",
-      de: "Netzwerkangriff, der Datenverkehr mit Scapy und Python abfängt, einschleust und verändert: ARP-Spoofing, um sich zwischen Opfer und Gateway zu setzen, und Paketmanipulation in Echtzeit.",
-      it: "Attacco di rete che intercetta, inietta e modifica il traffico in transito con Scapy e Python: ARP poisoning per posizionarsi tra vittima e gateway e manipolazione dei pacchetti al volo.",
-      nl: "Netwerkaanval die verkeer onderweg onderschept, injecteert en wijzigt met Scapy en Python: ARP-poisoning om tussen slachtoffer en gateway te gaan zitten, en pakketmanipulatie in realtime.",
+    title: {
+      es: "Man-in-the-Middle (MITM) sobre AMQP",
+      en: "Man-in-the-Middle (MITM) over AMQP",
+      de: "Man-in-the-Middle (MITM) über AMQP",
+      it: "Man-in-the-Middle (MITM) su AMQP",
+      nl: "Man-in-the-Middle (MITM) over AMQP",
     },
-    tags: ["Python", "Scapy", "Networking", "Security"],
+    description: {
+      es: "Prueba de concepto de seguridad ofensiva sobre AMQP, el protocolo binario de mensajería de RabbitMQ. Un contenedor sniffer intercepta el tráfico del broker con Scapy, altera el payload en tránsito y reinyecta los paquetes, todo en un laboratorio multi-contenedor con Docker.",
+      en: "Offensive-security proof of concept over AMQP, the binary messaging protocol behind RabbitMQ. A sniffer container intercepts the broker traffic with Scapy, alters the payload in transit and reinjects the packets, all in a multi-container Docker lab.",
+      de: "Offensive-Security-Proof-of-Concept über AMQP, das binäre Messaging-Protokoll von RabbitMQ. Ein Sniffer-Container fängt den Broker-Verkehr mit Scapy ab, verändert die Payload im Transit und schleust die Pakete wieder ein – alles in einem Docker-Labor mit mehreren Containern.",
+      it: "Proof of concept di sicurezza offensiva su AMQP, il protocollo binario di messaggistica di RabbitMQ. Un container sniffer intercetta il traffico del broker con Scapy, altera il payload in transito e reinietta i pacchetti, il tutto in un laboratorio multi-container con Docker.",
+      nl: "Proof of concept voor offensieve security over AMQP, het binaire messagingprotocol van RabbitMQ. Een sniffer-container onderschept het brokerverkeer met Scapy, wijzigt de payload onderweg en injecteert de pakketten opnieuw, alles in een multi-container Docker-lab.",
+    },
+    tags: ["Python", "Scapy", "AMQP", "RabbitMQ", "Docker"],
+    links: {
+      github: "https://github.com/maxxee1/ampq-scapy-injection",
+    },
   },
   {
     id: "optiwallet",
+    date: monthDate("mar", 2026),
     emoji: "💳",
     role: "collaborator",
     categories: ["ai", "development", "collab"],
@@ -90,6 +118,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "udp-map",
+    date: monthDate("may", 2026),
     emoji: "🗺️",
     role: "collaborator",
     categories: ["development", "collab"],
@@ -129,23 +158,18 @@ export const projects: readonly Project[] = [
   },
   {
     id: "proxivision",
+    date: monthDate("mar", 2025),
     image: "/images/projects/proxivision.webp",
     categories: ["development"],
-    title: {
-      es: "ProxiVision - Proyecto TIC",
-      en: "ProxiVision - TIC Project",
-      de: "ProxiVision - IKT-Projekt",
-      it: "ProxiVision - Progetto TIC",
-      nl: "ProxiVision - ICT-project",
-    },
+    title: "ProxiVision",
     description: {
-      es: "Sistema de asistencia para personas con discapacidad visual usando sensores IoT, MicroPython y React Native. Arquitectura serverless en Vercel.",
-      en: "Assistance system for visually impaired people using IoT sensors, MicroPython, and React Native. Serverless architecture on Vercel.",
-      de: "Assistenzsystem für sehbehinderte Menschen mit IoT-Sensoren, MicroPython und React Native. Serverlose Architektur auf Vercel.",
-      it: "Sistema di assistenza per persone con disabilità visiva basato su sensori IoT, MicroPython e React Native. Architettura serverless su Vercel.",
-      nl: "Hulpsysteem voor mensen met een visuele beperking met IoT-sensoren, MicroPython en React Native. Serverloze architectuur op Vercel.",
+      es: "Lentes inteligentes de asistencia para personas con discapacidad visual. Sensores de proximidad independientes en cada patilla (MicroPython) detectan obstáculos a la altura de la cabeza y avisan con vibración bilateral, modulada por lado para indicar hacia dónde esquivar, sin ocupar el oído. Incluye app móvil en React Native y una API serverless en Vercel para telemetría y configuración.",
+      en: "Assistive smart glasses for visually impaired people. Independent proximity sensors on each temple (MicroPython) detect head-level obstacles and warn through bilateral vibration, modulated per side to signal which way to dodge, without blocking hearing. Includes a React Native mobile app and a serverless Vercel API for telemetry and configuration.",
+      de: "Assistive Smart Glasses für sehbehinderte Menschen. Unabhängige Näherungssensoren an jedem Bügel (MicroPython) erkennen Hindernisse in Kopfhöhe und warnen per bilateraler Vibration, je Seite moduliert, um die Ausweichrichtung anzuzeigen – ohne das Gehör zu blockieren. Mit React-Native-App und serverloser Vercel-API für Telemetrie und Konfiguration.",
+      it: "Occhiali intelligenti assistivi per persone con disabilità visiva. Sensori di prossimità indipendenti su ciascuna astina (MicroPython) rilevano ostacoli all'altezza della testa e avvisano con vibrazione bilaterale, modulata per lato per indicare da che parte scansare, senza occupare l'udito. Include app mobile in React Native e API serverless su Vercel per telemetria e configurazione.",
+      nl: "Assistieve slimme bril voor mensen met een visuele beperking. Onafhankelijke nabijheidssensoren op elk pootje (MicroPython) detecteren obstakels op hoofdhoogte en waarschuwen met bilaterale trilling, per kant gemoduleerd om aan te geven welke kant op te ontwijken, zonder het gehoor te blokkeren. Met React Native-app en serverloze Vercel-API voor telemetrie en configuratie.",
     },
-    tags: ["React Native", "MicroPython", "IoT", "Vercel"],
+    tags: ["MicroPython", "React Native", "Wearable", "Haptic Feedback", "Vercel"],
     links: {
       github: "https://github.com/maxxee1/proxivision",
       website: "https://github.com/maxxee1/proxivision",
@@ -153,6 +177,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "mlp-grades",
+    date: monthDate("abr", 2026),
     image: "/images/projects/mlp.webp",
     categories: ["ai"],
     title: {
@@ -177,6 +202,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "memory-simulator",
+    date: monthDate("dic", 2025),
     image: "/images/projects/ms.webp",
     categories: ["systems"],
     title: {
@@ -202,6 +228,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "doom-threads",
+    date: monthDate("oct", 2025),
     emoji: "🔀",
     categories: ["systems"],
     title: {
@@ -226,6 +253,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "named-pipes",
+    date: monthDate("sep", 2025),
     image: "/images/projects/npc.webp",
     categories: ["systems"],
     title: {
