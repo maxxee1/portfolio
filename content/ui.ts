@@ -372,6 +372,13 @@ export const ui = {
         it: "Classifica individuale",
         nl: "Individueel klassement",
       },
+      national: {
+        es: "Ranking nacional",
+        en: "National ranking",
+        de: "Nationale Wertung",
+        it: "Classifica nazionale",
+        nl: "Nationaal klassement",
+      },
       world: {
         es: "Ranking mundial",
         en: "Worldwide ranking",

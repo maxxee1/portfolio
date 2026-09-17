@@ -14,7 +14,7 @@ export type Education = {
 };
 
 export type Ranking = {
-  scope: "team" | "individual" | "world";
+  scope: "team" | "individual" | "national" | "world";
   /** Puesto obtenido. Puede faltar cuando solo se conoce el puntaje. */
   rank?: number;
   /** Cuántos compitieron (equipos o participantes). */
@@ -237,7 +237,12 @@ export const competitions: readonly Competition[] = [
       },
     ],
     logo: "ieee.webp",
-    rankings: [{ scope: "world", rank: 924, total: 8169 }],
+    // 32 equipos chilenos según la noticia de la EIT UDP.
+    link: "https://eit.udp.cl/estudiantes-de-la-eit-organizaron-la-competicion-ieeextreme-19-0-en-la-facultad/",
+    rankings: [
+      { scope: "national", rank: 6, total: 32 },
+      { scope: "world", rank: 924, total: 8169 },
+    ],
   },
   {
     id: "ctf-dreamlab-2",
