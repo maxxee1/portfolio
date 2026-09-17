@@ -25,6 +25,11 @@ export function buildLlmsText(locale: Locale): string {
   const en = locale === "en";
   const lines: string[] = [];
   const push = (...rows: string[]) => lines.push(...rows);
+  // Mismo formato y redondeo que las tarjetas de la web (13,3% en español).
+  const numberLocale = en ? "en-US" : "es-CL";
+  const formatNumber = (value: number) => value.toLocaleString(numberLocale);
+  const percent = (part: number, whole: number) =>
+    ((part / whole) * 100).toLocaleString(numberLocale, { maximumFractionDigits: 1 });
 
   push(`# ${profile.name} — ${t(profile.role)}`, "", `> ${t(profile.tagline)}`, "");
   push(
@@ -86,10 +91,16 @@ export function buildLlmsText(locale: Locale): string {
   for (const comp of competitions) {
     push(`#### ${comp.name} — ${t(comp.achievement)}`, "", `${t(comp.detail)} · ${t(comp.date)}`, "");
     for (const r of comp.rankings ?? []) {
-      const rank = `${r.rank !== undefined ? `#${r.rank}` : "—"} ${t(ui.education.of)} ${r.total}`;
-      const score = r.score !== undefined ? ` · ${r.score} ${t(ui.education.points)}` : "";
-      const top = r.topScore !== undefined ? ` (${t(ui.education.leader)}: ${r.topScore})` : "";
-      push(`- ${t(ui.education.rankings[r.scope])}: ${rank}${score}${top}`);
+      const parts = [`${r.rank !== undefined ? `#${r.rank}` : "—"} ${t(ui.education.of)} ${r.total}`];
+      if (r.rank !== undefined) parts.push(`Top ${percent(r.rank, r.total)}%`);
+      if (r.score !== undefined) parts.push(`${formatNumber(r.score)} ${t(ui.education.points)}`);
+      if (r.topScore !== undefined) parts.push(`${t(ui.education.leader)}: ${formatNumber(r.topScore)}`);
+      push(`- ${t(ui.education.rankings[r.scope])}: ${parts.join(" · ")}`);
+    }
+    const team = comp.rankings?.find((r) => r.scope === "team");
+    const individual = comp.rankings?.find((r) => r.scope === "individual");
+    if (team?.score && individual?.score) {
+      push(`- ${percent(individual.score, team.score)}% ${t(ui.education.contribution)}`);
     }
     if (comp.link) push(`- ${t(ui.education.readNews)}: ${comp.link}`);
     push("");

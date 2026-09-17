@@ -75,9 +75,15 @@ export function Education() {
         {t(ui.education.competitions)}
       </h3>
 
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      {/* Flex centrado en vez de grid: si la última fila queda incompleta, sus
+          tarjetas se centran en lugar de dejar un hueco a la derecha. */}
+      <div className="flex flex-wrap justify-center gap-5">
         {competitions.map((competition, index) => (
-          <Reveal key={competition.id} delay={index * 0.05} className="h-full">
+          <Reveal
+            key={competition.id}
+            delay={index * 0.05}
+            className="w-full md:w-[calc((100%-1.25rem)/2)] xl:w-[calc((100%-2.5rem)/3)]"
+          >
             <article className="card flex h-full flex-col p-6">
               <div className="flex items-start justify-between gap-3">
                 {competition.logo ? (
@@ -154,7 +160,7 @@ function TeamContribution({ competition }: { competition: (typeof competitions)[
 
   return (
     <p className="mt-2 text-xs text-muted">
-      <span className="font-bold text-accent">{formatted}%</span> {t(ui.education.contribution)}
+      <span className="font-bold text-accent">{`${formatted}%`}</span> {t(ui.education.contribution)}
     </p>
   );
 }
@@ -177,16 +183,15 @@ function RankingRow({ ranking }: { ranking: Ranking }) {
         <dt className="text-muted">{t(ui.education.rankings[ranking.scope])}</dt>
         <dd className="flex items-center gap-2">
           {rank !== undefined && (
+            // Cada cifra como un solo nodo de texto: "#10 de 75" sale entero en el HTML.
             <span className="font-bold text-heading">
-              #{format(rank)}{" "}
-              <span className="font-medium text-muted">
-                {t(ui.education.of)} {format(total)}
-              </span>
+              {`#${format(rank)} `}
+              <span className="font-medium text-muted">{`${t(ui.education.of)} ${format(total)}`}</span>
             </span>
           )}
           {topPercent !== null && (
             <span className="rounded-full bg-success-soft px-2 py-0.5 text-[11px] font-bold text-success">
-              Top {topPercent}%
+              {`Top ${topPercent}%`}
             </span>
           )}
         </dd>
@@ -230,12 +235,8 @@ function ScoreGap({
         <div className="h-full rounded-full bg-bar" style={{ width: `${fill}%` }} />
       </div>
       <div className="mt-1.5 flex justify-between font-mono text-[11px]">
-        <span className="font-bold text-heading">
-          {format(value)} {pointsLabel}
-        </span>
-        <span className="text-muted">
-          {leaderLabel} {format(top)}
-        </span>
+        <span className="font-bold text-heading">{`${format(value)} ${pointsLabel}`}</span>
+        <span className="text-muted">{`${leaderLabel} ${format(top)}`}</span>
       </div>
     </>
   );
@@ -262,7 +263,7 @@ function PositionScale({
         <div className="h-full rounded-full bg-bar" style={{ width: `${Math.max(3, standing)}%` }} />
       </div>
       <div aria-hidden className="mt-1.5 flex justify-between font-mono text-[11px] text-muted">
-        <span>#{format(total)}</span>
+        <span>{`#${format(total)}`}</span>
         <span>#1</span>
       </div>
     </>

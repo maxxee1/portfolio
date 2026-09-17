@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Cloud, Copy, ExternalLink, Languages, ShieldCheck } from "lucide-react";
+import { Check, Cloud, Copy, ExternalLink, Languages, Lock, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 import { useLanguage } from "@/components/providers/language-provider";
@@ -71,9 +71,7 @@ function CertificationGroup({ title, certs, columns }: CertificationGroupProps) 
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-lg font-bold text-heading">{title}</h3>
         <p className="text-sm text-muted">
-          <span className="font-bold text-heading">
-            {done}/{total}
-          </span>{" "}
+          <span className="font-bold text-heading">{`${done}/${total}`}</span>{" "}
           {t(ui.certifications.completedCount)}
         </p>
       </div>
@@ -138,6 +136,18 @@ function CertificationTile({ cert }: { cert: Certification }) {
           </span>
 
           {cert.url && <TileLink href={cert.url}>{t(ui.certifications.verify)}</TileLink>}
+
+          {/* Sin enlace todavía: "Verificar" apagado, para que no parezca clickeable. */}
+          {!cert.url && !cert.verify && !cert.credentials && (
+            <span
+              aria-disabled="true"
+              title={t(ui.certifications.verifyPending)}
+              className="inline-flex cursor-not-allowed items-center gap-1 text-[11px] font-bold text-muted/60 select-none"
+            >
+              {t(ui.certifications.verify)} <Lock size={10} />
+              <span className="sr-only">{`(${t(ui.certifications.verifyPending)})`}</span>
+            </span>
+          )}
 
           {cert.credentials && (
             <CredentialList

@@ -458,6 +458,13 @@ export const ui = {
       it: "Verifica",
       nl: "Verifiëren",
     },
+    verifyPending: {
+      es: "Verificable al completarla",
+      en: "Verifiable once completed",
+      de: "Nach Abschluss überprüfbar",
+      it: "Verificabile una volta completata",
+      nl: "Verifieerbaar na afronding",
+    },
     code: { es: "Código", en: "Code", de: "Code", it: "Codice", nl: "Code" },
     copyCode: {
       es: "Clic para copiar",
