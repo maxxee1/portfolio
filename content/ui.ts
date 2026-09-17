@@ -390,6 +390,27 @@ export const ui = {
       it: "del punteggio della squadra",
       nl: "van de teamscore",
     },
+    comingSoon: {
+      es: "Próximamente",
+      en: "Coming soon",
+      de: "Demnächst",
+      it: "Prossimamente",
+      nl: "Binnenkort",
+    },
+    comingSoonTitle: {
+      es: "Se vienen más competencias",
+      en: "More competitions on the way",
+      de: "Weitere Wettbewerbe folgen",
+      it: "Altre competizioni in arrivo",
+      nl: "Er komen meer wedstrijden aan",
+    },
+    comingSoonText: {
+      es: "Nuevos CTF y hackathons en camino. Esta sección se sigue actualizando.",
+      en: "New CTFs and hackathons on the way. This section keeps growing.",
+      de: "Neue CTFs und Hackathons sind geplant. Dieser Bereich wird laufend ergänzt.",
+      it: "Nuovi CTF e hackathon in arrivo. Questa sezione continua a crescere.",
+      nl: "Nieuwe CTF's en hackathons op komst. Dit onderdeel wordt steeds aangevuld.",
+    },
     readNews: {
       es: "Ver noticia",
       en: "Read article",

@@ -185,7 +185,7 @@ export const competitions: readonly Competition[] = [
     link: "https://eit.udp.cl/exitosa-tercera-version-de-evento-capture-the-flag-udp-dreamlab/",
     rankings: [
       { scope: "team", rank: 9, total: 18, score: 1060, topScore: 2920 },
-      { scope: "individual", total: 65, score: 300, topScore: 1280 },
+      { scope: "individual", rank: 21, total: 65, score: 300, topScore: 1280 },
     ],
   },
   {

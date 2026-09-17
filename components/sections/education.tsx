@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarDays, ExternalLink, GraduationCap, Trophy } from "lucide-react";
+import { CalendarDays, ExternalLink, GraduationCap, Hourglass, Trophy } from "lucide-react";
 import Image from "next/image";
 
 import { useLanguage } from "@/components/providers/language-provider";
@@ -75,15 +75,9 @@ export function Education() {
         {t(ui.education.competitions)}
       </h3>
 
-      {/* Flex centrado en vez de grid: si la última fila queda incompleta, sus
-          tarjetas se centran en lugar de dejar un hueco a la derecha. */}
-      <div className="flex flex-wrap justify-center gap-5">
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {competitions.map((competition, index) => (
-          <Reveal
-            key={competition.id}
-            delay={index * 0.05}
-            className="w-full md:w-[calc((100%-1.25rem)/2)] xl:w-[calc((100%-2.5rem)/3)]"
-          >
+          <Reveal key={competition.id} delay={index * 0.05} className="h-full">
             <article className="card flex h-full flex-col p-6">
               <div className="flex items-start justify-between gap-3">
                 {competition.logo ? (
@@ -141,8 +135,38 @@ export function Education() {
             </article>
           </Reveal>
         ))}
+        <ComingSoon count={competitions.length} />
       </div>
     </Section>
+  );
+}
+
+/* Clases literales para que Tailwind las genere. En tablet (2 columnas) la caja
+   solo aparece si la última fila tiene 1 tarjeta; en PC (3 columnas) ocupa las
+   1 o 2 celdas libres. Nunca abre una fila nueva, y en teléfono no se muestra. */
+const COMING_SOON_MD = ["md:hidden", "md:block"] as const;
+const COMING_SOON_XL = ["xl:hidden", "xl:block xl:col-span-2", "xl:block xl:col-span-1"] as const;
+
+/** Caja "Próximamente" que rellena la última fila incompleta de Competiciones. */
+function ComingSoon({ count }: { count: number }) {
+  const { t } = useLanguage();
+  const md = COMING_SOON_MD[count % 2];
+  const xl = COMING_SOON_XL[count % 3];
+  if (md === "md:hidden" && xl === "xl:hidden") return null;
+
+  return (
+    <div className={cn("hidden", md, xl)}>
+      <article className="flex h-full flex-col items-center justify-center gap-3 rounded-card border-2 border-dashed border-line p-6 text-center">
+        <span className="grid size-12 place-items-center rounded-full bg-tile text-muted">
+          <Hourglass size={20} />
+        </span>
+        <span className="rounded-full bg-tile px-3 py-1 text-xs font-semibold text-muted">
+          {t(ui.education.comingSoon)}
+        </span>
+        <p className="text-base font-bold text-heading">{t(ui.education.comingSoonTitle)}</p>
+        <p className="max-w-xs text-sm text-muted">{t(ui.education.comingSoonText)}</p>
+      </article>
+    </div>
   );
 }
 
